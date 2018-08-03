@@ -120,20 +120,20 @@ function findRoute(routes, req) {
 }
 
 function reply(route, res, req) {
-    res.writeHead(route.response.statusCode, route.response.headers);
-    const body = formatResponseBody(route.response.body, req);
+    res.writeHead(route.response.statusCode, applyTemplate(route.response.headers, req));
+    const body = applyTemplate(route.response.body, req);
     res.write(JSON.stringify(body, null, 2)); // eslint-disable-line no-magic-numbers
     res.end();
 }
 
-function formatResponseBody(template, req, scope) {
+function applyTemplate(template, req, scope) {
     if (null === template || 'undefined' === typeof template) {
         return '';
     }
 
     if (Array.isArray(template)) {
         return template.map((item) => {
-            return formatResponseBody(item, req, scope);
+            return applyTemplate(item, req, scope);
         });
     }
 
@@ -145,7 +145,7 @@ function formatResponseBody(template, req, scope) {
         case 'object': return Object
             .keys(template)
             .reduce((obj, key) => {
-                obj[key] = formatResponseBody(template[key], req, template);
+                obj[key] = applyTemplate(template[key], req, template);
                 return obj;
             }, {});
         case 'symbol': return String(template).replace(/^Symbol\((.*)\)$/, '$1');
