@@ -14,30 +14,24 @@ describe('index', () => {
         toReplyWith: async function toReplyWith(req, statusCode, body, headers) {
             const response = await req;
 
-            if (statusCode !== response.statusCode) {
-                return { pass: false, message: () => `expects ${statusCode} status code, got ${response.statusCode}` };
-            }
-
-            const print = (message, expected, received) => {
-                const diffString = diff(expected, received, {
-                    expand: this.expand
-                });
-
-                return `${message}\n ${diffString}`;
-            };
-
-            if (body && !this.equals(body, response.body)) {
+            const fail = (message, { expected, received } = {}) => {
+                const extra = expected ? diff(expected, received, { expand: this.expand }) : '';
                 return {
                     pass: false,
-                    message: () => print('Body does not match', body, response.body)
+                    message: () => `${message}\n${extra}\nRequest received:\n${JSON.stringify(response.body, null, 2)}`
                 };
+            };
+
+            if (statusCode !== response.statusCode) {
+                return fail(`expects ${statusCode} status code, got ${response.statusCode}`);
+            }
+
+            if (body && !this.equals(body, response.body)) {
+                return fail('Body does not match', body, response.body);
             }
 
             if (headers && !this.equals(headers, response.headers)) {
-                return {
-                    pass: false,
-                    message: () => print('Headers does not match', headers, response.headers)
-                };
+                return fail('Headers does not match', headers, response.headers);
             }
 
             return {
@@ -518,6 +512,25 @@ describe('index', () => {
                 arr: ['1', '2', '3', { one: 'un' }],
                 sym: 'bol'
             });
+        });
+    });
+
+    describe('Doc examples', () => {
+        it('should handle basic usage', async() => {
+            const body = { some: 'body' };
+            ws.get('/resource')
+                .addQuery({ page: '2' })
+                .addHeaders({ 'X-Api-Key': 'api_key' })
+                .setResponseBody(body);
+
+            await expect(request(
+                '/resource?page=2',
+                {
+                    headers: { 'X-Api-Key': 'api_key' },
+                    json: true,
+                    throwHttpErrors: false
+                }
+            )).toReplyWith(STATUS_CODES.SUCCESS, body);
         });
     });
 
