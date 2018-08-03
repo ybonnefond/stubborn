@@ -21,6 +21,7 @@ Stubborn web server to mock external api responses
 
 ## Installation
 ### Node version support
+Stubborn supports NodeJS version 8.x and above
 
 ## Usage
 

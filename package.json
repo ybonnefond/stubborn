@@ -1,6 +1,6 @@
 {
   "name": "stubborn",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "keywords": "stubborn, test, test api, testing, testing web server, nock, dyson, jest, jasmine, mocha",
