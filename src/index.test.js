@@ -5,7 +5,7 @@ describe('index', () => {
     const diff = require('jest-diff');
 
     const { STATUS_CODES } = require('./constants');
-    const { Stuborn } = require('./index');
+    const { Stubborn } = require('./index');
 
     let ws;
     let wsUrl;
@@ -48,7 +48,7 @@ describe('index', () => {
     });
 
     beforeAll(async() => {
-        ws = new Stuborn({ port: 0 });
+        ws = new Stubborn({ port: 0 });
         await ws.start();
         wsUrl = ws.getOrigin();
     });
