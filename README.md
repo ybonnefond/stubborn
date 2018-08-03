@@ -1,5 +1,6 @@
 headers no matched by default
-# Stubborn
+# Stubborn 
+[![Build Status](https://travis-ci.org/ybonnefond/stubborn.svg?branch=master)](https://travis-ci.org/ybonnefond/stubborn) [![Coverage Status](https://coveralls.io/repos/github/ybonnefond/stubborn/badge.svg?branch=master)](https://coveralls.io/github/ybonnefond/stubborn?branch=master)
 
 Stubborn web server to mock external api responses
 

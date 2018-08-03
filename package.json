@@ -5,11 +5,13 @@
   "main": "index.js",
   "keywords": "stubborn, test, test api, testing, testing web server, nock, dyson, jest, jasmine, mocha",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test-ci": "jest --coverage --coverageReporters=text-lcov | coveralls"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "coveralls": "^3.0.2",
     "eslint": "^5.2.0",
     "got": "^8.3.2",
     "jest": "^23.3.0",
