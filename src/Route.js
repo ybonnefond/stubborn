@@ -10,7 +10,7 @@ class Route {
         this.query = {};
         this.body = '';
 
-        this.addHeaders({
+        this.setHeaders({
             'user-agent': null,
             'accept-encoding': null,
             accept: null,
@@ -19,7 +19,7 @@ class Route {
             connection: null
         });
 
-        this.addQuery({});
+        this.setQueryParameters({});
 
         this.response = {
             statusCode: STATUS_CODES.SUCCESS,
@@ -40,14 +40,14 @@ class Route {
         };
     }
 
-    addHeaders(headers) {
-        this.headers = Object.assign({}, this.headers, headers);
+    setHeaders(headers) {
+        this.headers = null === headers ? headers : Object.assign({}, this.headers, headers);
 
         return this;
     }
 
-    addQuery(query) {
-        this.query = Object.assign({}, this.query, query);
+    setQueryParameters(query) {
+        this.query = null === query ? query : Object.assign({}, this.query, query);
 
         return this;
     }
