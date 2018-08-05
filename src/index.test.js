@@ -17,7 +17,7 @@ describe('index', () => {
                 const extra = expected ? diff(expected, received, { expand: this.expand }) : '';
                 return {
                     pass: false,
-                    message: () => `${message}\n${extra}\nRequest received:\n${JSON.stringify(response.body, null, 2)}`
+                    message: () => `${message}\n${extra}\nRequest received:\n${JSON.stringify(response.body, null, 2)}` // eslint-disable-line no-magic-numbers
                 };
             };
 
