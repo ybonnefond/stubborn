@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest",
     "test-ci": "yarn lint && jest --coverage --coverageReporters=text-lcov | coveralls",
-    "lint": "eslint src test"
+    "lint": "eslint src"
   },
   "author": "",
   "license": "ISC",
