@@ -7,8 +7,7 @@ describe('index', () => {
     const { STATUS_CODES } = require('./constants');
     const { Stubborn } = require('./index');
 
-    let ws;
-    let wsUrl;
+    const sb = new Stubborn({ port: 0 });
 
     expect.extend({
         toReplyWith: async function toReplyWith(req, statusCode, body, headers) {
@@ -41,19 +40,9 @@ describe('index', () => {
         }
     });
 
-    beforeAll(async() => {
-        ws = new Stubborn({ port: 0 });
-        await ws.start();
-        wsUrl = ws.getOrigin();
-    });
-
-    afterEach(() => {
-        return ws.clear();
-    });
-
-    afterAll(async() => {
-        await ws.stop();
-    });
+    beforeAll(async() => await sb.start());
+    afterAll(async() => await sb.stop());
+    afterEach(() => sb.clear());
 
     it('should return NOT_IMPLEMENTED if no routes are configured', async() => {
         await expect(request('/')).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
@@ -62,67 +51,67 @@ describe('index', () => {
     describe('Request matching', () => {
         describe('Method', () => {
             it('should return NOT_IMPLEMENTED if method does not match', async() => {
-                ws.get('/');
+                sb.get('/');
 
                 await expect(request('/', { method: 'POST' })).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
             });
 
             it('should return SUCCESS if method is GET', async() => {
-                ws.get('/');
+                sb.get('/');
 
                 await expect(request('/')).toReplyWith(STATUS_CODES.SUCCESS);
             });
 
             it('should return SUCCESS if method is POST', async() => {
-                ws.post('/');
+                sb.post('/');
 
                 await expect(request('/', { method: 'POST' })).toReplyWith(STATUS_CODES.SUCCESS);
             });
 
             it('should return SUCCESS if method is POST with empty body', async() => {
-                ws.post('/', '');
+                sb.post('/', '');
 
                 await expect(request('/', { method: 'POST', json: false, body: '' })).toReplyWith(STATUS_CODES.SUCCESS);
             });
 
             it('should return SUCCESS if method is POST with string body', async() => {
-                ws.post('/', 'body');
+                sb.post('/', 'body');
 
                 await expect(request('/', { method: 'POST', json: false, body: 'body' })).toReplyWith(STATUS_CODES.SUCCESS);
             });
 
             it('should return SUCCESS if method is PUT', async() => {
-                ws.put('/');
+                sb.put('/');
 
                 await expect(request('/', { method: 'PUT' })).toReplyWith(STATUS_CODES.SUCCESS);
             });
 
             it('should return SUCCESS if method is PUT with string body', async() => {
-                ws.put('/', 'body');
+                sb.put('/', 'body');
 
                 await expect(request('/', { method: 'PUT', json: false, body: 'body' })).toReplyWith(STATUS_CODES.SUCCESS);
             });
 
             it('should return SUCCESS if method is PATCH', async() => {
-                ws.patch('/');
+                sb.patch('/');
 
                 await expect(request('/', { method: 'PATCH' })).toReplyWith(STATUS_CODES.SUCCESS);
             });
 
             it('should return SUCCESS if method is PATCH with string body', async() => {
-                ws.patch('/', 'body');
+                sb.patch('/', 'body');
 
                 await expect(request('/', { method: 'PATCH', json: false, body: 'body' })).toReplyWith(STATUS_CODES.SUCCESS);
             });
 
             it('should return SUCCESS if method is DELETE', async() => {
-                ws.delete('/');
+                sb.delete('/');
 
                 await expect(request('/', { method: 'DELETE' })).toReplyWith(STATUS_CODES.SUCCESS);
             });
 
             it('should return SUCCESS if method is DELETE with string body', async() => {
-                ws.delete('/', 'body');
+                sb.delete('/', 'body');
 
                 await expect(request('/', { method: 'DELETE', json: false, body: 'body' })).toReplyWith(STATUS_CODES.SUCCESS);
             });
@@ -130,31 +119,31 @@ describe('index', () => {
 
         describe('Path', () => {
             it('should return NOT_IMPLEMENTED if path does not strictly match', async() => {
-                ws.get('/test');
+                sb.get('/test');
 
                 await expect(request('/test2')).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
             });
 
             it('should return SUCCESS if path strictly match', async() => {
-                ws.get('/test');
+                sb.get('/test');
 
                 await expect(request('/test')).toReplyWith(STATUS_CODES.SUCCESS);
             });
 
             it('should return NOT_IMPLEMENTED if path does not match a regex', async() => {
-                ws.get(/\/test\/[0-9]{1}/);
+                sb.get(/\/test\/[0-9]{1}/);
 
                 await expect(request('/test2', { method: 'GET' })).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
             });
 
             it('should return SUCCESS if path match regexp', async() => {
-                ws.get(/\/test\/[0-9]{1}/);
+                sb.get(/\/test\/[0-9]{1}/);
 
                 await expect(request('/test/2')).toReplyWith(STATUS_CODES.SUCCESS);
             });
 
             it('should return SUCCESS if path match custom function', async() => {
-                ws.get((path) => path === '/test/2');
+                sb.get((path) => path === '/test/2');
 
                 await expect(request('/test/2')).toReplyWith(STATUS_CODES.SUCCESS);
             });
@@ -162,79 +151,87 @@ describe('index', () => {
 
         describe('Headers', () => {
             it('should return NOT_IMPLEMENTED if header is not in definition', async() => {
-                ws.get('/');
+                sb.get('/');
 
                 await expect(request('/', { headers: { Authorization: 'token' } })).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
             });
 
             it('should return NOT_IMPLEMENTED if header in definition is not provided', async() => {
-                ws
+                sb
                     .get('/')
-                    .addHeaders({ Authorization: 'token' });
+                    .setHeaders({ Authorization: 'token' });
 
                 await expect(request('/')).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
             });
 
             it('should return NOT_IMPLEMENTED if headers name are different', async() => {
-                ws
+                sb
                     .get('/')
-                    .addHeaders({ Authorization: 'token' });
+                    .setHeaders({ Authorization: 'token' });
 
                 await expect(request('/', { headers: { 'x-api-key': 'api-key' } })).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
             });
 
             it('should return NOT_IMPLEMENTED if headers values are different', async() => {
-                ws
+                sb
                     .get('/')
-                    .addHeaders({ Authorization: 'token' });
+                    .setHeaders({ Authorization: 'token' });
 
                 await expect(request('/', { headers: { Authorization: 'not-token' } })).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
             });
 
-            it('should return SUCCESS if header is null and in request', async() => {
-                ws
+            it('should return SUCCESS if header is wildcarded', async() => {
+                sb
                     .get('/')
-                    .addHeaders({ Authorization: null });
+                    .setHeaders(null);
+
+                await expect(request('/', { headers: { Authorization: 'token' } })).toReplyWith(STATUS_CODES.SUCCESS);
+            });
+
+            it('should return SUCCESS if header is null and in request', async() => {
+                sb
+                    .get('/')
+                    .setHeaders({ Authorization: null });
 
                 await expect(request('/', { headers: { Authorization: 'token' } })).toReplyWith(STATUS_CODES.SUCCESS);
             });
 
             it('should return SUCCESS if header is null and not in request', async() => {
-                ws
+                sb
                     .get('/')
-                    .addHeaders({ Authorization: null });
+                    .setHeaders({ Authorization: null });
 
                 await expect(request('/')).toReplyWith(STATUS_CODES.SUCCESS);
             });
 
             it('should return SUCCESS if header is strictly equal to the definition', async() => {
-                ws
+                sb
                     .get('/')
-                    .addHeaders({ Authorization: 'token' });
+                    .setHeaders({ Authorization: 'token' });
 
                 await expect(request('/', { headers: { Authorization: 'token' } })).toReplyWith(STATUS_CODES.SUCCESS);
             });
 
             it('should return NOT_IMPLEMENTED if header does not match the definition', async() => {
-                ws
+                sb
                     .get('/')
-                    .addHeaders({ Authorization: /^Bearer [0-9]{1}$/ });
+                    .setHeaders({ Authorization: /^Bearer [0-9]{1}$/ });
 
                 await expect(request('/', { headers: { Authorization: 'Bearer 11' } })).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
             });
 
             it('should return SUCCESS if header match a regexp', async() => {
-                ws
+                sb
                     .get('/')
-                    .addHeaders({ Authorization: /^Bearer [0-9]{1}$/ });
+                    .setHeaders({ Authorization: /^Bearer [0-9]{1}$/ });
 
                 await expect(request('/', { headers: { Authorization: 'Bearer 9' } })).toReplyWith(STATUS_CODES.SUCCESS);
             });
 
             it('should return SUCCESS if header match a custom function', async() => {
-                ws
+                sb
                     .get('/')
-                    .addHeaders({ Authorization: (header) => header === 'Bearer 9' });
+                    .setHeaders({ Authorization: (header) => header === 'Bearer 9' });
 
                 await expect(request('/', { headers: { Authorization: 'Bearer 9' } })).toReplyWith(STATUS_CODES.SUCCESS);
             });
@@ -242,95 +239,103 @@ describe('index', () => {
 
         describe('Query', () => {
             it('should return NOT_IMPLEMENTED if query parameters is not in definition', async() => {
-                ws.get('/');
+                sb.get('/');
 
                 await expect(request('/?page=10')).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
             });
 
             it('should return NOT_IMPLEMENTED if query parameter in definition is not provided', async() => {
-                ws
+                sb
                     .get('/')
-                    .addQuery({ page: 10 });
+                    .setQueryParameters({ page: 10 });
 
                 await expect(request('/')).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
             });
 
             it('should return NOT_IMPLEMENTED if query parameters are different', async() => {
-                ws
+                sb
                     .get('/')
-                    .addQuery({ page: 10 });
+                    .setQueryParameters({ page: 10 });
 
                 await expect(request('/?limit=5')).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
             });
 
             it('should return NOT_IMPLEMENTED if query parameter value is not strictly equal to definition', async() => {
-                ws
+                sb
                     .get('/')
-                    .addQuery({ page: 10 });
+                    .setQueryParameters({ page: 10 });
 
                 await expect(request('/?page=11')).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
             });
 
             it('should return SUCCESS if query parameter is strictly equal to the definition', async() => {
-                ws
+                sb
                     .get('/')
-                    .addQuery({ page: '10' });
+                    .setQueryParameters({ page: '10' });
+
+                await expect(request('/?page=10')).toReplyWith(STATUS_CODES.SUCCESS);
+            });
+
+            it('should return SUCCESS if query parameters are wildcarded', async() => {
+                sb
+                    .get('/')
+                    .setQueryParameters(null);
 
                 await expect(request('/?page=10')).toReplyWith(STATUS_CODES.SUCCESS);
             });
 
             it('should return SUCCESS if query parameter is null and in query', async() => {
-                ws
+                sb
                     .get('/')
-                    .addQuery({ page: null });
+                    .setQueryParameters({ page: null });
 
                 await expect(request('/?page=10')).toReplyWith(STATUS_CODES.SUCCESS);
             });
 
             it('should return SUCCESS if query parameter is null and not in query', async() => {
-                ws
+                sb
                     .get('/')
-                    .addQuery({ page: null });
+                    .setQueryParameters({ page: null });
 
                 await expect(request('/')).toReplyWith(STATUS_CODES.SUCCESS);
             });
 
             it('should return SUCCESS if query parameter matches multiple values', async() => {
-                ws
+                sb
                     .get('/')
-                    .addQuery({ image: ['id1', 'id2'] });
+                    .setQueryParameters({ image: ['id1', 'id2'] });
 
                 await expect(request('/?image=id1&image=id2')).toReplyWith(STATUS_CODES.SUCCESS);
             });
 
             it('should return SUCCESS if query parameter does not match multiple values', async() => {
-                ws
+                sb
                     .get('/')
-                    .addQuery({ image: ['id1', 'id2'] });
+                    .setQueryParameters({ image: ['id1', 'id2'] });
 
                 await expect(request('/?image=id1&image=id3')).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
             });
 
             it('should return NOT_IMPLEMENTED if header does not match the definition', async() => {
-                ws
+                sb
                     .get('/')
-                    .addQuery({ page: /^\d+$/ });
+                    .setQueryParameters({ page: /^\d+$/ });
 
                 await expect(request('/?page=two')).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
             });
 
             it('should return SUCCESS if header match a regexp', async() => {
-                ws
+                sb
                     .get('/')
-                    .addQuery({ page: /^\d+$/ });
+                    .setQueryParameters({ page: /^\d+$/ });
 
                 await expect(request('/?page=100')).toReplyWith(STATUS_CODES.SUCCESS);
             });
 
             it('should return SUCCESS if header match a custom function', async() => {
-                ws
+                sb
                     .get('/')
-                    .addQuery({ page: (param) => param === '100' });
+                    .setQueryParameters({ page: (param) => param === '100' });
 
                 await expect(request('/?page=100')).toReplyWith(STATUS_CODES.SUCCESS);
             });
@@ -338,40 +343,40 @@ describe('index', () => {
 
         describe('Body', () => {
             it('should return NOT_IMPLEMENTED if body is not in definition', async() => {
-                ws.post('/');
+                sb.post('/');
 
                 await expect(request('/', { method: 'POST', body: 'test', json: false })).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
             });
 
             describe('Text body', async() => {
                 it('should return NOT_IMPLEMENTED if no body in request but in definition', async() => {
-                    ws
+                    sb
                         .post('/', 'test')
-                        .addHeaders({ 'Content-Type': 'text/plain' });
+                        .setHeaders({ 'Content-Type': 'text/plain' });
 
                     await expect(request('/', { method: 'POST', json: false, headers: { 'Content-Type': 'text/plain' } })).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
                 });
 
                 it('should return NOT_IMPLEMENTED if body in request but not in definition', async() => {
-                    ws
+                    sb
                         .post('/')
-                        .addHeaders({ 'Content-Type': 'text/plain' });
+                        .setHeaders({ 'Content-Type': 'text/plain' });
 
                     await expect(request('/', { method: 'POST', body: 'test', json: false, headers: { 'Content-Type': 'text/plain' } })).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
                 });
 
                 it('should return SUCCESS if definition is strictly equal to body', async() => {
-                    ws
+                    sb
                         .post('/', 'test')
-                        .addHeaders({ 'Content-Type': 'text/plain' });
+                        .setHeaders({ 'Content-Type': 'text/plain' });
 
                     await expect(request('/', { method: 'POST', body: 'test', json: false, headers: { 'Content-Type': 'text/plain' } })).toReplyWith(STATUS_CODES.SUCCESS);
                 });
 
                 it('should return NOT_IMPLEMENTED if string body does not equal definition body', async() => {
-                    ws
+                    sb
                         .post('/', 'test')
-                        .addHeaders({ 'Content-Type': 'text/plain' });
+                        .setHeaders({ 'Content-Type': 'text/plain' });
 
                     await expect(request('/', { method: 'POST', body: 'test2', json: false, headers: { 'Content-Type': 'text/plain' } })).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
                 });
@@ -379,62 +384,62 @@ describe('index', () => {
 
             describe('Object body', () => {
                 it('should return SUCCESS if json body is equal to definition', async() => {
-                    ws
+                    sb
                         .post('/', { key: 'value' })
-                        .addHeaders({ 'Content-Type': 'application/json' });
+                        .setHeaders({ 'Content-Type': 'application/json' });
 
                     await expect(request('/', { method: 'POST', body: { key: 'value' }, json: true })).toReplyWith(STATUS_CODES.SUCCESS);
                 });
 
                 it('should return NOT_IMPLEMENTED if values are different in object body', async() => {
-                    ws
+                    sb
                         .post('/', { key: 'value2' })
-                        .addHeaders({ 'Content-Type': 'application/json' });
+                        .setHeaders({ 'Content-Type': 'application/json' });
 
                     await expect(request('/', { method: 'POST', body: { key: 'value' }, json: true })).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
                 });
 
                 it('should return NOT_IMPLEMENTED if keys are different in object body', async() => {
-                    ws
+                    sb
                         .post('/', { key2: 'value' })
-                        .addHeaders({ 'Content-Type': 'application/json' });
+                        .setHeaders({ 'Content-Type': 'application/json' });
 
                     await expect(request('/', { method: 'POST', body: { key: 'value' }, json: true })).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
                 });
 
                 it('should return NOT_IMPLEMENTED if count keys are different in object definition', async() => {
-                    ws
+                    sb
                         .post('/', { key: 'value', key2: 'value' })
-                        .addHeaders({ 'Content-Type': 'application/json' });
+                        .setHeaders({ 'Content-Type': 'application/json' });
 
                     await expect(request('/', { method: 'POST', body: { key: 'value' }, json: true })).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
                 });
 
                 it('should return SUCCESS if json body is equal to definition with complex object', async() => {
-                    ws
+                    sb
                         .post('/', { subObject: { subArray: [{ key: 'value' }] } })
-                        .addHeaders({ 'Content-Type': 'application/json' });
+                        .setHeaders({ 'Content-Type': 'application/json' });
 
                     await expect(request('/', { method: 'POST', body: { subObject: { subArray: [{ key: 'value' }] } }, json: true })).toReplyWith(STATUS_CODES.SUCCESS);
                 });
 
                 it('should return SUCCESS if body equals definition with regex', async() => {
-                    ws
+                    sb
                         .post('/', { key: /\d+/, key2: [{ subkey: /\d+/ }] })
-                        .addHeaders({ 'Content-Type': 'application/json' });
+                        .setHeaders({ 'Content-Type': 'application/json' });
 
                     await expect(request('/', { method: 'POST', body: { key: 11, key2: [{ subkey: 13 }] }, json: true })).toReplyWith(STATUS_CODES.SUCCESS);
                 });
 
                 it('should return SUCCESS if body equals definition with custom function', async() => {
-                    ws
+                    sb
                         .post('/', {
                             key: (val) => val === 'test',
                             key2: [
                                 { subkey: (val) => val === 'toto' }
                             ]
                         })
-                        .addHeaders({ 'Content-Type': 'application/json' });
+                        .setHeaders({ 'Content-Type': 'application/json' });
 
                     await expect(request('/', { method: 'POST', body: { key: 'test', key2: [{ subkey: 'toto' }] }, json: true })).toReplyWith(STATUS_CODES.SUCCESS);
                 });
@@ -466,7 +471,7 @@ describe('index', () => {
 
         it('should respond with provided status code', async() => {
             const STATUS_CODE = 201;
-            ws
+            sb
                 .get('/')
                 .setResponseStatusCode(STATUS_CODE);
 
@@ -474,7 +479,7 @@ describe('index', () => {
         });
 
         it('should respond with provided headers', async() => {
-            ws
+            sb
                 .get('/')
                 .setResponseHeaders({ custom: 'header' });
 
@@ -482,7 +487,7 @@ describe('index', () => {
         });
 
         it('should respond with provided string body', async() => {
-            ws
+            sb
                 .get('/')
                 .setResponseBody('toto');
 
@@ -490,7 +495,7 @@ describe('index', () => {
         });
 
         it('should respond with provided object body', async() => {
-            ws
+            sb
                 .get('/')
                 .setResponseBody({ custom: 'body' });
 
@@ -498,9 +503,9 @@ describe('index', () => {
         });
 
         it('should respond with dynamic body', async() => {
-            ws
+            sb
                 .get('/')
-                .addQuery({ page: '10' })
+                .setQueryParameters({ page: '10' })
                 .setResponseBody({
                     custom: (req) => req.query.page,
                     arr: ['1', '2', () => '3', { one: () => 'un' }],
@@ -515,27 +520,59 @@ describe('index', () => {
         });
     });
 
-    describe('Doc examples', () => {
-        it('should handle basic usage', async() => {
+    describe('Doc ehandle basic usage', () => {
+        it('should respond to query', async() => {
             const body = { some: 'body' };
-            ws.get('/resource')
-                .addQuery({ page: '2' })
-                .addHeaders({ 'X-Api-Key': 'api_key' })
-                .setResponseBody(body);
+            sb.get('/').setResponseBody({ some: 'body' });
 
-            await expect(request(
-                '/resource?page=2',
+            const res = await got(`${sb.getOrigin()}`, { json: true });
+
+            expect(res.body).toEqual(body);
+        });
+
+        it('should respond 501 if a parameter is missing', async() => {
+            sb.get('/').setQueryParameters({ page: '1' });
+
+            const res = await got(`${sb.getOrigin()}`, { throwHttpErrors: false });
+
+            expect(res.statusCode).toEqual(STATUS_CODES.NOT_IMPLEMENTED);
+        });
+
+        it('should respond 501 if a parameter is added', async() => {
+            sb.get('/').setQueryParameters({ page: '1' });
+
+            const res = await got(`${sb.getOrigin()}?page=1&limit=10`, { throwHttpErrors: false });
+
+            expect(res.statusCode).toEqual(STATUS_CODES.NOT_IMPLEMENTED);
+        });
+
+        it('should respond 501 if a parameter is added', async() => {
+            sb.get('/').setQueryParameters({ page: '1' });
+
+            const res = await got(`${sb.getOrigin()}?page=2`, { throwHttpErrors: false });
+
+            expect(res.statusCode).toEqual(STATUS_CODES.NOT_IMPLEMENTED);
+        });
+
+        it('should respond using wildcard for paramter and headers', async() => {
+            sb.get('/')
+                .setQueryParameters({ page: null })
+                .setHeaders(null);
+
+            const res = await got(
+                `${sb.getOrigin()}?page=2`,
                 {
-                    headers: { 'X-Api-Key': 'api_key' },
-                    json: true,
+                    headers: { 'x-api-key': 'api key', 'any-other-header': 'stuff' },
                     throwHttpErrors: false
                 }
-            )).toReplyWith(STATUS_CODES.SUCCESS, body);
+            );
+
+            expect(res.statusCode).toEqual(STATUS_CODES.SUCCESS);
         });
     });
 
     function request(path = '/', options = {}) {
-        return got(`${wsUrl}${path}`, Object.assign({
+        return got(`${sb.getOrigin()}${path}`, Object.assign({
             method: 'GET',
             json: true,
             throwHttpErrors: false
