@@ -8,8 +8,13 @@ class QueryMatcher {
     }
 
     match(req) {
-        const { query: rawQuery } = req;
+        if (null === this.route.query) {
+            return true;
+        }
+
         const def = formatDef(this.route.query);
+
+        const { query: rawQuery } = req;
         const formatedQuery = formatDef(rawQuery);
 
         const keyMap = new KeyMap(def);

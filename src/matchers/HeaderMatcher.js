@@ -8,9 +8,12 @@ class HeaderMatcher {
     }
 
     match(req) {
-        const { headers: rawHeaders } = req;
-        const def = this.route.headers;
+        if (null === this.route.headers) {
+            return true;
+        }
 
+        const def = this.route.headers;
+        const { headers: rawHeaders } = req;
         const keyMap = new KeyMap(def, { caseSensitive: false });
 
         // Filter headers where def has null for value
