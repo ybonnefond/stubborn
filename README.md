@@ -129,6 +129,8 @@ See the [API documentation](doc/API.md)
 ### Release
 
 ```bash
+git checkout master
+git pull --rebase
 yarn doc
 git add .
 git commit -m 'doc(): Update documentation'
