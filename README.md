@@ -6,9 +6,10 @@
 <hr />
 
 - [Installation](#installation)
-  * [Node version support](#node-version-support)
 - [Usage](#usage)
-  * [Basic Usage](#basic-usage)
+- [API](#api)
+- [Contributing](#contributing)
+  * [Release](#release)
 
 <hr />
 
@@ -36,7 +37,6 @@ Stubborn strictly matches requests against on route definitions using rules base
 - Headers
 - Body
 
-### Basic Usage
 ```javascript
 describe('Test', () => {
     const got = require('got');
@@ -120,3 +120,20 @@ You can use `null` as wildcard
     });
 ```
 
+## API
+
+See the [API documentation](doc/API.md)
+
+## Contributing
+
+### Release
+
+```bash
+yarn doc
+git add .
+git commit -m 'doc(): Update documentation'
+yarn publish --<major|minor|patch>
+git push --follow-tags
+```
+
+Then go to github to [draft a new release](https://github.com/ybonnefond/stubborn/releases/new) 
