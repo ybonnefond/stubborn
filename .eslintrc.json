@@ -1,6 +1,6 @@
 {
     "parserOptions": {
-        "ecmaVersion": 6,
+        "ecmaVersion": 2017,
         "ecmaFeatures": {
             "arrowFunctions": true,
             "blockBindings": true,
@@ -8,8 +8,7 @@
             "defaultParams": true,
             "modules": true,
             "templateStrings": true,
-            "forOf": true,
-            "experimentalObjectRestSpread": true
+            "forOf": true
         }
     },
     "env": {
