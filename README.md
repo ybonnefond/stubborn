@@ -37,7 +37,7 @@ Stubborn strictly matches requests against on route definitions using rules base
 - Body
 
 ### Basic Usage
-```Javascript
+```javascript
 describe('Test', () => {
     const got = require('got');
     const { Stubborn } = require('stubborn-ws');
