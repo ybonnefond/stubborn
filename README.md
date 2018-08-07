@@ -29,13 +29,14 @@ yarn add -D stubborn
 
 ## Usage
 
+Stubborn is a testing tool that let you **hot** load and unload routes into a webserver. 
+Requests are **strictly** matched against routes definitions based on Method, Path, Query parameters, Headers and Body.
+If the request does not exactly match one route definition (ex: extra parameter, missing parameter, value does not match, etc), Stubborn will respond with a 501.
 
-Stubborn strictly matches requests against on route definitions using rules based on:
-- Method
-- Path
-- Query parameters
-- Headers
-- Body
+The very fact that Stubborn respond to the request validates that the parameters sent are the expected one, any change in the code that send the request will break the test. Any breaking change will be picked up by your test.
+
+Stubborn response headers and body can be hardcoded or defined using a template. 
+
 
 ```javascript
 describe('Test', () => {
