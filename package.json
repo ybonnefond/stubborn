@@ -1,40 +1,40 @@
 {
-  "name": "stubborn-ws",
-  "version": "0.1.2",
-  "description": "",
-  "homepage": "https://github.com/ybonnefond/stubborn#stubborn",
-  "main": "index.js",
-  "keywords": "stubborn, test, test api, testing, testing web server, nock, dyson, jest, jasmine, mocha",
-  "scripts": {
-    "test": "jest",
-    "test-ci": "mkdir -p coverage && yarn lint && jest --coverage --coverageReporters=lcov && cat ./coverage/lcov.info | coveralls",
-    "lint": "eslint src",
-    "doc": "jsdoc2md -f src/*.js > doc/API.md",
-    "release": "yarn doc && yarn publish"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "coveralls": "^3.0.2",
-    "eslint": "^5.3.0",
-    "got": "^9.0.0",
-    "jest": "^23.3.0",
-    "jest-diff": "^23.2.0",
-    "jsdoc-to-markdown": "^4.0.1"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "collectCoverage": true,
-    "coverageReporters": [
-      "html"
-    ],
-    "coverageDirectory": "coverage",
-    "collectCoverageFrom": [
-      "src/**/*.js"
-    ]
-  },
-  "dependencies": {
-    "body-parser": "^1.18.3",
-    "lodash": "^4.17.10"
-  }
+    "name": "stubborn-ws",
+    "version": "0.1.2",
+    "description": "",
+    "homepage": "https://github.com/ybonnefond/stubborn#stubborn",
+    "main": "src/index.js",
+    "keywords": "stubborn, test, test api, testing, testing web server, nock, dyson, jest, jasmine, mocha",
+    "scripts": {
+        "test": "jest",
+        "test-ci": "mkdir -p coverage && yarn lint && jest --coverage --coverageReporters=lcov && cat ./coverage/lcov.info | coveralls",
+        "lint": "eslint src",
+        "doc": "jsdoc2md -f src/*.js > doc/API.md",
+        "release": "yarn doc && yarn publish"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "coveralls": "^3.0.2",
+        "eslint": "^5.3.0",
+        "got": "^9.0.0",
+        "jest": "^23.3.0",
+        "jest-diff": "^23.2.0",
+        "jsdoc-to-markdown": "^4.0.1"
+    },
+    "jest": {
+        "testEnvironment": "node",
+        "collectCoverage": true,
+        "coverageReporters": [
+            "html"
+        ],
+        "coverageDirectory": "coverage",
+        "collectCoverageFrom": [
+            "src/**/*.js"
+        ]
+    },
+    "dependencies": {
+        "body-parser": "^1.18.3",
+        "lodash": "^4.17.10"
+    }
 }

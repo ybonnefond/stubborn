@@ -46,3 +46,5 @@ node_modules/
 
 # Npm package lock if run npm install instead of yarn install
 package-lock.json
+
+.history
