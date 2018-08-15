@@ -19,12 +19,12 @@ Stubborn is tested on NodeJS 8.x and above.
 
 Npm:
 ```bash
-npm install --save-dev stubborn
+npm install --save-dev stubborn-ws
 ```
 
 Yarn:
 ```bash
-yarn add -D stubborn
+yarn add -D stubborn-ws
 ```
 
 ## Usage
