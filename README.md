@@ -43,7 +43,7 @@ describe('Test', () => {
     const got = require('got');
     const { Stubborn } = require('stubborn-ws');
 
-    const sb = new Stubborn({ port: 8080 });
+    const sb = new Stubborn();
 
     beforeAll(async() => await sb.start());
     afterAll(async() => await sb.stop());
