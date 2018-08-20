@@ -4,15 +4,15 @@ const { STATUS_CODES } = require('./constants');
 const Route = require('./Route');
 const RouteMatcher = require('./RouteMatcher');
 const middlewares = require('./middlewares');
+const { getServerPort } = require('./utils');
 
 class Router {
     constructor(options) {
         this.options = Object.assign({
-            host: '',
-            port: 0
+            host: ''
         }, options);
 
-        this.port = this.options.port;
+        this.port = null;
         this.routes = new Set();
 
         this.middlewares = [];
@@ -46,13 +46,8 @@ class Router {
         this.routes.clear();
     }
 
-    setPort(port) {
-        this.port = port;
-
-        return this;
-    }
-
     handle(server) {
+        this.port = getServerPort(server);
         const mws = buildMiddlewares(this);
         mws.push(buildRequestHandler(this));
         server.on('request', (req, res) => {
