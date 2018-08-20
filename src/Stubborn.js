@@ -3,6 +3,7 @@
 const http = require('http');
 const Router = require('./Router');
 const { METHODS } = require('./constants');
+const { getServerPort } = require('./utils');
 
 class Stubborn {
     /**
@@ -15,14 +16,13 @@ class Stubborn {
      */
     constructor(options = {}) {
         this.options = Object.assign({
-            port: 8080,
             host: 'localhost',
             defaultHeaders: {}
         }, options);
 
+        this.port = null;
         this.server = http.createServer();
-        this.router = new Router({ host: this.options.host, port: this.options.port });
-        this.router.handle(this.server);
+        this.router = new Router({ host: this.options.host });
     }
 
     /**
@@ -33,15 +33,7 @@ class Stubborn {
      * @returns {number} Listening port
      */
     getPort() {
-        if (0 === this.options.port) {
-            const address = this.server.address();
-
-            if (null !== address) {
-                return address.port;
-            }
-        }
-
-        return this.options.port;
+        return getServerPort(this.server);
     }
 
     /**
@@ -131,10 +123,11 @@ class Stubborn {
      *
      * @returns {Promise} Promise object resolved when server is started
      */
-    start() {
+    start(port = 0) {
+        this.port = port;
         return new Promise((resolve) => {
-            this.server.listen(this.options.port);
-            this.router.setPort(this.getPort());
+            this.server.listen(this.port);
+            this.router.handle(this.server);
             resolve();
         });
     }

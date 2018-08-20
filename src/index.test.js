@@ -7,7 +7,7 @@ describe('index', () => {
     const { STATUS_CODES } = require('./constants');
     const { Stubborn } = require('./index');
 
-    const sb = new Stubborn({ port: 0 });
+    const sb = new Stubborn();
 
     expect.extend({
         toReplyWith: async function toReplyWith(req, statusCode, body, headers) {
