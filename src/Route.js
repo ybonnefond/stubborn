@@ -271,7 +271,7 @@ module.exports = Route;
   * - `Regexp`: Match using Regexp.test against the request header value
   * - `function`: Request header value will be passed to the function. The function Should return a boolean
   * - `null`: act as a wildcard, header will not be processed
-  * @typedef {string|Regexp|function|null>} Definition
+  * @typedef {string|Regexp|function|null} Definition
 
 /**
   * key/value object. Key is the header name, value is the header definition

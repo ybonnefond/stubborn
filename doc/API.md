@@ -12,8 +12,8 @@
 <dl>
 <dt><a href="#RouteDefinition">RouteDefinition</a> : <code>Object</code></dt>
 <dd></dd>
-<dt><a href="#HeadersDefinition">HeadersDefinition</a> : <code>object.&lt;string, (string|Regexp|function()|null)&gt;</code></dt>
-<dd><p>key/value object. Key is the header name, value is the header definition
+<dt><a href="#HeadersDefinition">HeadersDefinition</a> : <code>string</code> | <code>Regexp</code> | <code>function</code> | <code>null</code></dt>
+<dd><p>Definition
 The header definition can be a <code>string</code>, a <code>Regexp</code>, a <code>function</code> or <code>null</code></p>
 <ul>
 <li><code>string</code>: Match using string equality against the request header value</li>
@@ -22,7 +22,7 @@ The header definition can be a <code>string</code>, a <code>Regexp</code>, a <co
 <li><code>null</code>: act as a wildcard, header will not be processed</li>
 </ul>
 </dd>
-<dt><a href="#QueryParametersDefinition">QueryParametersDefinition</a> : <code>Object.&lt;string, (string|Regexp|function()|null)&gt;</code></dt>
+<dt><a href="#QueryParametersDefinition">QueryParametersDefinition</a> : <code>Object.&lt;string, Definition&gt;</code></dt>
 <dd><p>key/value object. Key is the query parameter name, value is the parameter definition
 The parameter definition can be a <code>string</code>, a <code>Regexp</code>, a <code>function</code> or <code>null</code></p>
 <ul>
@@ -32,7 +32,7 @@ The parameter definition can be a <code>string</code>, a <code>Regexp</code>, a 
 <li><code>null</code>: act as a wildcard, parameter will not be processed</li>
 </ul>
 </dd>
-<dt><a href="#BodyDefinition">BodyDefinition</a> : <code>string</code> | <code>Array</code> | <code>Object.&lt;string, (string|Regexp|Body|function()|null)&gt;</code></dt>
+<dt><a href="#BodyDefinition">BodyDefinition</a> : <code>string</code> | <code>Array</code> | <code>Object.&lt;string, (Definition|Body)&gt;</code></dt>
 <dd><p>Body can be a string, an array or a key/mixed object where values can be a <code>string</code>, a <code>Regexp</code>, a <code>function</code>, object, Array or <code>null</code></p>
 <ul>
 <li><code>string</code>: Match using string equality against the request parameter value</li>
@@ -53,11 +53,14 @@ The parameter definition can be a <code>string</code>, a <code>Regexp</code>, a 
 * [Route](#Route)
     * [.getDefinition()](#Route+getDefinition) ⇒ [<code>RouteDefinition</code>](#RouteDefinition)
     * [.setHeaders(headers)](#Route+setHeaders) ⇒ <code>this</code>
+    * [.setHeader(header, definition)](#Route+setHeader) ⇒ <code>this</code>
     * [.setQueryParameters(query)](#Route+setQueryParameters) ⇒ <code>this</code>
+    * [.setQueryParameter(queryParameter, definition)](#Route+setQueryParameter) ⇒ <code>this</code>
     * [.setBody(body)](#Route+setBody) ⇒ <code>this</code>
     * [.setResponseStatusCode(statusCode)](#Route+setResponseStatusCode) ⇒ <code>this</code>
     * [.setResponseBody(body)](#Route+setResponseBody) ⇒ <code>this</code>
-    * [.setResponseHeaders(body)](#Route+setResponseHeaders) ⇒ <code>this</code>
+    * [.setResponseHeaders(headers)](#Route+setResponseHeaders) ⇒ <code>this</code>
+    * [.setResponseHeader(header, value)](#Route+setResponseHeader) ⇒ <code>this</code>
 
 <a name="Route+getDefinition"></a>
 
@@ -94,6 +97,25 @@ stubborn
     func: (value) => 'match' === value
   });
 ```
+<a name="Route+setHeader"></a>
+
+### route.setHeader(header, definition) ⇒ <code>this</code>
+Set a specific header definition.
+
+**Kind**: instance method of [<code>Route</code>](#Route)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| header | <code>String</code> | Header name |
+| definition | <code>Definition</code> | Header definition |
+
+**Example**  
+```js
+
+stubborn
+  .get('/match')
+  .setHeader('Authorization', 'BEARER');
+```
 <a name="Route+setQueryParameters"></a>
 
 ### route.setQueryParameters(query) ⇒ <code>this</code>
@@ -122,6 +144,24 @@ stubborn
     // Match using `func(value);`
     func: (value) => 'match' === value
   });
+```
+<a name="Route+setQueryParameter"></a>
+
+### route.setQueryParameter(queryParameter, definition) ⇒ <code>this</code>
+Set a specific query parameter
+
+**Kind**: instance method of [<code>Route</code>](#Route)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| queryParameter | <code>String</code> | Query parameters name |
+| definition | <code>Definition</code> | Query parameter definition |
+
+**Example**  
+```js
+stubborn
+  .get('/match')
+  .setQueryParameter('page', '100');
 ```
 <a name="Route+setBody"></a>
 
@@ -192,8 +232,8 @@ ws.get('/resource')
 ```
 <a name="Route+setResponseHeaders"></a>
 
-### route.setResponseHeaders(body) ⇒ <code>this</code>
-Set the response header
+### route.setResponseHeaders(headers) ⇒ <code>this</code>
+Set the response headers
 key/value object. If value is a function it will receive the request as parameter
 ```js
 ws.get('/resource')
@@ -207,7 +247,24 @@ ws.get('/resource')
 
 | Param | Type |
 | --- | --- |
-| body | <code>Object.&lt;mixed&gt;</code> | 
+| headers | <code>Object.&lt;mixed&gt;</code> | 
+
+<a name="Route+setResponseHeader"></a>
+
+### route.setResponseHeader(header, value) ⇒ <code>this</code>
+Set a response header
+
+```js
+ws.get('/resource')
+  .setResponseHeader('Content-type', 'application/json');
+```
+
+**Kind**: instance method of [<code>Route</code>](#Route)  
+
+| Param | Type |
+| --- | --- |
+| header | <code>String</code> | 
+| value | <code>String</code> \| <code>function</code> | 
 
 <a name="Stubborn"></a>
 
@@ -336,8 +393,8 @@ Stop the Stubborn server
 
 <a name="HeadersDefinition"></a>
 
-## HeadersDefinition : <code>object.&lt;string, (string\|Regexp\|function()\|null)&gt;</code>
-key/value object. Key is the header name, value is the header definition
+## HeadersDefinition : <code>string</code> \| <code>Regexp</code> \| <code>function</code> \| <code>null</code>
+Definition
 The header definition can be a `string`, a `Regexp`, a `function` or `null`
 - `string`: Match using string equality against the request header value
 - `Regexp`: Match using Regexp.test against the request header value
@@ -347,7 +404,7 @@ The header definition can be a `string`, a `Regexp`, a `function` or `null`
 **Kind**: global typedef  
 <a name="QueryParametersDefinition"></a>
 
-## QueryParametersDefinition : <code>Object.&lt;string, (string\|Regexp\|function()\|null)&gt;</code>
+## QueryParametersDefinition : <code>Object.&lt;string, Definition&gt;</code>
 key/value object. Key is the query parameter name, value is the parameter definition
 The parameter definition can be a `string`, a `Regexp`, a `function` or `null`
 - `string`: Match using string equality against the request parameter value
@@ -358,7 +415,7 @@ The parameter definition can be a `string`, a `Regexp`, a `function` or `null`
 **Kind**: global typedef  
 <a name="BodyDefinition"></a>
 
-## BodyDefinition : <code>string</code> \| <code>Array</code> \| <code>Object.&lt;string, (string\|Regexp\|Body\|function()\|null)&gt;</code>
+## BodyDefinition : <code>string</code> \| <code>Array</code> \| <code>Object.&lt;string, (Definition\|Body)&gt;</code>
 Body can be a string, an array or a key/mixed object where values can be a `string`, a `Regexp`, a `function`, object, Array or `null`
 - `string`: Match using string equality against the request parameter value
 - `Regexp`: Match using Regexp.test against the request parameter value
