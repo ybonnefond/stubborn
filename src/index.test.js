@@ -235,6 +235,14 @@ describe('index', () => {
 
                 await expect(request('/', { headers: { Authorization: 'Bearer 9' } })).toReplyWith(STATUS_CODES.SUCCESS);
             });
+
+            it('should return SUCCESS when setting a specific header', async() => {
+                sb
+                    .get('/')
+                    .setHeader('Authorization', 'Bearer 9');
+
+                await expect(request('/', { headers: { Authorization: 'Bearer 9' } })).toReplyWith(STATUS_CODES.SUCCESS);
+            });
         });
 
         describe('Query', () => {
@@ -336,6 +344,14 @@ describe('index', () => {
                 sb
                     .get('/')
                     .setQueryParameters({ page: (param) => param === '100' });
+
+                await expect(request('/?page=100')).toReplyWith(STATUS_CODES.SUCCESS);
+            });
+
+            it('should return SUCCESS when setting a specific query parameter', async() => {
+                sb
+                    .get('/')
+                    .setQueryParameter('page', '100');
 
                 await expect(request('/?page=100')).toReplyWith(STATUS_CODES.SUCCESS);
             });
@@ -482,6 +498,14 @@ describe('index', () => {
             sb
                 .get('/')
                 .setResponseHeaders({ custom: 'header' });
+
+            await expect(request('/')).toReplyWith(STATUS_CODES.SUCCESS, '', expect.objectContaining({ custom: 'header' }));
+        });
+
+        it('should respond with provided header', async() => {
+            sb
+                .get('/')
+                .setResponseHeader('custom', 'header');
 
             await expect(request('/')).toReplyWith(STATUS_CODES.SUCCESS, '', expect.objectContaining({ custom: 'header' }));
         });

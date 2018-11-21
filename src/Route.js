@@ -79,6 +79,26 @@ class Route {
     }
 
     /**
+     * Set a specific header definition.
+     *
+     * @example
+     * ```js
+     *
+     * stubborn
+     *   .get('/match')
+     *   .setHeader('Authorization', 'BEARER');
+     * ```
+     * @param {String} header Header name
+     * @param {Definition} definition Header definition
+     * @returns {this}
+     */
+    setHeader(header, definition) {
+        this.headers[header] = definition;
+
+        return this;
+    }
+
+    /**
      * Set the headers definition.
      *
      * @example
@@ -104,6 +124,25 @@ class Route {
      */
     setQueryParameters(query) {
         this.query = null === query ? query : Object.assign({}, this.query, query);
+
+        return this;
+    }
+
+    /**
+     * Set a specific query parameter
+     *
+     * @example
+     * ```js
+     * stubborn
+     *   .get('/match')
+     *   .setQueryParameter('page', '100');
+     * ```
+     * @param {String} queryParameter Query parameters name
+     * @param {Definition} definition Query parameter definition
+     * @returns {this}
+     */
+    setQueryParameter(queryParameter, definition) {
+        this.query[queryParameter] = definition;
 
         return this;
     }
@@ -178,7 +217,7 @@ class Route {
     }
 
     /**
-     * Set the response header
+     * Set the response headers
      * key/value object. If value is a function it will receive the request as parameter
      * ```js
      * ws.get('/resource')
@@ -187,11 +226,28 @@ class Route {
      *     'Custom-Header': (req) => `${req.header.custom}-response`
      *   });
      * ```
-     * @param {Object.<mixed>} body
+     * @param {Object.<mixed>} headers
      * @returns {this}
      */
     setResponseHeaders(headers) {
         this.response.headers = headers;
+
+        return this;
+    }
+
+    /**
+     * Set a response header
+     *
+     * ```js
+     * ws.get('/resource')
+     *   .setResponseHeader('Content-type', 'application/json');
+     * ```
+     * @param {String} header
+     * @param {String|function} value
+     * @returns {this}
+     */
+    setResponseHeader(header, value) {
+        this.response.headers[header] = value;
 
         return this;
     }
@@ -209,13 +265,22 @@ module.exports = Route;
  */
 
 /**
+  * Definition
+  * The header definition can be a `string`, a `Regexp`, a `function` or `null`
+  * - `string`: Match using string equality against the request header value
+  * - `Regexp`: Match using Regexp.test against the request header value
+  * - `function`: Request header value will be passed to the function. The function Should return a boolean
+  * - `null`: act as a wildcard, header will not be processed
+  * @typedef {string|Regexp|function|null>} Definition
+
+/**
   * key/value object. Key is the header name, value is the header definition
   * The header definition can be a `string`, a `Regexp`, a `function` or `null`
   * - `string`: Match using string equality against the request header value
   * - `Regexp`: Match using Regexp.test against the request header value
   * - `function`: Request header value will be passed to the function. The function Should return a boolean
   * - `null`: act as a wildcard, header will not be processed
-  * @typedef {object.<string, string|Regexp|function|null>} HeadersDefinition
+  * @typedef {object.<string, HeaderValue>} HeadersDefinition
   */
 
 /**
@@ -226,7 +291,7 @@ module.exports = Route;
   * - `function`: Request parameter value will be passed to the function. The function Should return a boolean
   * - `null`: act as a wildcard, parameter will not be processed
   *
-  * @typedef {Object.<string, string|Regexp|function|null>} QueryParametersDefinition
+  * @typedef {Object.<string, Definition>} QueryParametersDefinition
   */
 
 /**
@@ -238,5 +303,5 @@ module.exports = Route;
   * - `Array`: Each array items will be recursively processed
   * - `null`: act as a wildcard, parameter will not be processed
   *
-  * @typedef {string|Array|Object.<string, string|Regexp|Body|function|null>} BodyDefinition
+  * @typedef {string|Array|Object.<string, Definition|Body>} BodyDefinition
   */
