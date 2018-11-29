@@ -510,12 +510,29 @@ describe('index', () => {
             await expect(request('/')).toReplyWith(STATUS_CODES.SUCCESS, '', expect.objectContaining({ custom: 'header' }));
         });
 
-        it('should respond with provided string body', async() => {
+        it('should respond with a json encoded body if accept header is json', async() => {
             sb
                 .get('/')
                 .setResponseBody('toto');
 
             await expect(request('/')).toReplyWith(STATUS_CODES.SUCCESS, 'toto');
+        });
+
+        it('should encode JSON is response content-type header is provided', async() => {
+            sb
+                .get('/')
+                .setResponseBody('toto')
+                .setResponseHeader('Content-Type', 'application/json; charset=utf-8');
+
+            await expect(request('/', { json: false })).toReplyWith(STATUS_CODES.SUCCESS, JSON.stringify('toto'));
+        });
+
+        it('should respond with no encodding if accept and content-type is not provided', async() => {
+            sb
+                .get('/')
+                .setResponseBody('toto');
+
+            await expect(request('/', { json: false })).toReplyWith(STATUS_CODES.SUCCESS, 'toto');
         });
 
         it('should respond with provided object body', async() => {
@@ -544,7 +561,7 @@ describe('index', () => {
         });
     });
 
-    describe('Doc ehandle basic usage', () => {
+    describe('Doc handle basic usage', () => {
         it('should respond to query', async() => {
             const body = { some: 'body' };
             sb.get('/').setResponseBody({ some: 'body' });

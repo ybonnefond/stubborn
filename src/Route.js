@@ -26,9 +26,7 @@ class Route {
 
         this.response = {
             statusCode: STATUS_CODES.SUCCESS,
-            headers: {
-                'Content-Type': '{{headers.accept}}'
-            },
+            headers: {},
             body: null
         };
     }

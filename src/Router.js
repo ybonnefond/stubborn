@@ -6,6 +6,9 @@ const RouteMatcher = require('./RouteMatcher');
 const middlewares = require('./middlewares');
 const { getServerPort } = require('./utils');
 
+const accept = require('accept');
+const contentType = require('content-type');
+
 class Router {
     constructor(options) {
         this.options = Object.assign({
@@ -115,10 +118,41 @@ function findRoute(routes, req) {
 }
 
 function reply(route, res, req) {
-    res.writeHead(route.response.statusCode, applyTemplate(route.response.headers, req));
+    const headers = applyTemplate(route.response.headers, req);
     const body = applyTemplate(route.response.body, req);
-    res.write(JSON.stringify(body, null, 2)); // eslint-disable-line no-magic-numbers
+
+    res.writeHead(route.response.statusCode, headers);
+
+    res.write(encodeBody(req, headers, body)); // eslint-disable-line no-magic-numbers
     res.end();
+}
+
+function encodeBody(req, headers, body) {
+    const mediaType = findContentType(headers);
+
+    const mediaTypes = null === mediaType ? findAcceptTypes(req.headers) : [mediaType];
+
+    if (mediaTypes.includes('application/json')) {
+        return JSON.stringify(body, null, 2); // eslint-disable-line no-magic-numbers
+    }
+
+    return body;
+}
+
+function findAcceptTypes(headers) {
+    const headerKey = Object.keys(headers).find((name) => new RegExp('^accept$', 'i').test(name));
+
+    return 'undefined' === typeof headerKey ? [] : accept.mediaTypes(headers[headerKey]);
+}
+
+function findContentType(headers) {
+    const headerKey = Object.keys(headers).find((name) => new RegExp('^content-type$', 'i').test(name));
+
+    try {
+        return contentType.parse(headers[headerKey]).type;
+    } catch (e) {
+        return null;
+    }
 }
 
 function applyTemplate(template, req, scope) {

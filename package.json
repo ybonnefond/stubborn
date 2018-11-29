@@ -35,7 +35,9 @@
         ]
     },
     "dependencies": {
+        "accept": "^3.1.3",
         "body-parser": "^1.18.3",
+        "content-type": "^1.0.4",
         "lodash": "^4.17.10"
     }
 }
