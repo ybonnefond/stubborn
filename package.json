@@ -1,6 +1,6 @@
 {
     "name": "stubborn-ws",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "",
     "homepage": "https://github.com/ybonnefond/stubborn#stubborn",
     "main": "src/index.js",
