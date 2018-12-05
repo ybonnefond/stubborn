@@ -61,6 +61,8 @@ The parameter definition can be a <code>string</code>, a <code>Regexp</code>, a 
     * [.setResponseBody(body)](#Route+setResponseBody) ⇒ <code>this</code>
     * [.setResponseHeaders(headers)](#Route+setResponseHeaders) ⇒ <code>this</code>
     * [.setResponseHeader(header, value)](#Route+setResponseHeader) ⇒ <code>this</code>
+    * [.countCalls()](#Route+countCalls) ⇒ <code>number</code>
+    * [.getCall(index)](#Route+getCall) ⇒ <code>number</code>
 
 <a name="Route+getDefinition"></a>
 
@@ -265,6 +267,37 @@ ws.get('/resource')
 | --- | --- |
 | header | <code>String</code> | 
 | value | <code>String</code> \| <code>function</code> | 
+
+<a name="Route+countCalls"></a>
+
+### route.countCalls() ⇒ <code>number</code>
+Return the number of times the route has been called
+
+```js
+const route = ws.get('/resource');
+expect(route.countCalls()).toBe(0);
+await got(`${ws.getOrigin()}/resource`);
+expect(route.countCalls()).toBe(1);
+```
+
+**Kind**: instance method of [<code>Route</code>](#Route)  
+<a name="Route+getCall"></a>
+
+### route.getCall(index) ⇒ <code>number</code>
+Return the number of times the route has been called
+
+```js
+const route = ws.get('/resource');
+expect(route.countCalls()).toBe(0);
+await got(`${ws.getOrigin()}/resource`);
+expect(route.getCall(0)).toBe(1);
+```
+
+**Kind**: instance method of [<code>Route</code>](#Route)  
+
+| Param | Type |
+| --- | --- |
+| index | <code>number</code> | 
 
 <a name="Stubborn"></a>
 
