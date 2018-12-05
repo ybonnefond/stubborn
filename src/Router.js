@@ -118,6 +118,8 @@ function findRoute(routes, req) {
 }
 
 function reply(route, res, req) {
+    route.calls.push(stripReq(req));
+
     const headers = applyTemplate(route.response.headers, req);
     const body = applyTemplate(route.response.body, req);
 
@@ -137,6 +139,18 @@ function encodeBody(req, headers, body) {
     }
 
     return body;
+}
+
+function stripReq(incMessage) {
+    const { headers, body, path, query, hash, method } = incMessage;
+    return {
+        headers,
+        body,
+        path,
+        query,
+        hash,
+        method
+    };
 }
 
 function findAcceptTypes(headers) {

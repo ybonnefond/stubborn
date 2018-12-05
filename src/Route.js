@@ -12,6 +12,7 @@ class Route {
         this.headers = {};
         this.query = {};
         this.body = '';
+        this.calls = [];
 
         this.setHeaders({
             'user-agent': null,
@@ -248,6 +249,39 @@ class Route {
         this.response.headers[header] = value;
 
         return this;
+    }
+
+    /**
+     * Return the number of times the route has been called
+     *
+     * ```js
+     * const route = ws.get('/resource');
+     * expect(route.countCalls()).toBe(0);
+     * await got(`${ws.getOrigin()}/resource`);
+     * expect(route.countCalls()).toBe(1);
+     * ```
+     *
+     * @returns {number}
+     */
+    countCalls() {
+        return this.calls.length;
+    }
+
+    /**
+     * Return the number of times the route has been called
+     *
+     * ```js
+     * const route = ws.get('/resource');
+     * expect(route.countCalls()).toBe(0);
+     * await got(`${ws.getOrigin()}/resource`);
+     * expect(route.getCall(0)).toBe(1);
+     * ```
+     *
+     * @param {number} index
+     * @returns {number}
+     */
+    getCall(index) {
+        return this.calls[index];
     }
 }
 

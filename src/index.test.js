@@ -612,6 +612,50 @@ describe('index', () => {
         });
     });
 
+    describe('Retain Calls', () => {
+        it('should have no calls when initialize the route', () => {
+            const route = sb.get('/');
+            expect(route.countCalls()).toBe(0);
+        });
+
+        it('should retain every calls made to the route', async() => {
+            const route = sb.get('/');
+
+            const TOTAL_CALLS = 3;
+
+            for (let i = 1; i <= TOTAL_CALLS; i++) {
+                await request();
+                expect(route.countCalls()).toBe(i);
+            }
+        });
+
+        it('should retain a striped version of the request', async() => {
+            const route = sb.post('/', null)
+                .setHeaders(null)
+                .setQueryParameters(null);
+
+            await request('/?page=100', { method: 'POST', body: { some: 'body' } });
+
+            expect(route.countCalls()).toBe(1);
+            expect(route.getCall(0)).toEqual({
+                method: 'POST',
+                query: { page: '100' },
+                body: { some: 'body' },
+                path: '/',
+                hash: '',
+                headers: {
+                    accept: 'application/json',
+                    'accept-encoding': expect.any(String),
+                    connection: expect.any(String),
+                    'content-length': expect.any(String),
+                    'content-type': expect.any(String),
+                    host: expect.any(String),
+                    'user-agent': expect.any(String)
+                }
+            });
+        });
+    });
+
     function request(path = '/', options = {}) {
         return got(`${sb.getOrigin()}${path}`, Object.assign({
             method: 'GET',
