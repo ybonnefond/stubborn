@@ -21,7 +21,7 @@
         "got": "^9.0.0",
         "jest": "^23.3.0",
         "jest-diff": "^23.2.0",
-        "jsdoc-to-markdown": "^4.0.1"
+        "jsdoc-to-markdown": "^5.0.0"
     },
     "jest": {
         "testEnvironment": "node",
