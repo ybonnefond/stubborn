@@ -1,0 +1,1 @@
+{"version":3,"file":"MethodMatcher.js","sourceRoot":"","sources":["../../src/matchers/MethodMatcher.ts"],"names":[],"mappings":";;AAGA,mCAAgC;AAEhC,SAAgB,aAAa,CAAC,KAAY;IACxC,OAAO,CAAC,GAAY,EAAE,EAAE;QACtB,MAAM,EAAE,MAAM,EAAE,GAAG,GAAG,CAAC;QACvB,OAAO,aAAK,CAAC,KAAK,CAAC,SAAS,EAAE,EAAE,MAAM,CAAC,CAAC;IAC1C,CAAC,CAAC;AACJ,CAAC;AALD,sCAKC"}
