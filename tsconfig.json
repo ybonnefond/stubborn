@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "commonjs",
+    "declaration": true,
+    "sourceMap": true,
+    "outDir": "dist",
+
+    "baseUrl": ".",
+
+    /* Strict Type-Checking Options */
+    "strict": true,
+
+    /* Additional Checks */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+
+    /* Module Resolution Options */
+    "moduleResolution": "node",
+    "typeRoots": [
+      /* List of folders to include type definitions from. */
+      "node_modules/@types"
+    ],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+
+    "resolveJsonModule": true,
+    "skipLibCheck": true
+  },
+  "include": ["./src/**/*"]
+}

@@ -1,43 +1,61 @@
 {
-    "name": "stubborn-ws",
-    "version": "1.2.0",
-    "description": "",
-    "homepage": "https://github.com/ybonnefond/stubborn#stubborn",
-    "main": "src/index.js",
-    "keywords": "stubborn, test, test api, testing, testing web server, nock, dyson, jest, jasmine, mocha",
-    "scripts": {
-        "test": "jest",
-        "test:watch": "jest --watch",
-        "test-ci": "mkdir -p coverage && yarn lint && jest --coverage --coverageReporters=lcov && cat ./coverage/lcov.info | coveralls",
-        "lint": "eslint src",
-        "doc": "jsdoc2md -f src/*.js > doc/API.md",
-        "release": "yarn doc && yarn publish"
-    },
-    "author": "",
-    "license": "ISC",
-    "devDependencies": {
-        "coveralls": "^3.0.2",
-        "eslint": "^5.3.0",
-        "got": "^9.0.0",
-        "jest": "^23.3.0",
-        "jest-diff": "^23.2.0",
-        "jsdoc-to-markdown": "^4.0.1"
-    },
-    "jest": {
-        "testEnvironment": "node",
-        "collectCoverage": true,
-        "coverageReporters": [
-            "html"
-        ],
-        "coverageDirectory": "coverage",
-        "collectCoverageFrom": [
-            "src/**/*.js"
-        ]
-    },
-    "dependencies": {
-        "accept": "^3.1.3",
-        "body-parser": "^1.18.3",
-        "content-type": "^1.0.4",
-        "lodash": "^4.17.10"
-    }
+  "name": "stubborn-ws",
+  "version": "1.2.0",
+  "description": "Web server to mock external HTTP APIs in tests",
+  "types": "dist/index.d.ts",
+  "homepage": "https://github.com/ybonnefond/stubborn#stubborn",
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=8"
+  },
+  "keywords": [
+    "stubborn",
+    "test",
+    "test api",
+    "testing",
+    "testing web server",
+    "nock",
+    "dyson",
+    "jest",
+    "jasmine",
+    "mocha"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "tsc",
+    "test": "jest --config jest.json",
+    "test:watch": "yarn test --watch",
+    "lint:prettier": "yarn prettier -l '{src,test}/**/*.{ts,js,md,json}'",
+    "lint:prettier:fix": "yarn prettier --write '{src,test}/**/*.{ts,js,md,json}'",
+    "test-ci": "mkdir -p coverage && yarn lint && yarn test --coverage --coverageReporters=lcov && cat ./coverage/lcov.info | coveralls",
+    "lint": "tslint --project tsconfig.json -c tslint.json 'src/**/*.ts' 'test/**/*.ts' -t stylish",
+    "doc": "jsdoc2md -f src/*.js > doc/API.md",
+    "release": "yarn doc && yarn publish"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/accept": "^3.1.1",
+    "@types/body-parser": "^1.17.0",
+    "@types/content-type": "^1.1.3",
+    "@types/got": "^9.6.0",
+    "@types/jest": "^24.0.15",
+    "@types/lodash": "^4.14.135",
+    "coveralls": "^3.0.4",
+    "got": "^9.6.0",
+    "jest": "^24.8.0",
+    "jest-diff": "^24.8.0",
+    "jsdoc-to-markdown": "^5.0.0",
+    "prettier": "^1.18.2",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.5.2"
+  },
+  "dependencies": {
+    "accept": "^3.1.3",
+    "body-parser": "^1.19.0",
+    "content-type": "^1.0.4",
+    "lodash": "^4.17.11"
+  }
 }
