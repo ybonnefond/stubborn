@@ -123,9 +123,9 @@ it('should respond using wildcard', async () => {
 });
 ```
 
-## API
+## Public API
 
-See the [API documentation](doc/API.md)
+See the [API documentation](https://ybonnefond.github.io/stubborn/)
 
 ## Contributing
 
