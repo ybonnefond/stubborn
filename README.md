@@ -22,13 +22,13 @@ Stubborn is tested on NodeJS 8.x and above.
 
 Npm:
 
-```bash
+```
 npm install --save-dev stubborn-ws
 ```
 
 Yarn:
 
-```bash
+```
 yarn add -D stubborn-ws
 ```
 
@@ -42,11 +42,11 @@ The very fact that Stubborn respond to the request validates that the parameters
 
 Stubborn response headers and body can be hardcoded or defined using a template.
 
-```javascript
-describe('Test', () => {
-  const got = require('got');
-  const { Stubborn } = require('stubborn-ws');
+```typescript
+import got from 'got';
+import { Stubborn } from 'stubborn-ws';
 
+describe('Test', () => {
   const sb = new Stubborn();
 
   beforeAll(async () => await sb.start());
@@ -70,7 +70,7 @@ Stubborn **strictly** matches the request against the route definition.
 
 If a query parameter or a header is missing, stubborn will return a 501 (not implemented)
 
-```javascript
+```typescript
 it('should respond 501 if a parameter is missing', async () => {
   sb.get('/').setQueryParameters({ page: '1' });
 
@@ -82,7 +82,7 @@ it('should respond 501 if a parameter is missing', async () => {
 
 If a query parameter or a header is added, stubborn will return a 501 (not implemented)
 
-```javascript
+```typescript
 it('should respond 501 if a parameter is added', async () => {
   sb.get('/').setQueryParameters({ page: '1' });
 
@@ -96,7 +96,7 @@ it('should respond 501 if a parameter is added', async () => {
 
 If a query parameter or a header does not match the route definition, stubborn will return a 501 (not implemented)
 
-```javascript
+```typescript
 it('should respond 501 if a parameter does not match the definition', async () => {
   sb.get('/').setQueryParameters({ page: '1' });
 
@@ -108,7 +108,7 @@ it('should respond 501 if a parameter does not match the definition', async () =
 
 You can use `null` as wildcard
 
-```javascript
+```typescript
 it('should respond using wildcard', async () => {
   sb.get('/')
     .setQueryParameters({ page: null })
@@ -131,7 +131,7 @@ See the [API documentation](https://ybonnefond.github.io/stubborn/)
 
 ### Release
 
-```bash
+```
 git checkout master
 git pull --rebase
 yarn doc
