@@ -23,16 +23,28 @@ import { middlewares } from './middlewares';
 import { Route } from './Route';
 import { RouteMatcher } from './RouteMatcher';
 import { getServerPort } from './utils';
-
+/**
+ * @internal
+ */
 export type RouterOptions = {
   host?: string;
 };
-
+/**
+ * @internal
+ */
 type MatchableRoute = {
   route: Route;
   matcher: RouteMatcher;
 };
 
+/**
+ * @internal
+ * Internal Router
+ *
+ * Class in charge of receiving request, find the route definition and return the response
+ *
+ * @todo Refactoring
+ */
 export class Router {
   private options: RouterOptions;
   private port: number | null = null;
@@ -81,7 +93,9 @@ export class Router {
     return this.port;
   }
 }
-
+/**
+ * @internal
+ */
 function runMiddlewares(
   mws: Middleware[],
   req: Request,
@@ -95,7 +109,9 @@ function runMiddlewares(
 
   return runMiddleware(mw, req, res).then(() => runMiddlewares(mws, req, res));
 }
-
+/**
+ * @internal
+ */
 function runMiddleware(mw: Middleware, req: Request, res: Response) {
   return new Promise((resolve, reject) => {
     try {
@@ -111,7 +127,9 @@ function runMiddleware(mw: Middleware, req: Request, res: Response) {
     }
   });
 }
-
+/**
+ * @internal
+ */
 function buildRequestHandler(router: Router) {
   return (req: Request, res: Response, next: NextFunction) => {
     const route = findRoute(router.getRoutes(), req);
@@ -125,7 +143,9 @@ function buildRequestHandler(router: Router) {
     next();
   };
 }
-
+/**
+ * @internal
+ */
 function buildMiddlewares(router: Router) {
   return [
     middlewares.urlParser({ host: router.getHost(), port: router.getPort() }),
@@ -134,7 +154,9 @@ function buildMiddlewares(router: Router) {
     middlewares.bodyRaw(),
   ];
 }
-
+/**
+ * @internal
+ */
 function findRoute(routes: Set<MatchableRoute>, req: Request) {
   for (const [{ route, matcher }] of routes.entries()) {
     if (matcher.match(req)) {
@@ -144,7 +166,9 @@ function findRoute(routes: Set<MatchableRoute>, req: Request) {
 
   return null;
 }
-
+/**
+ * @internal
+ */
 function reply(route: Route, res: Response, req: Request) {
   const stripedReq = stripReq(req);
   route.addCall(stripedReq);
@@ -160,7 +184,9 @@ function reply(route: Route, res: Response, req: Request) {
   res.write(encodeBody(req, headers, body));
   res.end();
 }
-
+/**
+ * @internal
+ */
 function replyNotImplemented(res: Response, req: Request) {
   res.writeHead(STATUS_CODES.NOT_IMPLEMENTED, {
     'Content-Type': 'application/json',
@@ -184,7 +210,9 @@ function replyNotImplemented(res: Response, req: Request) {
 
   res.end();
 }
-
+/**
+ * @internal
+ */
 function encodeBody(
   req: Request,
   headers: OutgoingHttpHeaders,
@@ -201,7 +229,9 @@ function encodeBody(
 
   return body;
 }
-
+/**
+ * @internal
+ */
 function stripReq(req: Request): RequestInfo {
   const { headers, body, path, query, hash, method } = req;
   return {
@@ -213,7 +243,9 @@ function stripReq(req: Request): RequestInfo {
     method,
   };
 }
-
+/**
+ * @internal
+ */
 function findAcceptTypes(headers: ResponseHeaders) {
   const headerKey = Object.keys(headers).find(name =>
     new RegExp('^accept$', 'i').test(name),
@@ -223,7 +255,9 @@ function findAcceptTypes(headers: ResponseHeaders) {
     ? []
     : accept.mediaTypes(headers[headerKey]);
 }
-
+/**
+ * @internal
+ */
 function findContentType(headers: OutgoingHttpHeaders) {
   const headerKey = Object.keys(headers).find(name =>
     new RegExp('^content-type$', 'i').test(name),
@@ -245,7 +279,9 @@ function findContentType(headers: OutgoingHttpHeaders) {
     return null;
   }
 }
-
+/**
+ * @internal
+ */
 function applyTemplate(
   template: Template,
   req: Request,

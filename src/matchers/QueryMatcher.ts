@@ -2,7 +2,9 @@ import { Request, RequestDefinition } from '../@types';
 import { Route } from '../Route';
 
 import { KeyMap, match } from './utils';
-
+/**
+ * @internal
+ */
 export function queryMatcher(route: Route) {
   return (req: Request) => {
     const definition = route.getQueryParameters();
@@ -36,7 +38,9 @@ export function queryMatcher(route: Route) {
     return keyMap.compareIncluded(query, compare);
   };
 }
-
+/**
+ * @internal
+ */
 function formatDef(rawDef: any) {
   return Object.keys(rawDef).reduce(
     (def, key) => {

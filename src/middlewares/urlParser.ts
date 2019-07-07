@@ -1,12 +1,16 @@
 import { URL } from 'url';
 
 import { NextFunction, Request, Response } from '../@types';
-
+/**
+ * @internal
+ */
 export type UrlParserMiddlewareOptions = {
   host?: string;
   port: number | null;
 };
-
+/**
+ * @internal
+ */
 export function urlParser(options: UrlParserMiddlewareOptions) {
   return function urlParserMiddleware(
     req: Request,
@@ -25,7 +29,9 @@ export function urlParser(options: UrlParserMiddlewareOptions) {
     next();
   };
 }
-
+/**
+ * @internal
+ */
 function convertSearchParamsToQuery(
   searchParams: IterableIterator<[string, string]>,
 ) {

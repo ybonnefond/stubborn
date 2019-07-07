@@ -12,13 +12,13 @@ export type QueryDefinitions = Record<string, RequestDefinition> | null;
 
 export type TemplateFunction = (request: Request, scope: any) => JsonValue;
 
-export interface TemplateObject {
+export type TemplateObject = {
   [key: string]: JsonValue | TemplateFunction | TemplateObject;
-}
+};
 
-export interface TemplateArray {
+export type TemplateArray = {
   [index: number]: JsonValue | TemplateFunction | TemplateObject;
-}
+};
 
 export type Template =
   | JsonValue
@@ -54,12 +54,16 @@ export type Request = IncomingMessage &
 export type Response = ServerResponse;
 export type NextFunction = (err?: any) => void;
 
-export type Middleware = (req: Request, res: Response, next: NextFunction) => any;
+export type Middleware = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => any;
 
 export type RequestMatcher = (req: Request) => boolean;
 
-export interface ResponseHeaders {
+export type ResponseHeaders = {
   [key: string]: string;
-}
+};
 
 export type ResponseBody = JsonValue;

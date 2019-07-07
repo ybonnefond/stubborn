@@ -29,12 +29,13 @@
     "lint:prettier:fix": "yarn prettier --write '{src,test}/**/*.{ts,js,md,json}'",
     "test-ci": "mkdir -p coverage && yarn lint && yarn test --coverage --coverageReporters=lcov && cat ./coverage/lcov.info | coveralls",
     "lint": "tslint --project tsconfig.json -c tslint.json 'src/**/*.ts' 'test/**/*.ts' -t stylish",
-    "doc": "typedoc --theme markdown --excludeNotExported --excludeExternals --excludePrivate --excludeProtected --out doc src",
+    "doc": "compodoc -p tsconfig.json -d docs --disableInternal --hideGenerator",
     "release": "yarn doc && yarn publish"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@compodoc/compodoc": "^1.1.9",
     "@types/accept": "^3.1.1",
     "@types/body-parser": "^1.17.0",
     "@types/content-type": "^1.1.3",
@@ -50,8 +51,6 @@
     "ts-jest": "^24.0.2",
     "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0",
-    "typedoc": "^0.14.2",
-    "typedoc-plugin-markdown": "^2.0.8",
     "typescript": "^3.5.2"
   },
   "dependencies": {
