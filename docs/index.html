@@ -1,0 +1,201 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>stubborn-ws documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	      <link rel="stylesheet" href="./styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="./" class="navbar-brand">stubborn-ws documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content getting-started">
+                   <div class="content-data">
+
+<h1 id="stubborn">Stubborn</h1>
+<p><a href="https://travis-ci.org/ybonnefond/stubborn"><img src="https://travis-ci.org/ybonnefond/stubborn.svg?branch=master" alt="Build Status" class="img-responsive"></a> <a href="https://coveralls.io/github/ybonnefond/stubborn?branch=master"><img src="https://coveralls.io/repos/github/ybonnefond/stubborn/badge.svg?branch=master" alt="Coverage Status" class="img-responsive"></a>
+<a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="code style: prettier" class="img-responsive"></a>
+<img src="https://img.shields.io/node/v/stubborn-ws.svg" alt="node" class="img-responsive"></p>
+<p><strong>Stubborn</strong> web server to mock external api responses. It is basically <a href="https://github.com/nock/nock">nock</a> meets <a href="https://github.com/webpro/dyson">Dyson</a>. <strong>Stubborn</strong> will <strong>strictly</strong> match the requests based on the definition like <a href="https://github.com/nock/nock">nock</a> but in a separate web server like <a href="https://github.com/webpro/dyson">Dyson</a>.</p>
+<hr />
+
+<ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#api">API</a></li>
+<li><a href="#contributing">Contributing</a><ul>
+<li><a href="#release">Release</a></li>
+</ul>
+</li>
+</ul>
+<hr />
+
+<h2 id="installation">Installation</h2>
+<p>Stubborn is tested on NodeJS 8.x and above.</p>
+<p>Npm:</p>
+<p><code>bash
+npm install --save-dev stubborn-ws</code></p>
+<p>Yarn:</p>
+<p><code>bash
+yarn add -D stubborn-ws</code></p>
+<h2 id="usage">Usage</h2>
+<p>Stubborn is a testing tool that let you <strong>hot</strong> load and unload routes into a webserver.
+Requests are <strong>strictly</strong> matched against routes definitions based on Method, Path, Query parameters, Headers and Body.
+If the request does not exactly match one route definition (ex: extra parameter, missing parameter, value does not match, etc), Stubborn will respond with a 501.</p>
+<p>The very fact that Stubborn respond to the request validates that the parameters sent are the expected one, any change in the code that send the request will break the test. Any breaking change will be picked up by your test.</p>
+<p>Stubborn response headers and body can be hardcoded or defined using a template.</p>
+<p>```javascript
+describe(&#39;Test&#39;, () =&gt; {
+  const got = require(&#39;got&#39;);
+  const { Stubborn } = require(&#39;stubborn-ws&#39;);</p>
+<p>  const sb = new Stubborn();</p>
+<p>  beforeAll(async () =&gt; await sb.start());
+  afterAll(async () =&gt; await sb.stop());</p>
+<p>  // Clean up all routes after a test if needed
+  afterEach(() =&gt; sb.clear());</p>
+<p>  it(&#39;should respond to query&#39;, async () =&gt; {
+    const body = { some: &#39;body&#39; };
+    sb.get(&#39;/&#39;).setResponseBody({ some: &#39;body&#39; });</p>
+<div><pre class="line-numbers"><code class="language-none">const res = await got(`${sb.getOrigin()}`, { json: true });
+
+expect(res.body).toEqual(body);</code></pre></div><p>  });
+});
+```</p>
+<p>Stubborn <strong>strictly</strong> matches the request against the route definition.</p>
+<p>If a query parameter or a header is missing, stubborn will return a 501 (not implemented)</p>
+<p>```javascript
+it(&#39;should respond 501 if a parameter is missing&#39;, async () =&gt; {
+  sb.get(&#39;/&#39;).setQueryParameters({ page: &#39;1&#39; });</p>
+<p>  const res = await got(<code>${sb.getOrigin()}</code>, { throwHttpErrors: false });</p>
+<p>  expect(res.statusCode).toEqual(501);
+});
+```</p>
+<p>If a query parameter or a header is added, stubborn will return a 501 (not implemented)</p>
+<p>```javascript
+it(&#39;should respond 501 if a parameter is added&#39;, async () =&gt; {
+  sb.get(&#39;/&#39;).setQueryParameters({ page: &#39;1&#39; });</p>
+<p>  const res = await got(<code>${sb.getOrigin()}?page=1&amp;limit=10</code>, {
+    throwHttpErrors: false,
+  });</p>
+<p>  expect(res.statusCode).toEqual(501);
+});
+```</p>
+<p>If a query parameter or a header does not match the route definition, stubborn will return a 501 (not implemented)</p>
+<p>```javascript
+it(&#39;should respond 501 if a parameter does not match the definition&#39;, async () =&gt; {
+  sb.get(&#39;/&#39;).setQueryParameters({ page: &#39;1&#39; });</p>
+<p>  const res = await got(<code>${sb.getOrigin()}?page=2</code>, { throwHttpErrors: false });</p>
+<p>  expect(res.statusCode).toEqual(501);
+});
+```</p>
+<p>You can use <code>null</code> as wildcard</p>
+<p>```javascript
+it(&#39;should respond using wildcard&#39;, async () =&gt; {
+  sb.get(&#39;/&#39;)
+    .setQueryParameters({ page: null })
+    .setHeaders(null);</p>
+<p>  const res = await got(<code>${sb.getOrigin()}?page=2</code>, {
+    headers: { &#39;x-api-key&#39;: &#39;api key&#39;, &#39;any-other-header&#39;: &#39;stuff&#39; },
+    throwHttpErrors: false,
+  });</p>
+<p>  expect(res.statusCode).toEqual(200);
+});
+```</p>
+<h2 id="api">API</h2>
+<p>See the <a href="doc/API.md">API documentation</a></p>
+<h2 id="contributing">Contributing</h2>
+<h3 id="release">Release</h3>
+<p><code>bash
+git checkout master
+git pull --rebase
+yarn doc
+git add .
+git commit -m &#39;doc(): Update documentation&#39;
+yarn publish --&lt;major|minor|patch&gt;
+git push --follow-tags</code></p>
+<p>Then go to github to <a href="https://github.com/ybonnefond/stubborn/releases/new">draft a new release</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
+            var COMPODOC_CURRENT_PAGE_URL = 'index.html';
+       </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="./js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="./js/menu-wc.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+       <script src="./js/libs/zepto.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
