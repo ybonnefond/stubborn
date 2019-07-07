@@ -10,7 +10,7 @@
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [API](#api)
+- [API](#public-api)
 - [Contributing](#contributing)
   - [Release](#release)
 
