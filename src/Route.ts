@@ -7,10 +7,14 @@ import {
   RequestDefinition,
   RequestInfo,
   ResponseDefinition,
+  ResponseHeaders,
 } from './@types';
 
 import { METHODS, STATUS_CODES } from './constants';
 
+/**
+ * Object holding the route definitions, requests matchers and response templates
+ */
 export class Route {
   private body: RequestBodyDefinition = '';
   private headers: HeaderDefinitions = {};
@@ -20,9 +24,6 @@ export class Route {
 
   private calls: RequestInfo[] = [];
 
-  /**
-   * @class Route
-   */
   constructor(private method: METHODS, private path: PathDefinition) {
     this.setHeaders({
       'user-agent': null,
@@ -44,8 +45,6 @@ export class Route {
 
   /**
    * Return the route definition, helpful to find why the route didn't match the request
-   *
-   * @returns {RouteDefinition}
    */
   public getDefinition() {
     return {
@@ -58,14 +57,14 @@ export class Route {
   }
 
   /**
-   * @return {METHODS} Route method
+   * @return Route method
    */
   public getMethod() {
     return this.method;
   }
 
   /**
-   * @return {string}
+   * @return The route path definition
    */
   public getPath() {
     return this.path;
@@ -75,7 +74,7 @@ export class Route {
    * Set the headers definition.
    *
    * @example
-   * ```js
+   * ```typescript
    * // Bypass all headers
    * stubborn
    *   .get('/bypass')
@@ -92,8 +91,7 @@ export class Route {
    *     func: (value) => 'match' === value
    *   });
    * ```
-   * @param {HeadersDefinition|null} headers Headers definition
-   * @returns {this}
+   * @param headers Headers definition
    */
   public setHeaders(headers: HeaderDefinitions) {
     this.headers =
@@ -103,7 +101,7 @@ export class Route {
   }
 
   /**
-   * @return {HeadersDefinition} Route headers definition
+   * @return Route headers definition
    */
   public getHeaders() {
     return this.headers;
@@ -113,15 +111,13 @@ export class Route {
    * Set a specific header definition.
    *
    * @example
-   * ```js
-   *
+   * ```typescript
    * stubborn
    *   .get('/match')
    *   .setHeader('Authorization', 'BEARER');
    * ```
-   * @param {String} header Header name
-   * @param {RequestDefinition} definition Header definition
-   * @returns {this}
+   * @param header Header name
+   * @param definition Header definition
    */
   public setHeader(header: string, definition: RequestDefinition) {
     if (null === this.headers) {
@@ -134,10 +130,10 @@ export class Route {
   }
 
   /**
-   * Set the headers definition.
+   * Set the query parameters definition.
    *
    * @example
-   * ```js
+   * ```typescript
    * // Bypass all query parameters
    * stubborn
    *   .get('/bypass')
@@ -154,8 +150,7 @@ export class Route {
    *     func: (value) => 'match' === value
    *   });
    * ```
-   * @param {QueryParametersDefinition|null} query Query parameters definition
-   * @returns {this}
+   * @param query Query parameters definition
    */
   public setQueryParameters(query: QueryDefinitions) {
     this.query = null === query ? query : Object.assign({}, this.query, query);
@@ -164,7 +159,7 @@ export class Route {
   }
 
   /**
-   * @return {QueryDefinitions} Query parameters definitions
+   * @return Query parameters definitions
    */
   public getQueryParameters() {
     return this.query;
@@ -174,14 +169,13 @@ export class Route {
    * Set a specific query parameter
    *
    * @example
-   * ```js
+   * ```typescript
    * stubborn
    *   .get('/match')
    *   .setQueryParameter('page', '100');
    * ```
-   * @param {String} queryParameter Query parameters name
-   * @param {RequestDefinition} definition Query parameter definition
-   * @returns {this}
+   * @param queryParameter Query parameters name
+   * @param definition Query parameter definition
    */
   public setQueryParameter(
     queryParameter: string,
@@ -200,7 +194,7 @@ export class Route {
    * Set the body definition. Body can be a string or a complex object mixing
    *
    * @example
-   * ```js
+   * ```typescript
    * // Bypass all query parameters
    * stubborn
    *   .get('/bypass')
@@ -223,8 +217,7 @@ export class Route {
    *     arr: [{ item: '1' }, { item: /2/ }]
    *   });
    * ```
-   * @param {BodyDefinition} body Body definition
-   * @returns {this}
+   * @param body Body definition
    */
   public setBody(body: RequestBodyDefinition) {
     this.body = body;
@@ -233,7 +226,7 @@ export class Route {
   }
 
   /**
-   * @return {BodyDefinition} Request body definition
+   * @return Request body definition
    */
   public getBody() {
     return this.body;
@@ -241,15 +234,17 @@ export class Route {
 
   /**
    * Set the response status code
-   * @param {Number} statusCode HTTP status code
-   * @returns {this}
+   * @param statusCode HTTP status code
    */
   public setResponseStatusCode(statusCode: number) {
     this.response.statusCode = statusCode;
 
     return this;
   }
-
+  /**
+   * Get the response status code
+   * @return HTTP status code
+   */
   public getResponseStatusCode() {
     return this.response.statusCode;
   }
@@ -260,15 +255,31 @@ export class Route {
    * If response is an Object, values can be a function which will receive the request as parameter
    *
    * @example
-   * ```js
-   * ws.get('/resource')
+   * ```typescript
+   * // String body
+   * stubborn.get('/resource')
+   *   .setResponseBody('Hello world');
+   *
+   * // Objects as JSON body
+   * stubborn.get('/resource')
+   *   .setResponseBody({ key: 'value' });
+   *
+   * // Template function
+   * stubborn.get('/resource')
+   *   .setResponseBody((request) => ({
+   *     page: req.param.page
+   *   }));
+   *
+   * // Template in sub keys
+   * stubborn.get('/resource')
    *   .setResponseBody({
-   *     key: 'value',
-   *     funKey: (req) => `${req.query.param}-param`
+   *     key: {
+   *       sub1: 'val1',
+   *       sub2: (req: Request, scope: any) => `sub1=${scope.sub1}`
+   *     }
    *   });
    * ```
-   * @param {string|Object.<string, mixed>} body
-   * @returns {this}
+   * @param body Body replied if route is matched
    */
   public setResponseBody(body: JsonValue) {
     this.response.body = body;
@@ -276,6 +287,9 @@ export class Route {
     return this;
   }
 
+  /**
+   * @return Response body template
+   */
   public getResponseBody() {
     return this.response.body;
   }
@@ -283,22 +297,26 @@ export class Route {
   /**
    * Set the response headers
    * key/value object. If value is a function it will receive the request as parameter
-   * ```js
-   * ws.get('/resource')
+   *
+   * @example
+   * ```typescript
+   * stubborn.get('/resource')
    *   .setResponseHeaders({
    *     'Content-type': 'application/json',
    *     'Custom-Header': (req) => `${req.header.custom}-response`
    *   });
    * ```
-   * @param {Object.<mixed>} headers
-   * @returns {this}
+   * @param headers Response header template
    */
-  public setResponseHeaders(headers: Record<string, string>) {
+  public setResponseHeaders(headers: ResponseHeaders) {
     this.response.headers = headers;
 
     return this;
   }
 
+  /**
+   * @return The response headers template
+   */
   public getResponseHeaders() {
     return this.response.headers;
   }
@@ -306,13 +324,13 @@ export class Route {
   /**
    * Set a response header
    *
-   * ```js
-   * ws.get('/resource')
+   * @example
+   * ```typescript
+   * stubborn.get('/resource')
    *   .setResponseHeader('Content-type', 'application/json');
    * ```
-   * @param {String} header
-   * @param {String|function} value
-   * @returns {this}
+   * @param header Header name
+   * @param value Header template
    */
   public setResponseHeader(header: string, value: string) {
     this.response.headers[header] = value;
@@ -321,91 +339,45 @@ export class Route {
   }
 
   /**
-   * Return the number of times the route has been called
-   *
-   * ```js
-   * const route = ws.get('/resource');
+   * @example
+   * ```typescript
+   * const route = stubborn.get('/resource');
    * expect(route.countCalls()).toBe(0);
-   * await got(`${ws.getOrigin()}/resource`);
+   *
+   * await got(`${stubborn.getOrigin()}/resource`);
    * expect(route.countCalls()).toBe(1);
    * ```
    *
-   * @returns {number}
+   * @returns The number of times the route has been called
    */
   public countCalls() {
     return this.calls.length;
   }
 
   /**
-   * Return the number of times the route has been called
-   *
-   * ```js
-   * const route = ws.get('/resource');
+   * Get information of a specific request call
+   * @example
+   * ```typescript
+   * const route = stubborn.get('/resource');
    * expect(route.countCalls()).toBe(0);
-   * await got(`${ws.getOrigin()}/resource`);
+   * await got(`${stubborn.getOrigin()}/resource`);
    * expect(route.getCall(0)).toBe(1);
    * ```
    *
-   * @param {number} index
-   * @returns {number}
+   * @param index Index of the call
+   * @returns The request received
    */
   public getCall(index: number) {
     return this.calls[index];
   }
 
+  /**
+   * Add a request to the call stack
+   *
+   * This method is used internaly by the router every time the route is matched by the incomming request
+   * @param req
+   */
   public addCall(req: RequestInfo) {
     this.calls.push(req);
   }
 }
-
-/**
- * @typedef {Object} RouteDefinition
- * @property {string} method The route method, one of [GET, POST, PATCH, PUT, DELETE]
- * @property {string} path The stubbed resource path (ex: /users)
- * @property {HeadersDefinition} headers
- * @property {QueryParametersDefinition} query
- * @property {BodyDefinition} body
- */
-
-/**
- * Definition
- * The header definition can be a `string`, a `Regexp`, a `function` or `null`
- * - `string`: Match using string equality against the request header value
- * - `Regexp`: Match using Regexp.test against the request header value
- * - `function`: Request header value will be passed to the function. The function Should return a boolean
- * - `null`: act as a wildcard, header will not be processed
- * @typedef {string|Regexp|function|null} Definition
- */
-
-/**
- * key/value object. Key is the header name, value is the header definition
- * The header definition can be a `string`, a `Regexp`, a `function` or `null`
- * - `string`: Match using string equality against the request header value
- * - `Regexp`: Match using Regexp.test against the request header value
- * - `function`: Request header value will be passed to the function. The function Should return a boolean
- * - `null`: act as a wildcard, header will not be processed
- * @typedef {object.<string, HeaderValue>} HeadersDefinition
- */
-
-/**
- * key/value object. Key is the query parameter name, value is the parameter definition
- * The parameter definition can be a `string`, a `Regexp`, a `function` or `null`
- * - `string`: Match using string equality against the request parameter value
- * - `Regexp`: Match using Regexp.test against the request parameter value
- * - `function`: Request parameter value will be passed to the function. The function Should return a boolean
- * - `null`: act as a wildcard, parameter will not be processed
- *
- * @typedef {Object.<string, RequestDefinition>} QueryParametersDefinition
- */
-
-/**
- * Body can be a string, an array or a key/mixed object where values can be a `string`, a `Regexp`, a `function`, object, Array or `null`
- * - `string`: Match using string equality against the request parameter value
- * - `Regexp`: Match using Regexp.test against the request parameter value
- * - `function`: Request parameter value will be passed to the function. The function Should return a boolean
- * - `Object`: Object will be recursively processed.
- * - `Array`: Each array items will be recursively processed
- * - `null`: act as a wildcard, parameter will not be processed
- *
- * @typedef {string|Array|Object.<string, RequestDefinition|Body>} BodyDefinition
- */

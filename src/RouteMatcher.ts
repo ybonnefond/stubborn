@@ -2,6 +2,11 @@ import { Request, RequestMatcher } from './@types';
 import { matchers } from './matchers';
 import { Route } from './Route';
 
+/**
+ * @internal
+ * Class responsible to check if a route matches the incomming request
+ * based on route definitions
+ */
 export class RouteMatcher {
   private matchers: RequestMatcher[] = [];
 
@@ -11,6 +16,10 @@ export class RouteMatcher {
     });
   }
 
+  /**
+   *
+   * @param req Incomming Request
+   */
   public match(req: Request) {
     return this.matchers.every(matcher => {
       return matcher(req);

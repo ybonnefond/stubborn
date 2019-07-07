@@ -2,7 +2,9 @@ import { Request, RequestDefinition } from '../@types';
 import { Route } from '../Route';
 
 import { KeyMap, match } from './utils';
-
+/**
+ * @internal
+ */
 export function headerMatcher(route: Route) {
   return (req: Request) => {
     const headersDefinition = route.getHeaders();

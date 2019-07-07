@@ -1,11 +1,20 @@
+/**
+ * @internal
+ */
 export interface KeyMapOptions {
   caseSensitive?: boolean;
 }
-
+/**
+ * @internal
+ */
 export type KeyMapCompareFunction = (key1: any, key2: any) => boolean;
-
+/**
+ * @internal
+ */
 export type KeyMapObject = Record<string, any>;
-
+/**
+ * @internal
+ */
 export class KeyMap {
   private options: KeyMapOptions;
   private obj: KeyMapObject;
