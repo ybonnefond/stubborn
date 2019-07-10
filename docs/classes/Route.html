@@ -558,13 +558,15 @@
                     <div>
                         <b>Example :</b>
                         <div>
-                            <pre class="line-numbers"><code class="language-html">&lt;code&gt;typescript
-   * const route = stubborn.get(&amp;#39;/resource&amp;#39;);
-   * expect(route.countCalls()).toBe(0);
-   *
-   * await got(`${stubborn.getOrigin()}/resource`);
-   * expect(route.countCalls()).toBe(1);
-   *&lt;/code&gt;</code></pre>
+                            <pre class="line-numbers"><code class="language-html">```typescript&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;const route = stubborn.get(&amp;#39;/resource&amp;#39;);&lt;/li&gt;
+&lt;li&gt;expect(route.countCalls()).toBe(0);&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;li&gt;await got(&lt;code&gt;${stubborn.getOrigin()}/resource&lt;/code&gt;);&lt;/li&gt;
+&lt;li&gt;expect(route.countCalls()).toBe(1);&lt;/li&gt;
+&lt;li&gt;```&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
                         </div>
                     </div>
                     <div class="io-description">
@@ -695,12 +697,14 @@
                     <div>
                         <b>Example :</b>
                         <div>
-                            <pre class="line-numbers"><code class="language-html">&lt;code&gt;typescript
-   * const route = stubborn.get(&amp;#39;/resource&amp;#39;);
-   * expect(route.countCalls()).toBe(0);
-   * await got(`${stubborn.getOrigin()}/resource`);
-   * expect(route.getCall(0)).toBe(1);
-   *&lt;/code&gt;</code></pre>
+                            <pre class="line-numbers"><code class="language-html">```typescript&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;const route = stubborn.get(&amp;#39;/resource&amp;#39;);&lt;/li&gt;
+&lt;li&gt;expect(route.countCalls()).toBe(0);&lt;/li&gt;
+&lt;li&gt;await got(&lt;code&gt;${stubborn.getOrigin()}/resource&lt;/code&gt;);&lt;/li&gt;
+&lt;li&gt;expect(route.getCall(0)).toBe(1);&lt;/li&gt;
+&lt;li&gt;```&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
                         </div>
                     </div>
                     <div class="io-description">
@@ -1158,29 +1162,31 @@
                     <div>
                         <b>Example :</b>
                         <div>
-                            <pre class="line-numbers"><code class="language-html">&lt;code&gt;typescript
-   * // Bypass all query parameters
-   * stubborn
-   *   .get(&amp;#39;/bypass&amp;#39;)
-   *   .setBody(null);
-   *
-   * stubborn
-   *   .get(&amp;#39;/simple&amp;#39;)
-   *   .setBody(&amp;#39;text body&amp;#39;);
-   *
-   * stubborn
-   *   .get(&amp;#39;/object&amp;#39;)
-   *   .setBody({
-   *     // Match using `===`
-   *     exact: &amp;#39;match&amp;#39;,
-   *     // Match using `/^match/.test(value)`
-   *     regexp: /^match/,
-   *     // Match using `func(value);`
-   *     func: (value) =&amp;gt; &amp;#39;match&amp;#39; === value,
-   *     object: { reg: /\d+/, bypass: null },
-   *     arr: [{ item: &amp;#39;1&amp;#39; }, { item: /2/ }]
-   *   });
-   *&lt;/code&gt;</code></pre>
+                            <pre class="line-numbers"><code class="language-html">```typescript&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;// Bypass all query parameters&lt;/li&gt;
+&lt;li&gt;stubborn&lt;/li&gt;
+&lt;li&gt;.get(&amp;#39;/bypass&amp;#39;)&lt;/li&gt;
+&lt;li&gt;.setBody(null);&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;li&gt;stubborn&lt;/li&gt;
+&lt;li&gt;.get(&amp;#39;/simple&amp;#39;)&lt;/li&gt;
+&lt;li&gt;.setBody(&amp;#39;text body&amp;#39;);&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;li&gt;stubborn&lt;/li&gt;
+&lt;li&gt;.get(&amp;#39;/object&amp;#39;)&lt;/li&gt;
+&lt;li&gt;.setBody({&lt;/li&gt;
+&lt;li&gt;// Match using &lt;code&gt;===&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;exact: &amp;#39;match&amp;#39;,&lt;/li&gt;
+&lt;li&gt;// Match using &lt;code&gt;/^match/.test(value)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;regexp: /^match/,&lt;/li&gt;
+&lt;li&gt;// Match using &lt;code&gt;func(value);&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;func: (value) =&amp;gt; &amp;#39;match&amp;#39; === value,&lt;/li&gt;
+&lt;li&gt;object: { reg: /\d+/, bypass: null },&lt;/li&gt;
+&lt;li&gt;arr: [{ item: &amp;#39;1&amp;#39; }, { item: /2/ }]&lt;/li&gt;
+&lt;li&gt;});&lt;/li&gt;
+&lt;li&gt;```&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
                         </div>
                     </div>
                     <div class="io-description">
@@ -1279,11 +1285,13 @@
                     <div>
                         <b>Example :</b>
                         <div>
-                            <pre class="line-numbers"><code class="language-html">&lt;code&gt;typescript
-   * stubborn
-   *   .get(&amp;#39;/match&amp;#39;)
-   *   .setHeader(&amp;#39;Authorization&amp;#39;, &amp;#39;BEARER&amp;#39;);
-   *&lt;/code&gt;</code></pre>
+                            <pre class="line-numbers"><code class="language-html">```typescript&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;stubborn&lt;/li&gt;
+&lt;li&gt;.get(&amp;#39;/match&amp;#39;)&lt;/li&gt;
+&lt;li&gt;.setHeader(&amp;#39;Authorization&amp;#39;, &amp;#39;BEARER&amp;#39;);&lt;/li&gt;
+&lt;li&gt;```&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
                         </div>
                     </div>
                     <div class="io-description">
@@ -1366,23 +1374,25 @@
                     <div>
                         <b>Example :</b>
                         <div>
-                            <pre class="line-numbers"><code class="language-html">&lt;code&gt;typescript
-   * // Bypass all headers
-   * stubborn
-   *   .get(&amp;#39;/bypass&amp;#39;)
-   *   .setHeaders(null);
-   *
-   * stubborn
-   *   .get(&amp;#39;/match&amp;#39;)
-   *   .setHeaders({
-   *     // Match using `===`
-   *     exact: &amp;#39;match&amp;#39;,
-   *     // Match using `/^match/.test(value)`
-   *     regexp: /^match/,
-   *     // Match using `func(value);`
-   *     func: (value) =&amp;gt; &amp;#39;match&amp;#39; === value
-   *   });
-   *&lt;/code&gt;</code></pre>
+                            <pre class="line-numbers"><code class="language-html">```typescript&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;// Bypass all headers&lt;/li&gt;
+&lt;li&gt;stubborn&lt;/li&gt;
+&lt;li&gt;.get(&amp;#39;/bypass&amp;#39;)&lt;/li&gt;
+&lt;li&gt;.setHeaders(null);&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;li&gt;stubborn&lt;/li&gt;
+&lt;li&gt;.get(&amp;#39;/match&amp;#39;)&lt;/li&gt;
+&lt;li&gt;.setHeaders({&lt;/li&gt;
+&lt;li&gt;// Match using &lt;code&gt;===&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;exact: &amp;#39;match&amp;#39;,&lt;/li&gt;
+&lt;li&gt;// Match using &lt;code&gt;/^match/.test(value)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;regexp: /^match/,&lt;/li&gt;
+&lt;li&gt;// Match using &lt;code&gt;func(value);&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;func: (value) =&amp;gt; &amp;#39;match&amp;#39; === value&lt;/li&gt;
+&lt;li&gt;});&lt;/li&gt;
+&lt;li&gt;```&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
                         </div>
                     </div>
                     <div class="io-description">
@@ -1481,11 +1491,13 @@
                     <div>
                         <b>Example :</b>
                         <div>
-                            <pre class="line-numbers"><code class="language-html">&lt;code&gt;typescript
-   * stubborn
-   *   .get(&amp;#39;/match&amp;#39;)
-   *   .setQueryParameter(&amp;#39;page&amp;#39;, &amp;#39;100&amp;#39;);
-   *&lt;/code&gt;</code></pre>
+                            <pre class="line-numbers"><code class="language-html">```typescript&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;stubborn&lt;/li&gt;
+&lt;li&gt;.get(&amp;#39;/match&amp;#39;)&lt;/li&gt;
+&lt;li&gt;.setQueryParameter(&amp;#39;page&amp;#39;, &amp;#39;100&amp;#39;);&lt;/li&gt;
+&lt;li&gt;```&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
                         </div>
                     </div>
                     <div class="io-description">
@@ -1568,23 +1580,25 @@
                     <div>
                         <b>Example :</b>
                         <div>
-                            <pre class="line-numbers"><code class="language-html">&lt;code&gt;typescript
-   * // Bypass all query parameters
-   * stubborn
-   *   .get(&amp;#39;/bypass&amp;#39;)
-   *   .setQueryParameters(null);
-   *
-   * stubborn
-   *   .get(&amp;#39;/match&amp;#39;)
-   *   .setQueryParameters({
-   *     // Match using `===`
-   *     exact: &amp;#39;match&amp;#39;,
-   *     // Match using `/^match/.test(value)`
-   *     regexp: /^match/,
-   *     // Match using `func(value);`
-   *     func: (value) =&amp;gt; &amp;#39;match&amp;#39; === value
-   *   });
-   *&lt;/code&gt;</code></pre>
+                            <pre class="line-numbers"><code class="language-html">```typescript&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;// Bypass all query parameters&lt;/li&gt;
+&lt;li&gt;stubborn&lt;/li&gt;
+&lt;li&gt;.get(&amp;#39;/bypass&amp;#39;)&lt;/li&gt;
+&lt;li&gt;.setQueryParameters(null);&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;li&gt;stubborn&lt;/li&gt;
+&lt;li&gt;.get(&amp;#39;/match&amp;#39;)&lt;/li&gt;
+&lt;li&gt;.setQueryParameters({&lt;/li&gt;
+&lt;li&gt;// Match using &lt;code&gt;===&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;exact: &amp;#39;match&amp;#39;,&lt;/li&gt;
+&lt;li&gt;// Match using &lt;code&gt;/^match/.test(value)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;regexp: /^match/,&lt;/li&gt;
+&lt;li&gt;// Match using &lt;code&gt;func(value);&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;func: (value) =&amp;gt; &amp;#39;match&amp;#39; === value&lt;/li&gt;
+&lt;li&gt;});&lt;/li&gt;
+&lt;li&gt;```&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
                         </div>
                     </div>
                     <div class="io-description">
@@ -1668,30 +1682,32 @@
                     <div>
                         <b>Example :</b>
                         <div>
-                            <pre class="line-numbers"><code class="language-html">&lt;code&gt;typescript
-   * // String body
-   * stubborn.get(&amp;#39;/resource&amp;#39;)
-   *   .setResponseBody(&amp;#39;Hello world&amp;#39;);
-   *
-   * // Objects as JSON body
-   * stubborn.get(&amp;#39;/resource&amp;#39;)
-   *   .setResponseBody({ key: &amp;#39;value&amp;#39; });
-   *
-   * // Template function
-   * stubborn.get(&amp;#39;/resource&amp;#39;)
-   *   .setResponseBody((request) =&amp;gt; ({
-   *     page: req.param.page
-   *   }));
-   *
-   * // Template in sub keys
-   * stubborn.get(&amp;#39;/resource&amp;#39;)
-   *   .setResponseBody({
-   *     key: {
-   *       sub1: &amp;#39;val1&amp;#39;,
-   *       sub2: (req: Request, scope: any) =&amp;gt; `sub1=${scope.sub1}`
-   *     }
-   *   });
-   *&lt;/code&gt;</code></pre>
+                            <pre class="line-numbers"><code class="language-html">```typescript&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;// String body&lt;/li&gt;
+&lt;li&gt;stubborn.get(&amp;#39;/resource&amp;#39;)&lt;/li&gt;
+&lt;li&gt;.setResponseBody(&amp;#39;Hello world&amp;#39;);&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;li&gt;// Objects as JSON body&lt;/li&gt;
+&lt;li&gt;stubborn.get(&amp;#39;/resource&amp;#39;)&lt;/li&gt;
+&lt;li&gt;.setResponseBody({ key: &amp;#39;value&amp;#39; });&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;li&gt;// Template function&lt;/li&gt;
+&lt;li&gt;stubborn.get(&amp;#39;/resource&amp;#39;)&lt;/li&gt;
+&lt;li&gt;.setResponseBody((request) =&amp;gt; ({&lt;/li&gt;
+&lt;li&gt;page: req.param.page&lt;/li&gt;
+&lt;li&gt;}));&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;li&gt;// Template in sub keys&lt;/li&gt;
+&lt;li&gt;stubborn.get(&amp;#39;/resource&amp;#39;)&lt;/li&gt;
+&lt;li&gt;.setResponseBody({&lt;/li&gt;
+&lt;li&gt;key: {&lt;/li&gt;
+&lt;li&gt;sub1: &amp;#39;val1&amp;#39;,&lt;/li&gt;
+&lt;li&gt;sub2: (req: Request, scope: any) =&amp;gt; &lt;code&gt;sub1=${scope.sub1}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;}&lt;/li&gt;
+&lt;li&gt;});&lt;/li&gt;
+&lt;li&gt;```&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
                         </div>
                     </div>
                     <div class="io-description">
@@ -1790,10 +1806,12 @@
                     <div>
                         <b>Example :</b>
                         <div>
-                            <pre class="line-numbers"><code class="language-html">&lt;code&gt;typescript
-   * stubborn.get(&amp;#39;/resource&amp;#39;)
-   *   .setResponseHeader(&amp;#39;Content-type&amp;#39;, &amp;#39;application/json&amp;#39;);
-   *&lt;/code&gt;</code></pre>
+                            <pre class="line-numbers"><code class="language-html">```typescript&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;stubborn.get(&amp;#39;/resource&amp;#39;)&lt;/li&gt;
+&lt;li&gt;.setResponseHeader(&amp;#39;Content-type&amp;#39;, &amp;#39;application/json&amp;#39;);&lt;/li&gt;
+&lt;li&gt;```&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
                         </div>
                     </div>
                     <div class="io-description">
@@ -1877,13 +1895,15 @@ key/value object. If value is a function it will receive the request as paramete
                     <div>
                         <b>Example :</b>
                         <div>
-                            <pre class="line-numbers"><code class="language-html">&lt;code&gt;typescript
-   * stubborn.get(&amp;#39;/resource&amp;#39;)
-   *   .setResponseHeaders({
-   *     &amp;#39;Content-type&amp;#39;: &amp;#39;application/json&amp;#39;,
-   *     &amp;#39;Custom-Header&amp;#39;: (req) =&amp;gt; `${req.header.custom}-response`
-   *   });
-   *&lt;/code&gt;</code></pre>
+                            <pre class="line-numbers"><code class="language-html">```typescript&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;stubborn.get(&amp;#39;/resource&amp;#39;)&lt;/li&gt;
+&lt;li&gt;.setResponseHeaders({&lt;/li&gt;
+&lt;li&gt;&amp;#39;Content-type&amp;#39;: &amp;#39;application/json&amp;#39;,&lt;/li&gt;
+&lt;li&gt;&amp;#39;Custom-Header&amp;#39;: (req) =&amp;gt; &lt;code&gt;${req.header.custom}-response&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;});&lt;/li&gt;
+&lt;li&gt;```&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
                         </div>
                     </div>
                     <div class="io-description">
@@ -2375,6 +2395,7 @@ export class Route {
 
 
 
+                   
 
 
 
