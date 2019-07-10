@@ -1,4 +1,4 @@
-import accept from 'accept';
+import accept from '@hapi/accept';
 import contentType from 'content-type';
 import { OutgoingHttpHeaders, Server } from 'http';
 

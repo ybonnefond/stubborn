@@ -1,0 +1,9 @@
+./src/
+./test/
+./docs/
+.*
+jest.json
+tsconfig.json
+tslint.json
+README.md
+!./dist/
