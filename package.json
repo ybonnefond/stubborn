@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepublish": "tsc",
+    "prepublishOnly": "yarn build",
     "test": "jest --config jest.json",
     "test:watch": "yarn test --watch",
     "lint:prettier": "yarn prettier -l '{src,test}/**/*.{ts,js,md,json}'",
