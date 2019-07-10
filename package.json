@@ -36,10 +36,10 @@
   "license": "ISC",
   "devDependencies": {
     "@compodoc/compodoc": "^1.1.9",
-    "@types/accept": "^3.1.1",
     "@types/body-parser": "^1.17.0",
     "@types/content-type": "^1.1.3",
     "@types/got": "^9.6.0",
+    "@types/hapi__accept": "^3.2.0",
     "@types/jest": "^24.0.15",
     "@types/lodash": "^4.14.135",
     "coveralls": "^3.0.4",
@@ -54,7 +54,7 @@
     "typescript": "^3.5.2"
   },
   "dependencies": {
-    "accept": "^3.1.3",
+    "@hapi/accept": "^3.1.3",
     "body-parser": "^1.19.0",
     "content-type": "^1.0.4",
     "lodash": "^4.17.11"
