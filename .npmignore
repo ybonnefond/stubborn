@@ -1,0 +1,13 @@
+src
+test
+docs
+.coveralls
+.editorconfig
+.eslintignore
+.gitignore
+.prettierrc
+.travis.yml
+jest.json
+tsconfig.json
+tslint.json
+README.md
