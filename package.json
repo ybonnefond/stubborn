@@ -33,7 +33,7 @@
     "release": "yarn doc && yarn publish"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@compodoc/compodoc": "^1.1.9",
     "@types/body-parser": "^1.17.1",
