@@ -33,31 +33,31 @@
     "release": "yarn doc && yarn publish"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@compodoc/compodoc": "^1.1.9",
-    "@types/body-parser": "^1.17.0",
+    "@types/body-parser": "^1.17.1",
     "@types/content-type": "^1.1.3",
-    "@types/got": "^9.6.0",
+    "@types/got": "^9.6.7",
     "@types/hapi__accept": "^3.2.0",
-    "@types/jest": "^24.0.15",
-    "@types/lodash": "^4.14.135",
-    "coveralls": "^3.0.4",
+    "@types/jest": "^24.0.18",
+    "@types/lodash": "^4.14.138",
+    "coveralls": "^3.0.6",
     "got": "^9.6.0",
-    "jest": "^24.8.0",
-    "jest-diff": "^24.8.0",
-    "jsdoc-to-markdown": "^5.0.0",
+    "jest": "^24.9.0",
+    "jest-diff": "^24.9.0",
+    "jsdoc-to-markdown": "^5.0.1",
     "prettier": "^1.18.2",
-    "ts-jest": "^24.0.2",
-    "tslint": "^5.18.0",
+    "ts-jest": "^24.1.0",
+    "tslint": "^5.20.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.5.2"
+    "typescript": "^3.6.3"
   },
   "dependencies": {
-    "@hapi/accept": "^3.1.3",
+    "@hapi/accept": "^3.2.3",
     "body-parser": "^1.19.0",
     "content-type": "^1.0.4",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.15"
   },
   "files": [
     "/dist"
