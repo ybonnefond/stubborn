@@ -101,7 +101,9 @@ If a query parameter or a header does not match the route definition, stubborn w
 it('should respond 501 if a parameter does not match the definition', async () => {
   sb.get('/').setQueryParameters({ page: '1' });
 
-  const res = await request(`${sb.getOrigin()}?page=2`, { throwHttpErrors: false });
+  const res = await request(`${sb.getOrigin()}?page=2`, {
+    throwHttpErrors: false,
+  });
 
   expect(res.statusCode).toEqual(501);
 });
@@ -110,7 +112,7 @@ it('should respond 501 if a parameter does not match the definition', async () =
 You can use `null` as wildcard
 
 ```typescript
-it('should respond using wildcard', async () => {
+it('should match using wildcard', async () => {
   sb.get('/')
     .setQueryParameters({ page: null })
     .setHeaders(null);
@@ -124,37 +126,72 @@ it('should respond using wildcard', async () => {
 });
 ```
 
+You can use regex to match a parameter, header or body
+
+```typescript
+it('should match using a regexp', async () => {
+  sb.post('/', {
+    slug: /^[a-z\-]*$/,
+  });
+
+  const res = await request(`${sb.getOrigin()}?page=2`, {
+    method: 'POST',
+    body: { slug: 'stubborn-ws' },
+  });
+
+  expect(res.statusCode).toEqual(200);
+});
+```
+
+You can use a function to match a parameter, header or body
+
+```typescript
+it('should match using a function', async () => {
+  sb.get('/').setQueryParameters({
+    page: value => parseInt(value as string) > 0,
+  });
+
+  const res = await request('/?page=2');
+
+  expect(res).toReplyWith(STATUS_CODES.SUCCESS);
+});
+```
+
 ## Public API
 
 See the [API documentation](https://ybonnefond.github.io/stubborn/)
 
 ## FAQ
+
 #### Q: Stubborn is not matching my route definition and always return a 501
+
 Stubborn is STUBBORN, therefore it will return a 501 if it does not exactly match the route definition you have set up.
 To help you find what missing in the route definition, you can compare it to the response body returned when receiving a 501:
 
 ```typescript
-  const route = sb.get('/')
-    // This header definition will miss additional header added by got, like user-agent, connexion, etc...
-    .setHeaders({ 'X-Api-Key': 'test' });
-    
-  const res = await request(sb.getOrigin(), {
-    headers: { 'x-api-key': 'api key' }
-  });
-  
-  expect(res.statusCode).toBe(501);
+const route = sb
+  .get('/')
+  // This header definition will miss additional header added by got, like user-agent, connexion, etc...
+  .setHeaders({ 'X-Api-Key': 'test' });
 
-  const def = route.getDefinition();
-  
-  // Definition used by stubborn to match the request against 
-  console.log('--- DEFINTION ---\n', def);
-  // Actual request received
-  console.log('--- REQUEST ---\n', res.body);
-  
-  // Spot the differences or use a diff tool to find them ;)
+const res = await request(sb.getOrigin(), {
+  headers: { 'x-api-key': 'api key' },
+});
+
+expect(res.statusCode).toBe(501);
+
+const def = route.getDefinition();
+
+// Definition used by stubborn to match the request against
+console.log('--- DEFINTION ---\n', def);
+// Actual request received
+console.log('--- REQUEST ---\n', res.body);
+
+// Spot the differences or use a diff tool to find them ;)
 ```
 
 #### Q: How do I know if stubborn has been called and matched the route defined?
+
 Stubborn will return a 501 (Not Implemented) if it received a request but cannot match any route.
 If the request matches the route it will respond according to the route response configuration and update the `call` property of the route
 
@@ -165,7 +202,7 @@ If the request matches the route it will respond according to the route response
 
   // No route setup in Stubborn
   const res = await call();
-  
+
   expect(res.statusCode).toBe(501);
   expect(res.body).toEqual({
     method: 'GET'
