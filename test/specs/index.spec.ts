@@ -611,7 +611,7 @@ describe('index', () => {
     });
   });
 
-  describe('Doc handle basic usage', () => {
+  describe('README examples', () => {
     it('should respond to query', async () => {
       const body = { some: 'body' };
       sb.get('/').setResponseBody({ some: 'body' });
@@ -643,7 +643,7 @@ describe('index', () => {
       ).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
     });
 
-    it('should respond 501 if a parameter is added', async () => {
+    it('should respond 501 if a parameter is not equal', async () => {
       sb.get('/').setQueryParameters({ page: '1' });
 
       expect(
@@ -653,7 +653,7 @@ describe('index', () => {
       ).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
     });
 
-    it('should respond using wildcard for paramter and headers', async () => {
+    it('should respond using wildcard for parameter and headers', async () => {
       sb.get('/')
         .setQueryParameters({ page: null })
         .setHeaders(null);
@@ -664,6 +664,31 @@ describe('index', () => {
           throwHttpErrors: false,
         }),
       ).toReplyWith(STATUS_CODES.SUCCESS);
+    });
+
+    it('should match using regex', async () => {
+      sb.post('/', {
+        slug: /^[a-z\-]*$/,
+      })
+        .setQueryParameters({ page: /^\d$/ })
+        .setHeaders(null);
+
+      const res = await request('/?page=2', {
+        method: 'POST',
+        body: { slug: 'stubborn-ws' },
+      });
+
+      expect(res).toReplyWith(STATUS_CODES.SUCCESS);
+    });
+
+    it('should match using a function', async () => {
+      sb.get('/').setQueryParameters({
+        page: value => parseInt(value as string) > 0,
+      });
+
+      const res = await request('/?page=2');
+
+      expect(res).toReplyWith(STATUS_CODES.SUCCESS);
     });
   });
 
