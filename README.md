@@ -44,7 +44,7 @@ The very fact that Stubborn respond to the request validates that the parameters
 Stubborn response headers and body can be hardcoded or defined using a template.
 
 ```typescript
-import got from 'got';
+import request from 'got';
 import { Stubborn } from 'stubborn-ws';
 
 describe('Test', () => {
@@ -60,7 +60,7 @@ describe('Test', () => {
     const body = { some: 'body' };
     sb.get('/').setResponseBody({ some: 'body' });
 
-    const res = await got(`${sb.getOrigin()}`, { json: true });
+    const res = await request(`${sb.getOrigin()}`, { json: true });
 
     expect(res.body).toEqual(body);
   });
@@ -75,7 +75,7 @@ If a query parameter or a header is missing, stubborn will return a 501 (not imp
 it('should respond 501 if a parameter is missing', async () => {
   sb.get('/').setQueryParameters({ page: '1' });
 
-  const res = await got(`${sb.getOrigin()}`, { throwHttpErrors: false });
+  const res = await request(`${sb.getOrigin()}`, { throwHttpErrors: false });
 
   expect(res.statusCode).toEqual(501);
 });
@@ -87,7 +87,7 @@ If a query parameter or a header is added, stubborn will return a 501 (not imple
 it('should respond 501 if a parameter is added', async () => {
   sb.get('/').setQueryParameters({ page: '1' });
 
-  const res = await got(`${sb.getOrigin()}?page=1&limit=10`, {
+  const res = await request(`${sb.getOrigin()}?page=1&limit=10`, {
     throwHttpErrors: false,
   });
 
@@ -101,7 +101,7 @@ If a query parameter or a header does not match the route definition, stubborn w
 it('should respond 501 if a parameter does not match the definition', async () => {
   sb.get('/').setQueryParameters({ page: '1' });
 
-  const res = await got(`${sb.getOrigin()}?page=2`, { throwHttpErrors: false });
+  const res = await request(`${sb.getOrigin()}?page=2`, { throwHttpErrors: false });
 
   expect(res.statusCode).toEqual(501);
 });
@@ -115,7 +115,7 @@ it('should respond using wildcard', async () => {
     .setQueryParameters({ page: null })
     .setHeaders(null);
 
-  const res = await got(`${sb.getOrigin()}?page=2`, {
+  const res = await request(`${sb.getOrigin()}?page=2`, {
     headers: { 'x-api-key': 'api key', 'any-other-header': 'stuff' },
     throwHttpErrors: false,
   });
@@ -138,7 +138,7 @@ To help you find what missing in the route definition, you can compare it to the
     // This header definition will miss additional header added by got, like user-agent, connexion, etc...
     .setHeaders({ 'X-Api-Key': 'test' });
     
-  const res = await got(sb.getOrigin(), {
+  const res = await request(sb.getOrigin(), {
     headers: { 'x-api-key': 'api key' }
   });
   
@@ -160,7 +160,7 @@ If the request matches the route it will respond according to the route response
 
 ```typescript
   async function call() {
-    return got(sb.getOrigin());
+    return request(sb.getOrigin());
   }
 
   // No route setup in Stubborn
