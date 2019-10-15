@@ -41,6 +41,7 @@
 <li><a href="#installation">Installation</a></li>
 <li><a href="#usage">Usage</a></li>
 <li><a href="#public-api">API</a></li>
+<li><a href="#faq">FAQ</a></li>
 <li><a href="#contributing">Contributing</a><ul>
 <li><a href="#release">Release</a></li>
 </ul>
@@ -58,7 +59,7 @@ Requests are <strong>strictly</strong> matched against routes definitions based 
 If the request does not exactly match one route definition (ex: extra parameter, missing parameter, value does not match, etc), Stubborn will respond with a 501.</p>
 <p>The very fact that Stubborn respond to the request validates that the parameters sent are the expected one, any change in the code that send the request will break the test. Any breaking change will be picked up by your test.</p>
 <p>Stubborn response headers and body can be hardcoded or defined using a template.</p>
-<div><pre class="line-numbers"><code class="language-typescript">import got from &#39;got&#39;;
+<div><pre class="line-numbers"><code class="language-typescript">import request from &#39;got&#39;;
 import { Stubborn } from &#39;stubborn-ws&#39;;
 
 describe(&#39;Test&#39;, () =&gt; {
@@ -74,7 +75,7 @@ describe(&#39;Test&#39;, () =&gt; {
     const body = { some: &#39;body&#39; };
     sb.get(&#39;/&#39;).setResponseBody({ some: &#39;body&#39; });
 
-    const res = await got(`${sb.getOrigin()}`, { json: true });
+    const res = await request(`${sb.getOrigin()}`, { json: true });
 
     expect(res.body).toEqual(body);
   });
@@ -83,14 +84,14 @@ describe(&#39;Test&#39;, () =&gt; {
 <div><pre class="line-numbers"><code class="language-typescript">it(&#39;should respond 501 if a parameter is missing&#39;, async () =&gt; {
   sb.get(&#39;/&#39;).setQueryParameters({ page: &#39;1&#39; });
 
-  const res = await got(`${sb.getOrigin()}`, { throwHttpErrors: false });
+  const res = await request(`${sb.getOrigin()}`, { throwHttpErrors: false });
 
   expect(res.statusCode).toEqual(501);
 });</code></pre></div><p>If a query parameter or a header is added, stubborn will return a 501 (not implemented)</p>
 <div><pre class="line-numbers"><code class="language-typescript">it(&#39;should respond 501 if a parameter is added&#39;, async () =&gt; {
   sb.get(&#39;/&#39;).setQueryParameters({ page: &#39;1&#39; });
 
-  const res = await got(`${sb.getOrigin()}?page=1&amp;limit=10`, {
+  const res = await request(`${sb.getOrigin()}?page=1&amp;limit=10`, {
     throwHttpErrors: false,
   });
 
@@ -99,24 +100,104 @@ describe(&#39;Test&#39;, () =&gt; {
 <div><pre class="line-numbers"><code class="language-typescript">it(&#39;should respond 501 if a parameter does not match the definition&#39;, async () =&gt; {
   sb.get(&#39;/&#39;).setQueryParameters({ page: &#39;1&#39; });
 
-  const res = await got(`${sb.getOrigin()}?page=2`, { throwHttpErrors: false });
+  const res = await request(`${sb.getOrigin()}?page=2`, {
+    throwHttpErrors: false,
+  });
 
   expect(res.statusCode).toEqual(501);
 });</code></pre></div><p>You can use <code>null</code> as wildcard</p>
-<div><pre class="line-numbers"><code class="language-typescript">it(&#39;should respond using wildcard&#39;, async () =&gt; {
+<div><pre class="line-numbers"><code class="language-typescript">it(&#39;should match using wildcard&#39;, async () =&gt; {
   sb.get(&#39;/&#39;)
     .setQueryParameters({ page: null })
     .setHeaders(null);
 
-  const res = await got(`${sb.getOrigin()}?page=2`, {
+  const res = await request(`${sb.getOrigin()}?page=2`, {
     headers: { &#39;x-api-key&#39;: &#39;api key&#39;, &#39;any-other-header&#39;: &#39;stuff&#39; },
     throwHttpErrors: false,
   });
 
   expect(res.statusCode).toEqual(200);
+});</code></pre></div><p>You can use regex to match a parameter, header or body</p>
+<div><pre class="line-numbers"><code class="language-typescript">it(&#39;should match using a regexp&#39;, async () =&gt; {
+  sb.post(&#39;/&#39;, {
+    slug: /^[a-z\-]*$/,
+  });
+
+  const res = await request(`${sb.getOrigin()}?page=2`, {
+    method: &#39;POST&#39;,
+    body: { slug: &#39;stubborn-ws&#39; },
+  });
+
+  expect(res.statusCode).toEqual(200);
+});</code></pre></div><p>You can use a function to match a parameter, header or body</p>
+<div><pre class="line-numbers"><code class="language-typescript">it(&#39;should match using a function&#39;, async () =&gt; {
+  sb.get(&#39;/&#39;).setQueryParameters({
+    page: value =&gt; parseInt(value as string) &gt; 0,
+  });
+
+  const res = await request(&#39;/?page=2&#39;);
+
+  expect(res).toReplyWith(STATUS_CODES.SUCCESS);
 });</code></pre></div><h2 id="public-api">Public API</h2>
 <p>See the <a href="https://ybonnefond.github.io/stubborn/">API documentation</a></p>
-<h2 id="contributing">Contributing</h2>
+<h2 id="faq">FAQ</h2>
+<h4 id="q-stubborn-is-not-matching-my-route-definition-and-always-return-a-501">Q: Stubborn is not matching my route definition and always return a 501</h4>
+<p>Stubborn is STUBBORN, therefore it will return a 501 if it does not exactly match the route definition you have set up.
+To help you find what missing in the route definition, you can compare it to the response body returned when receiving a 501:</p>
+<div><pre class="line-numbers"><code class="language-typescript">const route = sb
+  .get(&#39;/&#39;)
+  // This header definition will miss additional header added by got, like user-agent, connexion, etc...
+  .setHeaders({ &#39;X-Api-Key&#39;: &#39;test&#39; });
+
+const res = await request(sb.getOrigin(), {
+  headers: { &#39;x-api-key&#39;: &#39;api key&#39; },
+});
+
+expect(res.statusCode).toBe(501);
+
+const def = route.getDefinition();
+
+// Definition used by stubborn to match the request against
+console.log(&#39;--- DEFINTION ---\n&#39;, def);
+// Actual request received
+console.log(&#39;--- REQUEST ---\n&#39;, res.body);
+
+// Spot the differences or use a diff tool to find them ;)</code></pre></div><h4 id="q-how-do-i-know-if-stubborn-has-been-called-and-matched-the-route-defined">Q: How do I know if stubborn has been called and matched the route defined?</h4>
+<p>Stubborn will return a 501 (Not Implemented) if it received a request but cannot match any route.
+If the request matches the route it will respond according to the route response configuration and update the <code>call</code> property of the route</p>
+<div><pre class="line-numbers"><code class="language-typescript">  async function call() {
+    return request(sb.getOrigin());
+  }
+
+  // No route setup in Stubborn
+  const res = await call();
+
+  expect(res.statusCode).toBe(501);
+  expect(res.body).toEqual({
+    method: &#39;GET&#39;
+    path: &#39;/&#39;,
+    headers: {
+      // ...
+    }
+    // ...
+  });
+
+
+  const route = sb.get(&#39;/&#39;)
+    .setHeaders(null)
+    .setResponseBody(&#39;content&#39;);
+
+
+  const res = await call();
+  expect(res.calls.length).toBe(1);
+  expect(res.calls[0]).toEqual({
+    method: &#39;GET&#39;
+    path: &#39;/&#39;,
+    headers: {
+      // ...
+    }
+      // ...
+    });</code></pre></div><h2 id="contributing">Contributing</h2>
 <h3 id="release">Release</h3>
 <div><pre class="line-numbers"><code class="language-none">git checkout master
 git pull --rebase
