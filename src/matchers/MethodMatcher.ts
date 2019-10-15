@@ -8,6 +8,6 @@ import { match } from './utils';
 export function methodMatcher(route: Route) {
   return (req: Request) => {
     const { method } = req;
-    return match(route.getMethod(), method);
+    return match(route.getMethod().toLowerCase(), method.toLowerCase());
   };
 }
