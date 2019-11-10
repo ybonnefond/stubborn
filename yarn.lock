@@ -210,25 +210,20 @@
     is-absolute "^1.0.0"
     is-negated-glob "^1.0.0"
 
-"@hapi/accept@^3.2.3":
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/@hapi/accept/-/accept-3.2.3.tgz#6947259928ed28df2736c7daffbfc739b72adfcc"
-  integrity sha512-qEzsOJkCAJZxwj3iF83bSG9Lxy8Bpbrt8mRLNdvSALT6vlU2cYh6ZEHKEZPy4h/Mo31Su3j0rJgFF91+W1RWDQ==
+"@hapi/accept@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@hapi/accept/-/accept-4.0.0.tgz#ec54acc3304185091e98cd6fdfa7a815e5aaaf31"
+  integrity sha512-1wfaS05XyraV4FG8GVcsATorTokAO3i3rAIzffxmqEGUct87tKkIvwtcNDfpEz6AhN77R8uPU0FO5DD3AJutHg==
   dependencies:
-    "@hapi/boom" "7.x.x"
+    "@hapi/boom" "8.x.x"
     "@hapi/hoek" "8.x.x"
 
-"@hapi/boom@7.x.x":
-  version "7.4.2"
-  resolved "https://registry.yarnpkg.com/@hapi/boom/-/boom-7.4.2.tgz#c16957cd09796f6c1bfb4031bdc39d66d6d750c3"
-  integrity sha512-T2CYcTI0AqSvC6YC7keu/fh9LVSMzfoMLharBnPbOwmc+Cexj9joIc5yNDKunaxYq9LPuOwMS0f2B3S1tFQUNw==
+"@hapi/boom@8.x.x":
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@hapi/boom/-/boom-8.0.1.tgz#13f1f2f2a3abfb0787c79e35e238c8aff6aa1661"
+  integrity sha512-SnBM2GzEYEA6AGFKXBqNLWXR3uNBui0bkmklYXX1gYtevVhDTy2uakwkSauxvIWMtlANGRhzChYg95If3FWCwA==
   dependencies:
-    "@hapi/hoek" "6.x.x"
-
-"@hapi/hoek@6.x.x":
-  version "6.2.4"
-  resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-6.2.4.tgz#4b95fbaccbfba90185690890bdf1a2fbbda10595"
-  integrity sha512-HOJ20Kc93DkDVvjwHyHawPwPkX44sIrbXazAUDiUXaY2R9JwQGo2PhFfnQtdrsIe4igjG2fPgMra7NYw7qhy0A==
+    "@hapi/hoek" "8.x.x"
 
 "@hapi/hoek@8.x.x":
   version "8.2.4"
