@@ -301,7 +301,7 @@
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>&#x27;&#x27;</code>
+                            <i>Default value : </i><code>undefined</code>
                         </td>
                     </tr>
                         <tr>
@@ -2024,7 +2024,7 @@ import { METHODS, STATUS_CODES } from &#x27;./constants&#x27;;
  * Object holding the route definitions, requests matchers and response templates
  */
 export class Route {
-  private body: RequestBodyDefinition &#x3D; &#x27;&#x27;;
+  private body: RequestBodyDefinition &#x3D; undefined;
   private headers: HeaderDefinitions &#x3D; {};
   private query: QueryDefinitions &#x3D; {};
 
