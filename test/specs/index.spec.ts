@@ -223,6 +223,21 @@ describe('index', () => {
           await request('/', { headers: { Authorization: 'Bearer 9' } }),
         ).toReplyWith(STATUS_CODES.SUCCESS);
       });
+
+      it('should convert json if JSON Accept header', async () => {
+        sb.post('/', '{"key": "value"}').setResponseBody({ key: 'ok' });
+
+        const res = await request('/', {
+          method: 'post',
+          body: '{"key": "value"}',
+          json: false,
+          headers: { Accept: 'application/vnd.api+json' },
+        });
+        expect(res).toReplyWith(STATUS_CODES.SUCCESS);
+
+        const body = JSON.parse(res.body);
+        expect(body).toStrictEqual({ key: 'ok' });
+      });
     });
 
     describe('Query', () => {

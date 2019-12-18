@@ -218,12 +218,18 @@ function encodeBody(
   headers: OutgoingHttpHeaders,
   body: ResponseBody,
 ) {
-  const mediaType = findContentType(headers);
+  let mediaTypes: string[] = [];
+  const contentTypeValue = findContentType(headers);
 
-  const mediaTypes =
-    null === mediaType ? findAcceptTypes(req.headers) : [mediaType];
+  if (typeof contentTypeValue === 'string') {
+    mediaTypes.push(contentTypeValue);
+  }
 
-  if (mediaTypes.includes('application/json')) {
+  mediaTypes = [...mediaTypes, ...findAcceptTypes(req.headers)];
+
+  const isJson = mediaTypes.some((type: string) => new RegExp('json', 'gi').test(type));
+
+  if (isJson === true) {
     return JSON.stringify(body, null, 2); // eslint-disable-line no-magic-numbers
   }
 

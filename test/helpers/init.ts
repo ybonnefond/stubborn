@@ -7,7 +7,7 @@ export function init() {
 
   beforeAll(async () => await sb.start());
   afterAll(async () => await sb.stop());
-  afterEach(() => sb.clear());
+  beforeEach(async () => await sb.clear());
 
   function request(path = '/', options = {}) {
     return got(
