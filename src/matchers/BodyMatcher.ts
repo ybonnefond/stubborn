@@ -24,7 +24,7 @@ export function bodyMatcher(route: Route) {
   };
 }
 
-function extract(req:Request) {
+function extract(req: Request) {
   const { body: rawBody } = req;
   return rawBody instanceof Buffer ? String(rawBody) : rawBody;
 }

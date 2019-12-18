@@ -230,7 +230,9 @@ function encodeBody(
 
   mediaTypes = [...mediaTypes, ...findAcceptTypes(req.headers)];
 
-  const isJson = mediaTypes.some((type: string) => new RegExp('json', 'gi').test(type));
+  const isJson = mediaTypes.some((type: string) =>
+    new RegExp('json', 'gi').test(type),
+  );
 
   if (isJson === true) {
     return JSON.stringify(body, null, 2); // eslint-disable-line no-magic-numbers

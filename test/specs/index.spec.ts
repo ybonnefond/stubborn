@@ -757,7 +757,9 @@ describe('index', () => {
     it('should return SUCCESS if method is GET', async () => {
       sb.addRoute(new Route(METHODS.GET, '/'));
 
-      expect(await request('/', { json: false })).toReplyWith(STATUS_CODES.SUCCESS);
+      expect(await request('/', { json: false })).toReplyWith(
+        STATUS_CODES.SUCCESS,
+      );
     });
   });
 });
