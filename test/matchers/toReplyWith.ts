@@ -15,7 +15,7 @@ declare global {
   }
 }
 
-export async function toReplyWith(
+export function toReplyWith(
   this: any,
   response: any,
   statusCode: any,
