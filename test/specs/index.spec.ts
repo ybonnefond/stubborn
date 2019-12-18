@@ -1,8 +1,9 @@
-import { init } from '../helpers';
-import { toReplyWith } from '../matchers';
+import { METHODS, Route } from '../../src';
 
 import { Request } from '../../src/@types';
 import { STATUS_CODES } from '../../src/constants';
+import { init } from '../helpers';
+import { toReplyWith } from '../matchers';
 
 describe('index', () => {
   expect.extend({ toReplyWith });
@@ -698,7 +699,7 @@ describe('index', () => {
 
     it('should match using a function', async () => {
       sb.get('/').setQueryParameters({
-        page: value => parseInt(value as string) > 0,
+        page: value => parseInt(value as string, 10) > 0,
       });
 
       const res = await request('/?page=2');
@@ -749,6 +750,14 @@ describe('index', () => {
           'user-agent': expect.any(String),
         },
       });
+    });
+  });
+
+  describe('addRoute', () => {
+    it('should return SUCCESS if method is GET', async () => {
+      sb.addRoute(new Route(METHODS.GET, '/'));
+
+      expect(await request('/', { json: false })).toReplyWith(STATUS_CODES.SUCCESS);
     });
   });
 });

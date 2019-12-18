@@ -3,7 +3,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 export type MatchFunction = (value: JsonValue) => boolean;
 
 export type JsonValue = null | string | number | boolean | object;
-export type RequestDefinition = null | RegExp | MatchFunction | JsonValue;
+export type RequestDefinition = null | RegExp | MatchFunction | JsonValue | undefined;
 
 export type PathDefinition = null | string | RegExp | MatchFunction;
 export type RequestBodyDefinition = RequestDefinition;

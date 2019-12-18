@@ -16,7 +16,7 @@ import { METHODS, STATUS_CODES } from './constants';
  * Object holding the route definitions, requests matchers and response templates
  */
 export class Route {
-  private body: RequestBodyDefinition = '';
+  private body: RequestBodyDefinition = undefined;
   private headers: HeaderDefinitions = {};
   private query: QueryDefinitions = {};
 

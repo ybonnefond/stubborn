@@ -60,12 +60,15 @@ export class Router {
     );
   }
 
-  public createRoute(method: METHODS, path: PathDefinition) {
-    const route = new Route(method, path);
+  public addRoute(route: Route) {
     const matcher = new RouteMatcher(route);
     this.routes.add({ route, matcher });
 
     return route;
+  }
+
+  public createRoute(method: METHODS, path: PathDefinition) {
+    return this.addRoute(new Route(method, path));
   }
 
   public clear() {

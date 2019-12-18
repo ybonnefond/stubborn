@@ -6,6 +6,7 @@ import {
   RequestBodyDefinition,
 } from './@types';
 import { METHODS } from './constants';
+import { Route } from './Route';
 import { Router } from './Router';
 import { getServerPort } from './utils';
 
@@ -81,7 +82,7 @@ export class Stubborn {
    * @param path Path matching definition
    */
   public delete(path: PathDefinition) {
-    return this.router.createRoute(METHODS.DELETE, path).setBody(null);
+    return this.router.createRoute(METHODS.DELETE, path);
   }
 
   /**
@@ -90,7 +91,7 @@ export class Stubborn {
    * @param path Path matching definition
    */
   public get(path: PathDefinition) {
-    return this.router.createRoute(METHODS.GET, path).setBody(null);
+    return this.router.createRoute(METHODS.GET, path);
   }
 
   /**
@@ -121,6 +122,14 @@ export class Stubborn {
    */
   public put(path: PathDefinition, body: RequestBodyDefinition = '') {
     return this.router.createRoute(METHODS.PUT, path).setBody(body);
+  }
+  /**
+   * Register a new route
+   *
+   * @param route Route a Route object
+   */
+  public addRoute(route: Route) {
+    return this.router.addRoute(route);
   }
 
   /**
