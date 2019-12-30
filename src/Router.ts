@@ -176,6 +176,7 @@ function buildMiddlewares(router: Router) {
     middlewares.bodyJson(),
     middlewares.bodyUrlEncoded(),
     middlewares.bodyRaw(),
+    middlewares.bodyEmpty(),
   ];
 }
 /**
@@ -329,17 +330,14 @@ function applyTemplate(
     case 'function':
       return (template as TemplateFunction)(req, scope);
     case 'object':
-      return Object.keys(template).reduce(
-        (obj, key) => {
-          obj[key] = applyTemplate(
-            (template as TemplateObject)[key],
-            req,
-            template,
-          );
-          return obj;
-        },
-        {} as Record<string | number, JsonValue>,
-      );
+      return Object.keys(template).reduce((obj, key) => {
+        obj[key] = applyTemplate(
+          (template as TemplateObject)[key],
+          req,
+          template,
+        );
+        return obj;
+      }, {} as Record<string | number, JsonValue>);
     case 'symbol':
       return String(template).replace(/^Symbol\((.*)\)$/, '$1');
 

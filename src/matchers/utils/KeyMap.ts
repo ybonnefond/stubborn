@@ -59,26 +59,20 @@ export class KeyMap {
   }
 
   public filterExcluded(obj: KeyMapObject): KeyMapObject {
-    return Object.keys(obj).reduce(
-      (values, key) => {
-        if (!this.isExcluded(key)) {
-          values[key] = obj[key];
-        }
+    return Object.keys(obj).reduce((values, key) => {
+      if (!this.isExcluded(key)) {
+        values[key] = obj[key];
+      }
 
-        return values;
-      },
-      {} as KeyMapObject,
-    );
+      return values;
+    }, {} as KeyMapObject);
   }
 
   private fixObjectCase(obj: KeyMapObject): KeyMapObject {
-    return Object.keys(obj).reduce(
-      (clone, key) => {
-        clone[this.fixCase(key)] = obj[key];
-        return clone;
-      },
-      {} as KeyMapObject,
-    );
+    return Object.keys(obj).reduce((clone, key) => {
+      clone[this.fixCase(key)] = obj[key];
+      return clone;
+    }, {} as KeyMapObject);
   }
 
   private fixCase(str: string) {

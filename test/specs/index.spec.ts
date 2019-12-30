@@ -26,7 +26,7 @@ describe('index', () => {
           'user-agent': expect.any(String),
         },
         query: {},
-        body: {},
+        body: undefined,
         hash: '',
       },
     });
@@ -608,10 +608,9 @@ describe('index', () => {
     it('should respond with provided object body', async () => {
       sb.get('/').setResponseBody({ custom: 'body' });
 
-      expect(await request('/', { json: true })).toReplyWith(
-        STATUS_CODES.SUCCESS,
-        { custom: 'body' },
-      );
+      expect(
+        await request('/', { json: true }),
+      ).toReplyWith(STATUS_CODES.SUCCESS, { custom: 'body' });
     });
 
     it('should respond with dynamic body', async () => {
