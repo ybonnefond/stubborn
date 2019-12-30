@@ -1,4 +1,4 @@
-import { METHODS, Route } from '../../src';
+import { EVENTS, METHODS, Route } from '../../src';
 
 import { Request } from '../../src/@types';
 import { STATUS_CODES } from '../../src/constants';
@@ -10,7 +10,26 @@ describe('index', () => {
   const { sb, request } = init();
 
   it('should return NOT_IMPLEMENTED if no routes are configured', async () => {
+    const mockFn = jest.fn();
+    sb.on(EVENTS.NOT_IMPLEMENTED, mockFn);
+
     expect(await request('/')).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
+    expect(mockFn).toBeCalledWith({
+      request: {
+        method: 'GET',
+        path: '/',
+        headers: {
+          accept: 'application/json',
+          'accept-encoding': 'gzip, deflate',
+          connection: 'close',
+          host: expect.any(String),
+          'user-agent': expect.any(String),
+        },
+        query: {},
+        body: {},
+        hash: '',
+      },
+    });
   });
 
   describe('Request matching', () => {
@@ -487,9 +506,12 @@ describe('index', () => {
         });
 
         it('should return SUCCESS if body equals definition with custom function', async () => {
+          const key = (val: string) => val === 'test';
+          const subkey = (val: string) => val === 'toto';
+
           sb.post('/', {
-            key: (val: string) => val === 'test',
-            key2: [{ subkey: (val: string) => val === 'toto' }],
+            key,
+            key2: [{ subkey }],
           }).setHeaders({ 'Content-Type': 'application/json' });
 
           expect(
@@ -524,6 +546,7 @@ describe('index', () => {
             headers: expect.objectContaining(options.headers),
             query: { page: '10', limit: '100' },
             body: options.body,
+            hash: expect.any(String),
           },
         },
       );

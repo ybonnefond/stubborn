@@ -13,3 +13,7 @@ export enum STATUS_CODES {
   // 5xx Server Errors
   NOT_IMPLEMENTED = 501,
 }
+
+export const EVENTS = {
+  NOT_IMPLEMENTED: Symbol.for('NOT_IMPLEMENTED'),
+};
