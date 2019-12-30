@@ -1,3 +1,4 @@
+import EventEmitter from 'events';
 import { createServer, Server } from 'http';
 
 import {
@@ -33,6 +34,7 @@ export class Stubborn {
   private port: number | null;
   private router: Router;
   private options: StubbornOptions;
+  private emitter: EventEmitter = new EventEmitter();
 
   constructor(options: StubbornOptions = {}) {
     this.options = Object.assign(
@@ -45,7 +47,7 @@ export class Stubborn {
 
     this.port = null;
     this.server = createServer();
-    this.router = new Router({ host: this.options.host });
+    this.router = new Router({ host: this.options.host }, this.emitter);
   }
 
   /**
@@ -155,5 +157,9 @@ export class Stubborn {
     return new Promise(resolve => {
       this.server.close(() => resolve());
     });
+  }
+
+  public on(event: symbol, listener: (...args: any[]) => void) {
+    this.emitter.on(event, listener);
   }
 }

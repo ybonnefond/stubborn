@@ -1,6 +1,8 @@
+import EventEmitter from 'events';
+import { OutgoingHttpHeaders, Server } from 'http';
+
 import accept from '@hapi/accept';
 import contentType from 'content-type';
-import { OutgoingHttpHeaders, Server } from 'http';
 
 import {
   JsonValue,
@@ -18,7 +20,7 @@ import {
   TemplateObject,
 } from './@types';
 
-import { METHODS, STATUS_CODES } from './constants';
+import { EVENTS, METHODS, STATUS_CODES } from './constants';
 import { middlewares } from './middlewares';
 import { Route } from './Route';
 import { RouteMatcher } from './RouteMatcher';
@@ -48,10 +50,12 @@ type MatchableRoute = {
 export class Router {
   private options: RouterOptions;
   private port: number | null = null;
+  private emitter: EventEmitter;
 
   private routes: Set<MatchableRoute> = new Set();
 
-  constructor(options: RouterOptions) {
+  constructor(options: RouterOptions, emitter: EventEmitter) {
+    this.emitter = emitter;
     this.options = Object.assign(
       {
         host: '',
@@ -78,7 +82,7 @@ export class Router {
   public handle(server: Server) {
     this.port = getServerPort(server);
     const mws = buildMiddlewares(this);
-    mws.push(buildRequestHandler(this));
+    mws.push(buildRequestHandler(this, this.emitter));
     server.on('request', (req: Request, res: Response) => {
       return runMiddlewares(mws.slice(0), req, res);
     });
@@ -133,12 +137,14 @@ function runMiddleware(mw: Middleware, req: Request, res: Response) {
 /**
  * @internal
  */
-function buildRequestHandler(router: Router) {
+function buildRequestHandler(router: Router, emitter: EventEmitter) {
   return (req: Request, res: Response, next: NextFunction) => {
     const route = findRoute(router.getRoutes(), req);
 
     if (null === route) {
-      replyNotImplemented(res, req);
+      const reqInfo = extractRequestInfo(req);
+      replyNotImplemented(res, reqInfo);
+      emitter.emit(EVENTS.NOT_IMPLEMENTED, { request: reqInfo });
     } else {
       reply(route, res, req);
     }
@@ -146,6 +152,21 @@ function buildRequestHandler(router: Router) {
     next();
   };
 }
+
+/**
+ * @internal
+ */
+function extractRequestInfo(req: Request): RequestInfo {
+  return {
+    method: req.method,
+    path: req.path,
+    headers: req.headers,
+    query: req.query,
+    body: req.body,
+    hash: req.hash,
+  };
+}
+
 /**
  * @internal
  */
@@ -190,7 +211,7 @@ function reply(route: Route, res: Response, req: Request) {
 /**
  * @internal
  */
-function replyNotImplemented(res: Response, req: Request) {
+function replyNotImplemented(res: Response, reqInfo: RequestInfo) {
   res.writeHead(STATUS_CODES.NOT_IMPLEMENTED, {
     'Content-Type': 'application/json',
   });
@@ -198,13 +219,7 @@ function replyNotImplemented(res: Response, req: Request) {
     JSON.stringify(
       {
         message: 'No route matched',
-        request: {
-          method: req.method,
-          path: req.path,
-          headers: req.headers,
-          query: req.query,
-          body: req.body,
-        },
+        request: reqInfo,
       },
       null,
       2,
