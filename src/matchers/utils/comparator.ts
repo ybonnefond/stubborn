@@ -6,7 +6,7 @@ const { isEqualWith: isEqual } = require('lodash');
 /**
  * @internal
  */
-export function match(def: RequestDefinition, value: JsonValue) {
+export function match(def: RequestDefinition, value: JsonValue | undefined) {
   return isEqual(def, value, customizer);
 }
 /**

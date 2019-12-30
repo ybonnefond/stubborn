@@ -44,7 +44,7 @@ export type ResponseDefinition = {
 
 export type RequestInfo = {
   headers: Record<string, string>;
-  body: JsonValue;
+  body: JsonValue | undefined;
   path: string;
   query: Record<string, string | string[]>;
   hash: string;
