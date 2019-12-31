@@ -14,22 +14,20 @@ describe('index', () => {
     sb.on(EVENTS.NOT_IMPLEMENTED, mockFn);
 
     expect(await request('/')).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
-    expect(mockFn).toBeCalledWith({
-      request: {
-        method: 'GET',
-        path: '/',
-        headers: {
-          accept: 'application/json',
-          'accept-encoding': 'gzip, deflate',
-          connection: 'close',
-          host: expect.any(String),
-          'user-agent': expect.any(String),
-        },
-        query: {},
-        body: undefined,
-        hash: '',
-      },
+    expect(mockFn).toHaveBeenCalledTimes(1);
+    const [req]: [Request] = mockFn.mock.calls[0];
+    expect(req.method).toBe('GET');
+    expect(req.path).toBe('/');
+    expect(req.headers).toEqual({
+      accept: 'application/json',
+      'accept-encoding': 'gzip, deflate',
+      connection: 'close',
+      host: expect.any(String),
+      'user-agent': expect.any(String),
     });
+    expect(req.query).toEqual({});
+    expect(req.body).toBeUndefined();
+    expect(req.hash).toBe('');
   });
 
   describe('Request matching', () => {

@@ -142,9 +142,7 @@ function buildRequestHandler(router: Router, emitter: EventEmitter) {
     const route = findRoute(router.getRoutes(), req);
 
     if (null === route) {
-      const reqInfo = extractRequestInfo(req);
-      replyNotImplemented(res, reqInfo);
-      emitter.emit(EVENTS.NOT_IMPLEMENTED, { request: reqInfo });
+      replyNotImplemented(res, req, emitter);
     } else {
       reply(route, res, req);
     }
@@ -212,7 +210,11 @@ function reply(route: Route, res: Response, req: Request) {
 /**
  * @internal
  */
-function replyNotImplemented(res: Response, reqInfo: RequestInfo) {
+function replyNotImplemented(
+  res: Response,
+  req: Request,
+  emitter: EventEmitter,
+) {
   res.writeHead(STATUS_CODES.NOT_IMPLEMENTED, {
     'Content-Type': 'application/json',
   });
@@ -220,7 +222,7 @@ function replyNotImplemented(res: Response, reqInfo: RequestInfo) {
     JSON.stringify(
       {
         message: 'No route matched',
-        request: reqInfo,
+        request: extractRequestInfo(req),
       },
       null,
       2,
@@ -228,6 +230,8 @@ function replyNotImplemented(res: Response, reqInfo: RequestInfo) {
   );
 
   res.end();
+
+  setImmediate(() => emitter.emit(EVENTS.NOT_IMPLEMENTED, req));
 }
 /**
  * @internal
