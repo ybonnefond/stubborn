@@ -64,5 +64,17 @@
   },
   "files": [
     "/dist"
-  ]
+  ],
+  "jest": {
+    "testEnvironment": "node",
+    "coverageDirectory": "coverage",
+    "collectCoverage": false,
+    "collectCoverageFrom": ["src/**/*.ts", "!src/**/*.d.ts", "!src/**/@types/**"],
+    "setupFilesAfterEnv": ["<rootDir>/test/setup.ts"],
+    "testMatch": ["<rootDir>/test/specs/*.spec.ts"],
+    "testPathIgnorePatterns": ["/node_modules/", "/dist/"],
+    "transform": {
+      "\\.ts$": "ts-jest"
+    }
+  }
 }
