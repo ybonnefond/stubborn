@@ -17,3 +17,5 @@ export enum STATUS_CODES {
 export const EVENTS = {
   NOT_IMPLEMENTED: Symbol.for('NOT_IMPLEMENTED'),
 };
+
+export const WILDCARD = Symbol.for('WILDCARD');

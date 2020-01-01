@@ -1,4 +1,4 @@
-import { JsonValue, MatchFunction, DefinitionValue } from '../../@types';
+import { DefinitionValue, JsonValue, MatchFunction } from '../../@types';
 /**
  * @internal
  */
@@ -12,7 +12,14 @@ export function match(def: DefinitionValue, value: JsonValue | undefined) {
 /**
  * @internal
  */
-function customizer(def: DefinitionValue, value: JsonValue, _key: any, _other: any, _object: any, _stack: any) {
+function customizer(
+  def: DefinitionValue,
+  value: JsonValue,
+  _key: any,
+  _other: any,
+  _object: any,
+  _stack: any,
+) {
   // eslint-disable-line consistent-return
   if (def instanceof RegExp) {
     return def.test(String(value));

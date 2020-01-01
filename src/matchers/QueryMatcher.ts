@@ -1,4 +1,5 @@
-import { Request, DefinitionValue } from '../@types';
+import { DefinitionValue, Request } from '../@types';
+import { WILDCARD } from '../constants';
 import { Route } from '../Route';
 
 import { KeyMap, match } from './utils';
@@ -8,7 +9,7 @@ import { KeyMap, match } from './utils';
 export function queryMatcher(route: Route) {
   return (req: Request) => {
     const definition = route.getQueryParameters();
-    if (null === definition) {
+    if (WILDCARD === definition) {
       return true;
     }
 
@@ -45,7 +46,7 @@ function formatDef(rawDef: any) {
   return Object.keys(rawDef).reduce((def, key) => {
     const rawValue = rawDef[key];
     const value =
-      null === rawValue || Array.isArray(rawValue) ? rawValue : [rawValue];
+      WILDCARD === rawValue || Array.isArray(rawValue) ? rawValue : [rawValue];
     def[key] = value;
     return def;
   }, {} as Record<string, DefinitionValue>);

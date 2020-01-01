@@ -1,4 +1,5 @@
 import { Request } from '../@types';
+import { WILDCARD } from '../constants';
 import { Route } from '../Route';
 
 import { match } from './utils';
@@ -12,7 +13,7 @@ export function bodyMatcher(route: Route) {
     const body = extract(req);
 
     // Bypass body matching
-    if (null === definition) {
+    if (WILDCARD === definition) {
       return true;
     }
 

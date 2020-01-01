@@ -2,7 +2,7 @@ import EventEmitter from 'events';
 import { createServer, Server } from 'http';
 
 import {
-  HeaderDefinitions,
+  HeadersDefinition,
   PathDefinition,
   RequestBodyDefinition,
 } from './@types';
@@ -13,7 +13,7 @@ import { getServerPort } from './utils';
 
 export type StubbornOptions = {
   host?: string;
-  defaultHeaders?: HeaderDefinitions;
+  defaultHeaders?: HeadersDefinition;
 };
 
 /**
