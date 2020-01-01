@@ -44,13 +44,20 @@ export type ResponseDefinition = {
   body: ResponseBodyDefinition;
 };
 
+export type RequestHeaders = Record<string, string>;
+export type RequestQuery = Record<string, string | string[]>;
+export type RequestBody = JsonValue | undefined;
+export type RequestPath = string;
+export type RequestHash = string;
+export type RequestMethod = string;
+
 export type RequestInfo = {
-  headers: Record<string, string>;
-  body: JsonValue | undefined;
-  path: string;
-  query: Record<string, string | string[]>;
-  hash: string;
-  method: string;
+  headers: RequestHeaders;
+  body: RequestBody;
+  path: RequestPath;
+  query: RequestQuery;
+  hash: RequestHash;
+  method: RequestMethod;
 };
 
 export type Request = IncomingMessage &
