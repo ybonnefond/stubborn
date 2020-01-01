@@ -71,7 +71,7 @@
     "collectCoverage": false,
     "collectCoverageFrom": ["src/**/*.ts", "!src/**/*.d.ts", "!src/**/@types/**"],
     "setupFilesAfterEnv": ["<rootDir>/test/setup.ts"],
-    "testMatch": ["<rootDir>/test/specs/*.spec.ts"],
+    "testMatch": ["<rootDir>/test/specs/*.spec.ts", "<rootDir>/src/**/*.test.ts"],
     "testPathIgnorePatterns": ["/node_modules/", "/dist/"],
     "transform": {
       "\\.ts$": "ts-jest"
