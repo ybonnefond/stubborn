@@ -4,7 +4,7 @@ import {
   PathDefinition,
   QueryDefinitions,
   RequestBodyDefinition,
-  RequestDefinition,
+  DefinitionValue,
   RequestInfo,
   ResponseDefinition,
   ResponseHeaders,
@@ -119,7 +119,7 @@ export class Route {
    * @param header Header name
    * @param definition Header definition
    */
-  public setHeader(header: string, definition: RequestDefinition) {
+  public setHeader(header: string, definition: DefinitionValue) {
     if (null === this.headers) {
       this.headers = {};
     }
@@ -179,7 +179,7 @@ export class Route {
    */
   public setQueryParameter(
     queryParameter: string,
-    definition: RequestDefinition,
+    definition: DefinitionValue,
   ) {
     if (null === this.query) {
       this.query = {};

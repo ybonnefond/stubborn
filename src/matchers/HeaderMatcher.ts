@@ -1,4 +1,4 @@
-import { Request, RequestDefinition } from '../@types';
+import { Request, DefinitionValue } from '../@types';
 import { Route } from '../Route';
 
 import { KeyMap, match } from './utils';
@@ -19,7 +19,7 @@ export function headerMatcher(route: Route) {
     const headers = keyMap.filterExcluded(rawHeaders);
 
     function compare(
-      defValue: RequestDefinition,
+      defValue: DefinitionValue,
       reqValue: string | undefined,
     ) {
       if ('string' !== typeof reqValue) {
