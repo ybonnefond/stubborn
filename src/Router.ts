@@ -10,7 +10,7 @@ import {
   NextFunction,
   PathDefinition,
   Request,
-  RequestDefinition,
+  DefinitionValue,
   RequestInfo,
   Response,
   ResponseBody,
@@ -316,7 +316,7 @@ function findContentType(headers: OutgoingHttpHeaders) {
 function applyTemplate(
   template: Template,
   req: Request,
-  scope?: RequestDefinition,
+  scope?: DefinitionValue,
 ): JsonValue {
   if (null === template || 'undefined' === typeof template) {
     return '';

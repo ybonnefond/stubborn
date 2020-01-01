@@ -1,19 +1,21 @@
 import { IncomingMessage, ServerResponse } from 'http';
+import { DIFF_TYPES } from '../constants';
 
 export type MatchFunction = (value: JsonValue) => boolean;
 
 export type JsonValue = null | string | number | boolean | object;
-export type RequestDefinition =
+export type DefinitionValue =
   | null
   | RegExp
   | MatchFunction
   | JsonValue
   | undefined;
 
+export type MethodDefinition = string;
 export type PathDefinition = null | string | RegExp | MatchFunction;
-export type RequestBodyDefinition = RequestDefinition;
-export type HeaderDefinitions = Record<string, RequestDefinition> | null;
-export type QueryDefinitions = Record<string, RequestDefinition> | null;
+export type RequestBodyDefinition = DefinitionValue;
+export type HeaderDefinitions = Record<string, DefinitionValue> | null;
+export type QueryDefinitions = Record<string, DefinitionValue> | null;
 
 export type TemplateFunction = (request: Request, scope: any) => JsonValue;
 

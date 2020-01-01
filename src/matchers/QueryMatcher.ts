@@ -1,4 +1,4 @@
-import { Request, RequestDefinition } from '../@types';
+import { Request, DefinitionValue } from '../@types';
 import { Route } from '../Route';
 
 import { KeyMap, match } from './utils';
@@ -21,7 +21,7 @@ export function queryMatcher(route: Route) {
     const query = keyMap.filterExcluded(formatedQuery);
 
     function compare(
-      defValues: RequestDefinition[],
+      defValues: DefinitionValue[],
       reqValues: Array<string | number | null>,
     ) {
       if (!Array.isArray(reqValues)) {
@@ -29,7 +29,7 @@ export function queryMatcher(route: Route) {
       }
 
       return reqValues.every(reqValue => {
-        return defValues.some((defValue: RequestDefinition) => {
+        return defValues.some((defValue: DefinitionValue) => {
           return match(defValue, reqValue);
         });
       });
@@ -48,5 +48,5 @@ function formatDef(rawDef: any) {
       null === rawValue || Array.isArray(rawValue) ? rawValue : [rawValue];
     def[key] = value;
     return def;
-  }, {} as Record<string, RequestDefinition>);
+  }, {} as Record<string, DefinitionValue>);
 }
