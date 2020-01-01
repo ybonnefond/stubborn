@@ -1,31 +1,53 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import { DIFF_TYPES } from '../constants';
+import { METHODS, WILDCARD } from '../constants';
+
+export type JsonPrimitive = string | number | boolean | null;
+export type JsonObject = { [member: string]: JsonValue };
+export interface JsonArray extends Array<JsonValue> {}
+export type JsonValue = JsonPrimitive | JsonObject | JsonArray;
 
 export type MatchFunction = (value: JsonValue) => boolean;
-
-export type JsonValue = null | string | number | boolean | object;
+export type DefinitionMatcher = RegExp | MatchFunction | typeof WILDCARD;
 export type DefinitionValue =
-  | null
-  | RegExp
-  | MatchFunction
+  | DefinitionMatcher
   | JsonValue
-  | undefined;
+  | undefined
+  | METHODS; // Any possible values for definition
 
-export type MethodDefinition = string;
-export type PathDefinition = null | string | RegExp | MatchFunction;
-export type RequestBodyDefinition = DefinitionValue;
-export type HeaderDefinitions = Record<string, DefinitionValue> | null;
-export type QueryDefinitions = Record<string, DefinitionValue> | null;
+// Request part definitions types
+export type MethodDefinition = METHODS;
+export type PathDefinition = DefinitionMatcher | string;
+export type HeaderDefinition = DefinitionMatcher | string | number;
+export type HeadersDefinition =
+  | Record<string, HeaderDefinition>
+  | typeof WILDCARD;
+
+export type RequestBodyDefinitionPrimitive = DefinitionMatcher | JsonValue;
+export type RequestBodyDefinitionObject = {
+  [member: string]: RequestBodyDefinitionValue;
+};
+export interface RequestBodyDefinitionArray
+  extends Array<RequestBodyDefinitionValue> {}
+export type RequestBodyDefinitionValue =
+  | RequestBodyDefinitionPrimitive
+  | RequestBodyDefinitionObject
+  | RequestBodyDefinitionArray;
+export type RequestBodyDefinition = undefined | RequestBodyDefinitionValue;
+
+export type QueryParameterDefinitionPrimitives =
+  | DefinitionMatcher
+  | string
+  | number;
+export type QueryParameterDefinition =
+  | QueryParameterDefinitionPrimitives
+  | QueryParameterDefinitionPrimitives[];
+export type QueryDefinition =
+  | Record<string, QueryParameterDefinition>
+  | typeof WILDCARD;
 
 export type TemplateFunction = (request: Request, scope: any) => JsonValue;
-
-export type TemplateObject = {
-  [key: string]: JsonValue | TemplateFunction | TemplateObject;
-};
-
-export type TemplateArray = {
-  [index: number]: JsonValue | TemplateFunction | TemplateObject;
-};
+export type TemplateObject = { [key: string]: Template };
+export type TemplateArray = { [index: number]: Template };
 
 export type Template =
   | JsonValue
@@ -33,15 +55,10 @@ export type Template =
   | TemplateObject
   | TemplateArray;
 
-export type ResponseBodyDefinition =
-  | JsonValue
-  | TemplateFunction
-  | TemplateObject;
-
 export type ResponseDefinition = {
   statusCode: number;
   headers: Record<string, string | TemplateFunction>;
-  body: ResponseBodyDefinition;
+  body: Template;
 };
 
 export type RequestHeaders = Record<string, string>;

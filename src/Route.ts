@@ -1,24 +1,25 @@
 import {
-  HeaderDefinitions,
-  JsonValue,
+  HeaderDefinition,
+  HeadersDefinition,
   PathDefinition,
-  QueryDefinitions,
+  QueryDefinition,
+  QueryParameterDefinition,
   RequestBodyDefinition,
-  DefinitionValue,
   RequestInfo,
   ResponseDefinition,
   ResponseHeaders,
+  Template,
 } from './@types';
 
-import { METHODS, STATUS_CODES } from './constants';
+import { METHODS, STATUS_CODES, WILDCARD } from './constants';
 
 /**
  * Object holding the route definitions, requests matchers and response templates
  */
 export class Route {
   private body: RequestBodyDefinition = undefined;
-  private headers: HeaderDefinitions = {};
-  private query: QueryDefinitions = {};
+  private headers: HeadersDefinition = {};
+  private query: QueryDefinition = {};
 
   private response: ResponseDefinition;
 
@@ -26,12 +27,12 @@ export class Route {
 
   constructor(private method: METHODS, private path: PathDefinition) {
     this.setHeaders({
-      'user-agent': null,
-      'accept-encoding': null,
-      accept: null,
-      'content-length': null,
-      host: null,
-      connection: null,
+      'user-agent': WILDCARD,
+      'accept-encoding': WILDCARD,
+      accept: WILDCARD,
+      'content-length': WILDCARD,
+      host: WILDCARD,
+      connection: WILDCARD,
     });
 
     this.setQueryParameters({});
@@ -78,7 +79,7 @@ export class Route {
    * // Bypass all headers
    * stubborn
    *   .get('/bypass')
-   *   .setHeaders(null);
+   *   .setHeaders(WILDCARD);
    *
    * stubborn
    *   .get('/match')
@@ -93,9 +94,9 @@ export class Route {
    * ```
    * @param headers Headers definition
    */
-  public setHeaders(headers: HeaderDefinitions) {
+  public setHeaders(headers: HeadersDefinition) {
     this.headers =
-      null === headers ? headers : Object.assign({}, this.headers, headers);
+      WILDCARD === headers ? headers : Object.assign({}, this.headers, headers);
 
     return this;
   }
@@ -119,8 +120,8 @@ export class Route {
    * @param header Header name
    * @param definition Header definition
    */
-  public setHeader(header: string, definition: DefinitionValue) {
-    if (null === this.headers) {
+  public setHeader(header: string, definition: HeaderDefinition) {
+    if (WILDCARD === this.headers) {
       this.headers = {};
     }
 
@@ -137,7 +138,7 @@ export class Route {
    * // Bypass all query parameters
    * stubborn
    *   .get('/bypass')
-   *   .setQueryParameters(null);
+   *   .setQueryParameters(WILDCARD);
    *
    * stubborn
    *   .get('/match')
@@ -152,8 +153,9 @@ export class Route {
    * ```
    * @param query Query parameters definition
    */
-  public setQueryParameters(query: QueryDefinitions) {
-    this.query = null === query ? query : Object.assign({}, this.query, query);
+  public setQueryParameters(query: QueryDefinition) {
+    this.query =
+      WILDCARD === query ? query : Object.assign({}, this.query, query);
 
     return this;
   }
@@ -179,9 +181,9 @@ export class Route {
    */
   public setQueryParameter(
     queryParameter: string,
-    definition: DefinitionValue,
+    definition: QueryParameterDefinition,
   ) {
-    if (null === this.query) {
+    if (WILDCARD === this.query) {
       this.query = {};
     }
 
@@ -198,7 +200,7 @@ export class Route {
    * // Bypass all query parameters
    * stubborn
    *   .get('/bypass')
-   *   .setBody(null);
+   *   .setBody(WILDCARD);
    *
    * stubborn
    *   .get('/simple')
@@ -213,7 +215,7 @@ export class Route {
    *     regexp: /^match/,
    *     // Match using `func(value);`
    *     func: (value) => 'match' === value,
-   *     object: { reg: /\d+/, bypass: null },
+   *     object: { reg: /\d+/, bypass: WILDCARD },
    *     arr: [{ item: '1' }, { item: /2/ }]
    *   });
    * ```
@@ -281,7 +283,7 @@ export class Route {
    * ```
    * @param body Body replied if route is matched
    */
-  public setResponseBody(body: JsonValue) {
+  public setResponseBody(body: Template) {
     this.response.body = body;
 
     return this;

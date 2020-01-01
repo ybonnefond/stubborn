@@ -1,6 +1,8 @@
 /**
  * @internal
  */
+import { WILDCARD } from '../../constants';
+
 export interface KeyMapOptions {
   caseSensitive?: boolean;
 }
@@ -83,7 +85,7 @@ export class KeyMap {
     return Object.keys(this.obj).forEach(rawKey => {
       const key = this.fixCase(rawKey);
 
-      if (null === this.obj[key]) {
+      if (WILDCARD === this.obj[key]) {
         this.excluded.push(key);
       } else {
         this.included.push(key);

@@ -1,4 +1,11 @@
-import { EVENTS, METHODS, Route } from '../../src';
+import {
+  EVENTS,
+  JsonValue,
+  MatchFunction,
+  METHODS,
+  Route,
+  WILDCARD,
+} from '../../src';
 
 import { Request } from '../../src/@types';
 import { STATUS_CODES } from '../../src/constants';
@@ -179,23 +186,23 @@ describe('index', () => {
       });
 
       it('should return SUCCESS if header is wildcarded', async () => {
-        sb.get('/').setHeaders(null);
+        sb.get('/').setHeaders(WILDCARD);
 
         expect(
           await request('/', { headers: { Authorization: 'token' } }),
         ).toReplyWith(STATUS_CODES.SUCCESS);
       });
 
-      it('should return SUCCESS if header is null and in request', async () => {
-        sb.get('/').setHeaders({ Authorization: null });
+      it('should return SUCCESS if header is WILDCARD and in request', async () => {
+        sb.get('/').setHeaders({ Authorization: WILDCARD });
 
         expect(
           await request('/', { headers: { Authorization: 'token' } }),
         ).toReplyWith(STATUS_CODES.SUCCESS);
       });
 
-      it('should return SUCCESS if header is null and not in request', async () => {
-        sb.get('/').setHeaders({ Authorization: null });
+      it('should return SUCCESS if header is WILDCARD and not in request', async () => {
+        sb.get('/').setHeaders({ Authorization: WILDCARD });
 
         expect(await request('/')).toReplyWith(STATUS_CODES.SUCCESS);
       });
@@ -296,19 +303,19 @@ describe('index', () => {
       });
 
       it('should return SUCCESS if query parameters are wildcarded', async () => {
-        sb.get('/').setQueryParameters(null);
+        sb.get('/').setQueryParameters(WILDCARD);
 
         expect(await request('/?page=10')).toReplyWith(STATUS_CODES.SUCCESS);
       });
 
-      it('should return SUCCESS if query parameter is null and in query', async () => {
-        sb.get('/').setQueryParameters({ page: null });
+      it('should return SUCCESS if query parameter is WILDCARD and in query', async () => {
+        sb.get('/').setQueryParameters({ page: WILDCARD });
 
         expect(await request('/?page=10')).toReplyWith(STATUS_CODES.SUCCESS);
       });
 
-      it('should return SUCCESS if query parameter is null and not in query', async () => {
-        sb.get('/').setQueryParameters({ page: null });
+      it('should return SUCCESS if query parameter is WILDCARD and not in query', async () => {
+        sb.get('/').setQueryParameters({ page: WILDCARD });
 
         expect(await request('/')).toReplyWith(STATUS_CODES.SUCCESS);
       });
@@ -504,8 +511,8 @@ describe('index', () => {
         });
 
         it('should return SUCCESS if body equals definition with custom function', async () => {
-          const key = (val: string) => val === 'test';
-          const subkey = (val: string) => val === 'toto';
+          const key: MatchFunction = (val: JsonValue) => val === 'test';
+          const subkey: MatchFunction = (val: JsonValue) => val === 'toto';
 
           sb.post('/', {
             key,
@@ -689,10 +696,10 @@ describe('index', () => {
       ).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
     });
 
-    it('should respond using wildcard for parameter and headers', async () => {
+    it('should respond using WILDCARD for parameter and headers', async () => {
       sb.get('/')
-        .setQueryParameters({ page: null })
-        .setHeaders(null);
+        .setQueryParameters({ page: WILDCARD })
+        .setHeaders(WILDCARD);
 
       expect(
         await request('/?page=2', {
@@ -707,7 +714,7 @@ describe('index', () => {
         slug: /^[a-z\-]*$/,
       })
         .setQueryParameters({ page: /^\d$/ })
-        .setHeaders(null);
+        .setHeaders(WILDCARD);
 
       const res = await request('/?page=2', {
         method: 'POST',
@@ -747,9 +754,9 @@ describe('index', () => {
 
     it('should retain a striped version of the request', async () => {
       const route = sb
-        .post('/', null)
-        .setHeaders(null)
-        .setQueryParameters(null);
+        .post('/', WILDCARD)
+        .setHeaders(WILDCARD)
+        .setQueryParameters(WILDCARD);
 
       await request('/?page=100', { method: 'POST', body: { some: 'body' } });
 

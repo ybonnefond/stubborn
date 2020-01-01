@@ -10,7 +10,6 @@ import {
   NextFunction,
   PathDefinition,
   Request,
-  DefinitionValue,
   RequestInfo,
   Response,
   ResponseBody,
@@ -316,7 +315,7 @@ function findContentType(headers: OutgoingHttpHeaders) {
 function applyTemplate(
   template: Template,
   req: Request,
-  scope?: DefinitionValue,
+  parentTemplate?: Template,
 ): JsonValue {
   if (null === template || 'undefined' === typeof template) {
     return '';
@@ -324,7 +323,7 @@ function applyTemplate(
 
   if (Array.isArray(template)) {
     return template.map(item => {
-      return applyTemplate(item, req, scope);
+      return applyTemplate(item, req, parentTemplate);
     });
   }
 
@@ -332,7 +331,7 @@ function applyTemplate(
 
   switch (type) {
     case 'function':
-      return (template as TemplateFunction)(req, scope);
+      return (template as TemplateFunction)(req, parentTemplate);
     case 'object':
       return Object.keys(template).reduce((obj, key) => {
         obj[key] = applyTemplate(
@@ -346,6 +345,6 @@ function applyTemplate(
       return String(template).replace(/^Symbol\((.*)\)$/, '$1');
 
     default:
-      return template;
+      return template as JsonValue;
   }
 }
