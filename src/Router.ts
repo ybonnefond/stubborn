@@ -20,22 +20,15 @@ import {
 } from './@types';
 
 import { EVENTS, METHODS, STATUS_CODES } from './constants';
+import { requestDiff } from './diff/requestDiff';
 import { middlewares } from './middlewares';
 import { Route } from './Route';
-import { RouteMatcher } from './RouteMatcher';
 import { getServerPort } from './utils';
 /**
  * @internal
  */
 export type RouterOptions = {
   host?: string;
-};
-/**
- * @internal
- */
-type MatchableRoute = {
-  route: Route;
-  matcher: RouteMatcher;
 };
 
 /**
@@ -51,7 +44,7 @@ export class Router {
   private port: number | null = null;
   private emitter: EventEmitter;
 
-  private routes: Set<MatchableRoute> = new Set();
+  private routes: Set<Route> = new Set();
 
   constructor(options: RouterOptions, emitter: EventEmitter) {
     this.emitter = emitter;
@@ -64,8 +57,7 @@ export class Router {
   }
 
   public addRoute(route: Route) {
-    const matcher = new RouteMatcher(route);
-    this.routes.add({ route, matcher });
+    this.routes.add(route);
 
     return route;
   }
@@ -179,9 +171,9 @@ function buildMiddlewares(router: Router) {
 /**
  * @internal
  */
-function findRoute(routes: Set<MatchableRoute>, req: Request) {
-  for (const [{ route, matcher }] of routes.entries()) {
-    if (matcher.match(req)) {
+function findRoute(routes: Set<Route>, req: Request) {
+  for (const [route] of routes.entries()) {
+    if (requestDiff(route, req).length === 0) {
       return route;
     }
   }

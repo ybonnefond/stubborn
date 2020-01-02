@@ -1,11 +1,7 @@
 import EventEmitter from 'events';
 import { createServer, Server } from 'http';
 
-import {
-  HeadersDefinition,
-  PathDefinition,
-  RequestBodyDefinition,
-} from './@types';
+import { BodyDefinition, HeadersDefinition, PathDefinition } from './@types';
 import { METHODS } from './constants';
 import { Route } from './Route';
 import { Router } from './Router';
@@ -102,7 +98,7 @@ export class Stubborn {
    * @param path Path matching definition
    * @param body Request body definition
    */
-  public patch(path: PathDefinition, body: RequestBodyDefinition = '') {
+  public patch(path: PathDefinition, body: BodyDefinition = '') {
     return this.router.createRoute(METHODS.PATCH, path).setBody(body);
   }
 
@@ -112,7 +108,7 @@ export class Stubborn {
    * @param path Path matching definition
    * @param body Request body definition
    */
-  public post(path: PathDefinition, body: RequestBodyDefinition = '') {
+  public post(path: PathDefinition, body: BodyDefinition = '') {
     return this.router.createRoute(METHODS.POST, path).setBody(body);
   }
 
@@ -122,7 +118,7 @@ export class Stubborn {
    * @param path Path matching definition
    * @param body Request body definition
    */
-  public put(path: PathDefinition, body: RequestBodyDefinition = '') {
+  public put(path: PathDefinition, body: BodyDefinition = '') {
     return this.router.createRoute(METHODS.PUT, path).setBody(body);
   }
   /**

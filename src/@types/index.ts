@@ -1,11 +1,12 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import { METHODS, WILDCARD } from '../constants';
+import { DIFF_TYPES, METHODS, WILDCARD } from '../constants';
 
 export type JsonPrimitive = string | number | boolean | null;
 export type JsonObject = { [member: string]: JsonValue };
 export interface JsonArray extends Array<JsonValue> {}
 export type JsonValue = JsonPrimitive | JsonObject | JsonArray;
 
+// TODO use generic type in match function so each element (header, body, query, etc...) can specify the type of the value
 export type MatchFunction = (value: JsonValue) => boolean;
 export type DefinitionMatcher = RegExp | MatchFunction | typeof WILDCARD;
 export type DefinitionValue =
@@ -22,17 +23,16 @@ export type HeadersDefinition =
   | Record<string, HeaderDefinition>
   | typeof WILDCARD;
 
-export type RequestBodyDefinitionPrimitive = DefinitionMatcher | JsonValue;
-export type RequestBodyDefinitionObject = {
-  [member: string]: RequestBodyDefinitionValue;
+export type BodyDefinitionPrimitive = DefinitionMatcher | JsonValue;
+export type BodyDefinitionObject = {
+  [member: string]: BodyDefinitionValue;
 };
-export interface RequestBodyDefinitionArray
-  extends Array<RequestBodyDefinitionValue> {}
-export type RequestBodyDefinitionValue =
-  | RequestBodyDefinitionPrimitive
-  | RequestBodyDefinitionObject
-  | RequestBodyDefinitionArray;
-export type RequestBodyDefinition = undefined | RequestBodyDefinitionValue;
+export interface BodyDefinitionArray extends Array<BodyDefinitionValue> {}
+export type BodyDefinitionValue =
+  | BodyDefinitionPrimitive
+  | BodyDefinitionObject
+  | BodyDefinitionArray;
+export type BodyDefinition = undefined | BodyDefinitionValue;
 
 export type QueryParameterDefinitionPrimitives =
   | DefinitionMatcher
@@ -98,3 +98,10 @@ export type ResponseHeaders = {
 };
 
 export type ResponseBody = JsonValue;
+
+export interface DiffError {
+  type: DIFF_TYPES;
+  definition: string | null;
+  value: JsonValue;
+  path: string;
+}
