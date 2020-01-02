@@ -1,10 +1,10 @@
 import {
+  BodyDefinition,
   HeaderDefinition,
   HeadersDefinition,
   PathDefinition,
   QueryDefinition,
   QueryParameterDefinition,
-  RequestBodyDefinition,
   RequestInfo,
   ResponseDefinition,
   ResponseHeaders,
@@ -17,7 +17,7 @@ import { METHODS, STATUS_CODES, WILDCARD } from './constants';
  * Object holding the route definitions, requests matchers and response templates
  */
 export class Route {
-  private body: RequestBodyDefinition = undefined;
+  private body: BodyDefinition = undefined;
   private headers: HeadersDefinition = {};
   private query: QueryDefinition = {};
 
@@ -221,7 +221,7 @@ export class Route {
    * ```
    * @param body Body definition
    */
-  public setBody(body: RequestBodyDefinition) {
+  public setBody(body: BodyDefinition) {
     this.body = body;
 
     return this;

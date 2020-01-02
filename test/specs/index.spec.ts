@@ -155,6 +155,14 @@ describe('index', () => {
     });
 
     describe('Headers', () => {
+      it('should return SUCCESS if headers are wildcarded', async () => {
+        sb.get('/').setHeaders(WILDCARD);
+
+        expect(
+          await request('/', { headers: { Authorization: 'token' } }),
+        ).toReplyWith(STATUS_CODES.SUCCESS);
+      });
+
       it('should return NOT_IMPLEMENTED if header is not in definition', async () => {
         sb.get('/');
 
@@ -185,14 +193,6 @@ describe('index', () => {
         ).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
       });
 
-      it('should return SUCCESS if header is wildcarded', async () => {
-        sb.get('/').setHeaders(WILDCARD);
-
-        expect(
-          await request('/', { headers: { Authorization: 'token' } }),
-        ).toReplyWith(STATUS_CODES.SUCCESS);
-      });
-
       it('should return SUCCESS if header is WILDCARD and in request', async () => {
         sb.get('/').setHeaders({ Authorization: WILDCARD });
 
@@ -212,6 +212,14 @@ describe('index', () => {
 
         expect(
           await request('/', { headers: { Authorization: 'token' } }),
+        ).toReplyWith(STATUS_CODES.SUCCESS);
+      });
+
+      it('should return SUCCESS if header is strictly equal to the definition and case is different', async () => {
+        sb.get('/').setHeaders({ Authorization: 'token' });
+
+        expect(
+          await request('/', { headers: { AUTHORIZATION: 'token' } }),
         ).toReplyWith(STATUS_CODES.SUCCESS);
       });
 

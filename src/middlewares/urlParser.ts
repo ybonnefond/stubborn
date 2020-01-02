@@ -43,10 +43,13 @@ function convertSearchParamsToQuery(
       if (!Array.isArray(query[key])) {
         query[key] = [query[key] as string];
       }
-      (query[key] as string[]).push(value);
     }
 
-    query[key] = value;
+    if (Array.isArray(query[key])) {
+      (query[key] as string[]).push(value);
+    } else {
+      query[key] = value;
+    }
   }
 
   return query;
