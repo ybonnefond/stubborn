@@ -30,7 +30,7 @@ describe('index', () => {
     expect(req.path).toBe('/');
     expect(req.headers).toEqual({
       accept: 'application/json',
-      'accept-encoding': 'gzip, deflate',
+      'accept-encoding': expect.any(String),
       connection: 'close',
       host: expect.any(String),
       'user-agent': expect.any(String),
@@ -67,16 +67,16 @@ describe('index', () => {
       it('should return SUCCESS if method is POST with empty body', async () => {
         sb.post('/', '');
 
-        expect(
-          await request('/', { method: 'POST', json: false, body: '' }),
-        ).toReplyWith(STATUS_CODES.SUCCESS);
+        expect(await request('/', { method: 'POST', body: '' })).toReplyWith(
+          STATUS_CODES.SUCCESS,
+        );
       });
 
       it('should return SUCCESS if method is POST with string body', async () => {
         sb.post('/', 'body');
 
         expect(
-          await request('/', { method: 'POST', json: false, body: 'body' }),
+          await request('/', { method: 'POST', body: 'body' }),
         ).toReplyWith(STATUS_CODES.SUCCESS);
       });
 
@@ -91,9 +91,9 @@ describe('index', () => {
       it('should return SUCCESS if method is PUT with string body', async () => {
         sb.put('/', 'body');
 
-        expect(
-          await request('/', { method: 'PUT', json: false, body: 'body' }),
-        ).toReplyWith(STATUS_CODES.SUCCESS);
+        expect(await request('/', { method: 'PUT', body: 'body' })).toReplyWith(
+          STATUS_CODES.SUCCESS,
+        );
       });
 
       it('should return SUCCESS if method is PATCH', async () => {
@@ -108,7 +108,7 @@ describe('index', () => {
         sb.patch('/', 'body');
 
         expect(
-          await request('/', { method: 'PATCH', json: false, body: 'body' }),
+          await request('/', { method: 'PATCH', body: 'body' }),
         ).toReplyWith(STATUS_CODES.SUCCESS);
       });
 
@@ -266,12 +266,12 @@ describe('index', () => {
         const res = await request('/', {
           method: 'post',
           body: '{"key": "value"}',
-          json: false,
+          responseType: 'text',
           headers: { Accept: 'application/vnd.api+json' },
         });
         expect(res).toReplyWith(STATUS_CODES.SUCCESS);
 
-        const body = JSON.parse(res.body);
+        const body = JSON.parse(res.body as string);
         expect(body).toStrictEqual({ key: 'ok' });
       });
     });
@@ -379,7 +379,11 @@ describe('index', () => {
         sb.post('/');
 
         expect(
-          await request('/', { method: 'POST', body: 'test', json: false }),
+          await request('/', {
+            method: 'POST',
+            body: 'test',
+            responseType: 'text',
+          }),
         ).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
       });
 
@@ -403,7 +407,6 @@ describe('index', () => {
             await request('/', {
               method: 'POST',
               body: 'test',
-              json: false,
               headers: { 'Content-Type': 'text/plain' },
             }),
           ).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
@@ -416,7 +419,6 @@ describe('index', () => {
             await request('/', {
               method: 'POST',
               body: 'test',
-              json: false,
               headers: { 'Content-Type': 'text/plain' },
             }),
           ).toReplyWith(STATUS_CODES.SUCCESS);
@@ -429,7 +431,6 @@ describe('index', () => {
             await request('/', {
               method: 'POST',
               body: 'test2',
-              json: false,
               headers: { 'Content-Type': 'text/plain' },
             }),
           ).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
@@ -445,8 +446,7 @@ describe('index', () => {
           expect(
             await request('/', {
               method: 'POST',
-              body: { key: 'value' },
-              json: true,
+              json: { key: 'value' },
             }),
           ).toReplyWith(STATUS_CODES.SUCCESS);
         });
@@ -459,8 +459,7 @@ describe('index', () => {
           expect(
             await request('/', {
               method: 'POST',
-              body: { key: 'value' },
-              json: true,
+              json: { key: 'value' },
             }),
           ).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
         });
@@ -473,8 +472,7 @@ describe('index', () => {
           expect(
             await request('/', {
               method: 'POST',
-              body: { key: 'value' },
-              json: true,
+              json: { key: 'value' },
             }),
           ).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
         });
@@ -487,8 +485,7 @@ describe('index', () => {
           expect(
             await request('/', {
               method: 'POST',
-              body: { key: 'value' },
-              json: true,
+              json: { key: 'value' },
             }),
           ).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
         });
@@ -501,8 +498,7 @@ describe('index', () => {
           expect(
             await request('/', {
               method: 'POST',
-              body: { subObject: { subArray: [{ key: 'value' }] } },
-              json: true,
+              json: { subObject: { subArray: [{ key: 'value' }] } },
             }),
           ).toReplyWith(STATUS_CODES.SUCCESS);
         });
@@ -515,8 +511,7 @@ describe('index', () => {
           expect(
             await request('/', {
               method: 'POST',
-              body: { key: 11, key2: [{ subkey: 13 }] },
-              json: true,
+              json: { key: 11, key2: [{ subkey: 13 }] },
             }),
           ).toReplyWith(STATUS_CODES.SUCCESS);
         });
@@ -533,8 +528,7 @@ describe('index', () => {
           expect(
             await request('/', {
               method: 'POST',
-              body: { key: 'test', key2: [{ subkey: 'toto' }] },
-              json: true,
+              json: { key: 'test', key2: [{ subkey: 'toto' }] },
             }),
           ).toReplyWith(STATUS_CODES.SUCCESS);
         });
@@ -549,8 +543,7 @@ describe('index', () => {
         headers: {
           'x-api-key': 'API_KEY',
         },
-        body: { key: 'value' },
-        json: true,
+        json: { key: 'value' },
       };
       expect(await request('/?page=10&limit=100', options)).toReplyWith(
         STATUS_CODES.NOT_IMPLEMENTED,
@@ -561,7 +554,7 @@ describe('index', () => {
             path: '/',
             headers: expect.objectContaining(options.headers),
             query: { page: '10', limit: '100' },
-            body: options.body,
+            body: options.json,
             hash: expect.any(String),
           },
         },
@@ -606,7 +599,7 @@ describe('index', () => {
         .setResponseBody('toto')
         .setResponseHeader('Content-Type', 'application/json; charset=utf-8');
 
-      expect(await request('/', { json: false })).toReplyWith(
+      expect(await request('/', { responseType: 'text' })).toReplyWith(
         STATUS_CODES.SUCCESS,
         JSON.stringify('toto'),
       );
@@ -615,7 +608,7 @@ describe('index', () => {
     it('should respond with no encodding if accept and content-type is not provided', async () => {
       sb.get('/').setResponseBody('toto');
 
-      expect(await request('/', { json: false })).toReplyWith(
+      expect(await request('/', { responseType: 'text' })).toReplyWith(
         STATUS_CODES.SUCCESS,
         'toto',
       );
@@ -625,7 +618,7 @@ describe('index', () => {
       sb.get('/').setResponseBody({ custom: 'body' });
 
       expect(
-        await request('/', { json: true }),
+        await request('/', { responseType: 'json' }),
       ).toReplyWith(STATUS_CODES.SUCCESS, { custom: 'body' });
     });
 
@@ -670,11 +663,7 @@ describe('index', () => {
       const body = { some: 'body' };
       sb.get('/').setResponseBody({ some: 'body' });
 
-      expect(
-        await request('/', {
-          json: true,
-        }),
-      ).toReplyWith(STATUS_CODES.SUCCESS, body);
+      expect(await request('/')).toReplyWith(STATUS_CODES.SUCCESS, body);
     });
 
     it('should respond 501 if a parameter is missing', async () => {
@@ -729,7 +718,7 @@ describe('index', () => {
 
       const res = await request('/?page=2', {
         method: 'POST',
-        body: { slug: 'stubborn-ws' },
+        json: { slug: 'stubborn-ws' },
       });
 
       expect(res).toReplyWith(STATUS_CODES.SUCCESS);
@@ -769,7 +758,7 @@ describe('index', () => {
         .setHeaders(WILDCARD)
         .setQueryParameters(WILDCARD);
 
-      await request('/?page=100', { method: 'POST', body: { some: 'body' } });
+      await request('/?page=100', { method: 'POST', json: { some: 'body' } });
 
       expect(route.countCalls()).toBe(1);
       expect(route.getCall(0)).toEqual({
@@ -795,9 +784,7 @@ describe('index', () => {
     it('should return SUCCESS if method is GET', async () => {
       sb.addRoute(new Route(METHODS.GET, '/'));
 
-      expect(await request('/', { json: false })).toReplyWith(
-        STATUS_CODES.SUCCESS,
-      );
+      expect(await request('/')).toReplyWith(STATUS_CODES.SUCCESS);
     });
   });
 
@@ -861,8 +848,7 @@ describe('index', () => {
           'x-header-1': 'Bearer world',
           'x-header-extra': 'x-extra-header-123',
         },
-        json: true,
-        body: {
+        json: {
           firstname: 123,
           lastname: 'Donald',
           extraKey: 'extra key value',

@@ -78,7 +78,7 @@ describe('bodyDiff', () => {
     [{ a: { b: { c: END_WITH_LO } } }, { a: { b: { c: 'hello' } } }],
   ])('should pass with def %p and value %p', (...args) => {
     const [def, val] = args;
-    const result = bodyDiff(def, val);
+    const result = bodyDiff(def as BodyDefinition, val);
     expect(result).toEqual([]);
   });
 
