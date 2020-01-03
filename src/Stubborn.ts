@@ -2,7 +2,7 @@ import EventEmitter from 'events';
 import { createServer, Server } from 'http';
 
 import { BodyDefinition, HeadersDefinition, PathDefinition } from './@types';
-import { METHODS } from './constants';
+import { EVENTS, METHODS } from './constants';
 import { Route } from './Route';
 import { Router } from './Router';
 import { getServerPort } from './utils';
@@ -70,6 +70,8 @@ export class Stubborn {
    */
   public clear() {
     this.router.clear();
+
+    this.emitter.emit(EVENTS.CLEARED);
 
     return this;
   }
@@ -157,5 +159,13 @@ export class Stubborn {
 
   public on(event: symbol, listener: (...args: any[]) => void) {
     this.emitter.on(event, listener);
+  }
+
+  public once(event: symbol, listener: (...args: any[]) => void) {
+    this.emitter.once(event, listener);
+  }
+
+  public off(event: symbol, listener: (...args: any[]) => void) {
+    this.emitter.off(event, listener);
   }
 }
