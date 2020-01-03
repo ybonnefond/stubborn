@@ -3,9 +3,13 @@ import diff from 'jest-diff';
 declare global {
   namespace jest {
     interface Expect {
-      toReplyWith<T>(statusCode: any, body?: any, headers?: any): Matchers<T>;
+      toReplyWith<R, T>(
+        statusCode: any,
+        body?: any,
+        headers?: any,
+      ): Matchers<R, T>;
     }
-    interface Matchers<R> {
+    interface Matchers<R, T> {
       toReplyWith(
         statusCode: any,
         body?: any,

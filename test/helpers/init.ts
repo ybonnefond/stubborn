@@ -10,17 +10,12 @@ export function init() {
   beforeEach(async () => await sb.clear());
 
   function request(path = '/', options = {}) {
-    return got(
-      `${sb.getOrigin()}${path}`,
-      Object.assign(
-        {
-          method: 'GET',
-          json: true,
-          throwHttpErrors: false,
-        },
-        options,
-      ),
-    );
+    return got(`${sb.getOrigin()}${path}`, {
+      method: 'GET',
+      responseType: 'json',
+      throwHttpErrors: false,
+      ...options,
+    });
   }
 
   return { sb, request };
