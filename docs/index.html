@@ -50,10 +50,7 @@
 <hr />
 
 <h2 id="installation">Installation</h2>
-<p>Stubborn is tested on NodeJS 8.x and above.</p>
-<p>Npm:</p>
-<div><pre class="line-numbers"><code class="language-none">npm install --save-dev stubborn-ws</code></pre></div><p>Yarn:</p>
-<div><pre class="line-numbers"><code class="language-none">yarn add -D stubborn-ws</code></pre></div><h2 id="usage">Usage</h2>
+<div><pre class="line-numbers"><code class="language-none">npm install --save-dev stubborn-ws</code></pre></div><div><pre class="line-numbers"><code class="language-none">yarn add -D stubborn-ws</code></pre></div><h2 id="usage">Usage</h2>
 <p>Stubborn is a testing tool that let you <strong>hot</strong> load and unload routes into a webserver.
 Requests are <strong>strictly</strong> matched against routes definitions based on Method, Path, Query parameters, Headers and Body.
 If the request does not exactly match one route definition (ex: extra parameter, missing parameter, value does not match, etc), Stubborn will respond with a 501.</p>
@@ -144,18 +141,15 @@ describe(&#39;Test&#39;, () =&gt; {
 <h4 id="q-stubborn-is-not-matching-my-route-definition-and-always-return-a-501">Q: Stubborn is not matching my route definition and always return a 501</h4>
 <p>Stubborn is STUBBORN, therefore it will return a 501 if it does not exactly match the route definition you have set up.
 To help you find what missing in the route definition, you can compare it to the response body returned when receiving a 501:</p>
-<div><pre class="line-numbers"><code class="language-typescript">import {EVENTS} from &#39;stubborn-ws&#39;;
+<div><pre class="line-numbers"><code class="language-typescript">import {logDiff} from &#39;stubborn-ws&#39;;
 
 const route = sb
   .get(&#39;/&#39;)
   // This header definition will miss additional header added by got, like user-agent, connexion, etc...
   .setHeaders({ &#39;X-Api-Key&#39;: &#39;test&#39; });
 
-console.log(&#39;--- DEFINITION ---\n&#39;, route.getDefinition());
-sb.on(
-  EVENTS.NOT_IMPLEMENTED, 
-  (req) =&gt; console.log(&#39;--- REQUEST ---\n&#39;, req)
-);
+// Will log in console the diff between the route and any request throwing a 501
+logDiffOn501(sb, route);
 
 const res = await request(sb.getOrigin(), {
   headers: { &#39;x-api-key&#39;: &#39;api key&#39; },

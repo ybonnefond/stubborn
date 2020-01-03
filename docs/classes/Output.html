@@ -42,7 +42,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li>Stubborn</li>
+  <li>Output</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -60,29 +60,12 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/Stubborn.ts</code>
+            <code>src/debug/Output.ts</code>
         </p>
 
 
 
 
-            <p class="comment">
-                <h3>Example</h3>
-            </p>
-            <div class="io-description">
-                        <div>
-                            <pre class="line-numbers"><code class="language-html">```typescript
- * import { Stubborn } from 'stubborn-ws';
- * const sb = new Stubborn();
- *
- * sb.get('/').setResponseBody({ some: 'body' });
- *
- * const res = await got(`${sb.getOrigin()}`, { json: true });
- *
- * expect(res.body).toEqual({ some: 'body' });
- * ```</code></pre>
-                        </div>
-            </div>
 
             <section>
     <h3 id="index">Index</h3>
@@ -98,23 +81,7 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Private</span>
-                                <a href="#emitter">emitter</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#options">options</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#port">port</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#router">router</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#server">server</a>
+                                <a href="#currentTab">currentTab</a>
                             </li>
                         </ul>
                     </td>
@@ -130,59 +97,75 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#addRoute">addRoute</a>
+                                <a href="#add">add</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#clear">clear</a>
+                                <a href="#addition">addition</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#additionLabel">additionLabel</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#delete">delete</a>
+                                <a href="#category">category</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#get">get</a>
+                                <a href="#errorEq">errorEq</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#getOrigin">getOrigin</a>
+                                <a href="#errorExt">errorExt</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#getPort">getPort</a>
+                                <a href="#errorMiss">errorMiss</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#off">off</a>
+                                <a href="#newLine">newLine</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#on">on</a>
+                                <a href="#pullTab">pullTab</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#once">once</a>
+                                <a href="#pushTab">pushTab</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#patch">patch</a>
+                                <a href="#render">render</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#post">post</a>
+                                <a href="#renderError">renderError</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#put">put</a>
+                                <a href="#renderErrors">renderErrors</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#start">start</a>
+                                <a href="#renderMultiplesErrors">renderMultiplesErrors</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#stop">stop</a>
+                                <a href="#renderOneError">renderOneError</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#substractionLabel">substractionLabel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#substration">substration</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#tab">tab</a>
                             </li>
                         </ul>
                     </td>
@@ -202,12 +185,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(options: <a href="../classes/Stubborn.html">StubbornOptions</a>)</code>
+<code>constructor(output: string[])</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/Stubborn.ts:33</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="7" class="link-to-prism">src/debug/Output.ts:7</a></div>
                             </td>
                         </tr>
 
@@ -225,10 +208,10 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>options</td>
+                                                        <td>output</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../classes/Stubborn.html" target="_self" >StubbornOptions</a></code>
+                                                                    <code>string[]</code>
                                                         </td>
                                                   
                                                     <td>
@@ -254,141 +237,29 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="emitter"></a>
+                        <a name="currentTab"></a>
                         <span class="name">
                             <b>
                                 <span class="modifier">Private</span>
-                            emitter</b>
-                            <a href="#emitter"><span class="icon ion-ios-link"></span></a>
+                            currentTab</b>
+                            <a href="#currentTab"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
 
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>new EventEmitter()</code>
+                            <i>Default value : </i><code>0</code>
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/Stubborn.ts:33</a></div>
-                            </td>
-                        </tr>
-
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="options"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
-                            options</b>
-                            <a href="#options"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="../classes/Stubborn.html" target="_self" >StubbornOptions</a></code>
-
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/Stubborn.ts:32</a></div>
-                            </td>
-                        </tr>
-
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="port"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
-                            port</b>
-                            <a href="#port"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>    <code>number | null</code>
-
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/Stubborn.ts:30</a></div>
-                            </td>
-                        </tr>
-
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="router"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
-                            router</b>
-                            <a href="#router"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="../classes/Route.html" target="_self" >Router</a></code>
-
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/Stubborn.ts:31</a></div>
-                            </td>
-                        </tr>
-
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="server"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
-                            server</b>
-                            <a href="#server"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>    <code>Server</code>
-
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/Stubborn.ts:29</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="7" class="link-to-prism">src/debug/Output.ts:7</a></div>
                             </td>
                         </tr>
 
@@ -406,36 +277,34 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="addRoute"></a>
+                    <a name="add"></a>
                     <span class="name">
                         <b>
                             <span class="modifier">Public</span>
-                            addRoute
+                            add
                         </b>
-                        <a href="#addRoute"><span class="icon ion-ios-link"></span></a>
+                        <a href="#add"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>addRoute(route: <a href="../classes/Route.html">Route</a>)</code>
+                    <code>add(lines: string | string[])</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="131"
-                            class="link-to-prism">src/Stubborn.ts:131</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="10"
+                            class="link-to-prism">src/debug/Output.ts:10</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Register a new route</p>
-</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -445,14 +314,13 @@
                                     <td>Name</td>
                                     <td>Type</td>
                                     <td>Optional</td>
-                                    <td>Description</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>route</td>
+                                    <td>lines</td>
                                     <td>
-                                                <code><a href="../classes/Route.html" target="_self" >Route</a></code>
+                                            <code>string | string[]</code>
                                     </td>
 
                                     <td>
@@ -460,10 +328,78 @@
                                     </td>
 
 
-                                    <td>
-                                        <p>Route a Route object</p>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>this</code>
 
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addition"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            addition
+                        </b>
+                        <a href="#addition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addition(text: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="68"
+                            class="link-to-prism">src/debug/Output.ts:68</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>text</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
                                 </tr>
                             </tbody>
                         </table>
@@ -485,36 +421,394 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="clear"></a>
+                    <a name="additionLabel"></a>
                     <span class="name">
                         <b>
-                            <span class="modifier">Public</span>
-                            clear
+                            <span class="modifier">Private</span>
+                            additionLabel
                         </b>
-                        <a href="#clear"><span class="icon ion-ios-link"></span></a>
+                        <a href="#additionLabel"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>clear()</code>
+                    <code>additionLabel(error: <a href="../interfaces/DiffError.html">DiffError</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="71"
-                            class="link-to-prism">src/Stubborn.ts:71</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="157"
+                            class="link-to-prism">src/debug/Output.ts:157</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Remove all routes from the server</p>
-</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>error</td>
+                                    <td>
+                                                <code><a href="../interfaces/DiffError.html" target="_self" >DiffError</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="category"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            category
+                        </b>
+                        <a href="#category"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>category(cat: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="21"
+                            class="link-to-prism">src/debug/Output.ts:21</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>cat</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>this</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorEq"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            errorEq
+                        </b>
+                        <a href="#errorEq"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>errorEq(error: <a href="../interfaces/DiffError.html">DiffError</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="31"
+                            class="link-to-prism">src/debug/Output.ts:31</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>error</td>
+                                    <td>
+                                                <code><a href="../interfaces/DiffError.html" target="_self" >DiffError</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorExt"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            errorExt
+                        </b>
+                        <a href="#errorExt"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>errorExt(error: <a href="../interfaces/DiffError.html">DiffError</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="49"
+                            class="link-to-prism">src/debug/Output.ts:49</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>error</td>
+                                    <td>
+                                                <code><a href="../interfaces/DiffError.html" target="_self" >DiffError</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorMiss"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            errorMiss
+                        </b>
+                        <a href="#errorMiss"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>errorMiss(error: <a href="../interfaces/DiffError.html">DiffError</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="42"
+                            class="link-to-prism">src/debug/Output.ts:42</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>error</td>
+                                    <td>
+                                                <code><a href="../interfaces/DiffError.html" target="_self" >DiffError</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="newLine"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            newLine
+                        </b>
+                        <a href="#newLine"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>newLine()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="27"
+                            class="link-to-prism">src/debug/Output.ts:27</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
 
                     <div class="io-description">
                         <b>Returns : </b>    <code>this</code>
@@ -528,178 +822,20 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="delete"></a>
+                    <a name="pullTab"></a>
                     <span class="name">
                         <b>
                             <span class="modifier">Public</span>
-                            delete
+                            pullTab
                         </b>
-                        <a href="#delete"><span class="icon ion-ios-link"></span></a>
+                        <a href="#pullTab"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>delete(path: <a href="../undefineds/PathDefinition.html">PathDefinition</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="84"
-                            class="link-to-prism">src/Stubborn.ts:84</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Create and Register a new DELETE route</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>path</td>
-                                    <td>
-                                                <code><a href="../miscellaneous/typealiases.html#PathDefinition" target="_self" >PathDefinition</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>Path matching definition</p>
-
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="get"></a>
-                    <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            get
-                        </b>
-                        <a href="#get"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>get(path: <a href="../undefineds/PathDefinition.html">PathDefinition</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="93"
-                            class="link-to-prism">src/Stubborn.ts:93</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Create and Register a new GET route</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>path</td>
-                                    <td>
-                                                <code><a href="../miscellaneous/typealiases.html#PathDefinition" target="_self" >PathDefinition</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>Path matching definition</p>
-
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="getOrigin"></a>
-                    <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            getOrigin
-                        </b>
-                        <a href="#getOrigin"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getOrigin()</code>
+                    <code>pullTab()</code>
                 </td>
             </tr>
 
@@ -707,24 +843,16 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="64"
-                            class="link-to-prism">src/Stubborn.ts:64</a></div>
+                            class="link-to-prism">src/debug/Output.ts:64</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Returns the server origin (http://&lt;options.host&gt;:<port>)</p>
-</div>
 
-                    <div>
-                    </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        <p>the server origin</p>
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                     </div>
                 </td>
@@ -735,20 +863,61 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="getPort"></a>
+                    <a name="pushTab"></a>
                     <span class="name">
                         <b>
                             <span class="modifier">Public</span>
-                            getPort
+                            pushTab
                         </b>
-                        <a href="#getPort"><span class="icon ion-ios-link"></span></a>
+                        <a href="#pushTab"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getPort()</code>
+                    <code>pushTab()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="60"
+                            class="link-to-prism">src/debug/Output.ts:60</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="render"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            render
+                        </b>
+                        <a href="#render"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>render()</code>
                 </td>
             </tr>
 
@@ -756,26 +925,16 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="56"
-                            class="link-to-prism">src/Stubborn.ts:56</a></div>
+                            class="link-to-prism">src/debug/Output.ts:56</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Returns the server port.</p>
-<p>If the server is initialized with options.port set to 0 this method
-will return the randomly affected port only after the server is started</p>
-</div>
 
-                    <div>
-                    </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>number | null</code>
-
-                    </div>
-                    <div class="io-description">
-                        <p>Listening port or null if the server is not started</p>
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
 
                     </div>
                 </td>
@@ -786,28 +945,28 @@ will return the randomly affected port only after the server is started</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="off"></a>
+                    <a name="renderError"></a>
                     <span class="name">
                         <b>
                             <span class="modifier">Public</span>
-                            off
+                            renderError
                         </b>
-                        <a href="#off"><span class="icon ion-ios-link"></span></a>
+                        <a href="#renderError"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>off(event: symbol, listener: (args: any[]) => void)</code>
+                    <code>renderError(error: <a href="../interfaces/DiffError.html">DiffError</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="168"
-                            class="link-to-prism">src/Stubborn.ts:168</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="130"
+                            class="link-to-prism">src/debug/Output.ts:130</a></div>
                 </td>
             </tr>
 
@@ -827,21 +986,9 @@ will return the randomly affected port only after the server is started</p>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>event</td>
+                                    <td>error</td>
                                     <td>
-                                            <code>symbol</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>listener</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+                                                <code><a href="../interfaces/DiffError.html" target="_self" >DiffError</a></code>
                                     </td>
 
                                     <td>
@@ -870,28 +1017,28 @@ will return the randomly affected port only after the server is started</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="on"></a>
+                    <a name="renderErrors"></a>
                     <span class="name">
                         <b>
                             <span class="modifier">Public</span>
-                            on
+                            renderErrors
                         </b>
-                        <a href="#on"><span class="icon ion-ios-link"></span></a>
+                        <a href="#renderErrors"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>on(event: symbol, listener: (args: any[]) => void)</code>
+                    <code>renderErrors(cat: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, errors: <a href="../interfaces/DiffError.html">DiffError[]</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="160"
-                            class="link-to-prism">src/Stubborn.ts:160</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="80"
+                            class="link-to-prism">src/debug/Output.ts:80</a></div>
                 </td>
             </tr>
 
@@ -911,9 +1058,9 @@ will return the randomly affected port only after the server is started</p>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>event</td>
+                                    <td>cat</td>
                                     <td>
-                                            <code>symbol</code>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
 
                                     <td>
@@ -923,9 +1070,9 @@ will return the randomly affected port only after the server is started</p>
 
                                 </tr>
                                 <tr>
-                                    <td>listener</td>
+                                    <td>errors</td>
                                     <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+                                                <code><a href="../interfaces/DiffError.html" target="_self" >DiffError[]</a></code>
                                     </td>
 
                                     <td>
@@ -954,28 +1101,28 @@ will return the randomly affected port only after the server is started</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="once"></a>
+                    <a name="renderMultiplesErrors"></a>
                     <span class="name">
                         <b>
                             <span class="modifier">Public</span>
-                            once
+                            renderMultiplesErrors
                         </b>
-                        <a href="#once"><span class="icon ion-ios-link"></span></a>
+                        <a href="#renderMultiplesErrors"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>once(event: symbol, listener: (args: any[]) => void)</code>
+                    <code>renderMultiplesErrors(errors: <a href="../interfaces/DiffError.html">DiffError[]</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="164"
-                            class="link-to-prism">src/Stubborn.ts:164</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="98"
+                            class="link-to-prism">src/debug/Output.ts:98</a></div>
                 </td>
             </tr>
 
@@ -995,21 +1142,9 @@ will return the randomly affected port only after the server is started</p>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>event</td>
+                                    <td>errors</td>
                                     <td>
-                                            <code>symbol</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>listener</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+                                                <code><a href="../interfaces/DiffError.html" target="_self" >DiffError[]</a></code>
                                     </td>
 
                                     <td>
@@ -1038,36 +1173,34 @@ will return the randomly affected port only after the server is started</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="patch"></a>
+                    <a name="renderOneError"></a>
                     <span class="name">
                         <b>
                             <span class="modifier">Public</span>
-                            patch
+                            renderOneError
                         </b>
-                        <a href="#patch"><span class="icon ion-ios-link"></span></a>
+                        <a href="#renderOneError"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>patch(path: <a href="../undefineds/PathDefinition.html">PathDefinition</a>, body: <a href="../undefineds/BodyDefinition.html">BodyDefinition</a>)</code>
+                    <code>renderOneError(errors: <a href="../interfaces/DiffError.html">DiffError[]</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="103"
-                            class="link-to-prism">src/Stubborn.ts:103</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="93"
+                            class="link-to-prism">src/debug/Output.ts:93</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Create and Register a new PACH route</p>
-</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -1077,47 +1210,92 @@ will return the randomly affected port only after the server is started</p>
                                     <td>Name</td>
                                     <td>Type</td>
                                     <td>Optional</td>
-                                    <td>Default value</td>
-                                    <td>Description</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>path</td>
+                                    <td>errors</td>
                                     <td>
-                                                <code><a href="../miscellaneous/typealiases.html#PathDefinition" target="_self" >PathDefinition</a></code>
+                                                <code><a href="../interfaces/DiffError.html" target="_self" >DiffError[]</a></code>
                                     </td>
 
                                     <td>
                                         No
                                     </td>
 
-                                    <td>
-                                    </td>
 
-                                    <td>
-                                        <p>Path matching definition</p>
-
-                                    </td>
                                 </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="substractionLabel"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            substractionLabel
+                        </b>
+                        <a href="#substractionLabel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>substractionLabel(error: <a href="../interfaces/DiffError.html">DiffError</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="153"
+                            class="link-to-prism">src/debug/Output.ts:153</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
                                 <tr>
-                                    <td>body</td>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>error</td>
                                     <td>
-                                                <code><a href="../miscellaneous/typealiases.html#BodyDefinition" target="_self" >BodyDefinition</a></code>
+                                                <code><a href="../interfaces/DiffError.html" target="_self" >DiffError</a></code>
                                     </td>
 
                                     <td>
                                         No
                                     </td>
 
-                                    <td>
-                                        <code>&#x27;&#x27;</code>
-                                    </td>
 
-                                    <td>
-                                        <p>Request body definition</p>
-
-                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1139,36 +1317,34 @@ will return the randomly affected port only after the server is started</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="post"></a>
+                    <a name="substration"></a>
                     <span class="name">
                         <b>
                             <span class="modifier">Public</span>
-                            post
+                            substration
                         </b>
-                        <a href="#post"><span class="icon ion-ios-link"></span></a>
+                        <a href="#substration"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>post(path: <a href="../undefineds/PathDefinition.html">PathDefinition</a>, body: <a href="../undefineds/BodyDefinition.html">BodyDefinition</a>)</code>
+                    <code>substration(text: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="113"
-                            class="link-to-prism">src/Stubborn.ts:113</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="72"
+                            class="link-to-prism">src/debug/Output.ts:72</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Create and Register a new POST route</p>
-</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -1178,47 +1354,20 @@ will return the randomly affected port only after the server is started</p>
                                     <td>Name</td>
                                     <td>Type</td>
                                     <td>Optional</td>
-                                    <td>Default value</td>
-                                    <td>Description</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>path</td>
+                                    <td>text</td>
                                     <td>
-                                                <code><a href="../miscellaneous/typealiases.html#PathDefinition" target="_self" >PathDefinition</a></code>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
 
                                     <td>
                                         No
                                     </td>
 
-                                    <td>
-                                    </td>
 
-                                    <td>
-                                        <p>Path matching definition</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>body</td>
-                                    <td>
-                                                <code><a href="../miscellaneous/typealiases.html#BodyDefinition" target="_self" >BodyDefinition</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-                                    <td>
-                                        <code>&#x27;&#x27;</code>
-                                    </td>
-
-                                    <td>
-                                        <p>Request body definition</p>
-
-                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1240,36 +1389,34 @@ will return the randomly affected port only after the server is started</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="put"></a>
+                    <a name="tab"></a>
                     <span class="name">
                         <b>
                             <span class="modifier">Public</span>
-                            put
+                            tab
                         </b>
-                        <a href="#put"><span class="icon ion-ios-link"></span></a>
+                        <a href="#tab"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>put(path: <a href="../undefineds/PathDefinition.html">PathDefinition</a>, body: <a href="../undefineds/BodyDefinition.html">BodyDefinition</a>)</code>
+                    <code>tab(text: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="123"
-                            class="link-to-prism">src/Stubborn.ts:123</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="76"
+                            class="link-to-prism">src/debug/Output.ts:76</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Create and Register a new PUT route</p>
-</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -1279,47 +1426,20 @@ will return the randomly affected port only after the server is started</p>
                                     <td>Name</td>
                                     <td>Type</td>
                                     <td>Optional</td>
-                                    <td>Default value</td>
-                                    <td>Description</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>path</td>
+                                    <td>text</td>
                                     <td>
-                                                <code><a href="../miscellaneous/typealiases.html#PathDefinition" target="_self" >PathDefinition</a></code>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
 
                                     <td>
                                         No
                                     </td>
 
-                                    <td>
-                                    </td>
 
-                                    <td>
-                                        <p>Path matching definition</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>body</td>
-                                    <td>
-                                                <code><a href="../miscellaneous/typealiases.html#BodyDefinition" target="_self" >BodyDefinition</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-                                    <td>
-                                        <code>&#x27;&#x27;</code>
-                                    </td>
-
-                                    <td>
-                                        <p>Request body definition</p>
-
-                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1327,139 +1447,11 @@ will return the randomly affected port only after the server is started</p>
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                     </div>
                     <div class="io-description">
                         
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="start"></a>
-                    <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            start
-                        </b>
-                        <a href="#start"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>start(port: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="139"
-                            class="link-to-prism">src/Stubborn.ts:139</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Start the Stubborn server</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Default value</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>port</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-                                    <td>
-                                        <code>0</code>
-                                    </td>
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        <p>Promise object resolved when server is started</p>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="stop"></a>
-                    <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            stop
-                        </b>
-                        <a href="#stop"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>stop()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="154"
-                            class="link-to-prism">src/Stubborn.ts:154</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Stop the Stubborn server</p>
-</div>
-
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        <p>Promise object resolved when server is stopped</p>
-
                     </div>
                 </td>
             </tr>
@@ -1475,175 +1467,164 @@ will return the randomly affected port only after the server is started</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import EventEmitter from &#x27;events&#x27;;
-import { createServer, Server } from &#x27;http&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import Color from &#x27;chalk&#x27;;
 
-import { BodyDefinition, HeadersDefinition, PathDefinition } from &#x27;./@types&#x27;;
-import { EVENTS, METHODS } from &#x27;./constants&#x27;;
-import { Route } from &#x27;./Route&#x27;;
-import { Router } from &#x27;./Router&#x27;;
-import { getServerPort } from &#x27;./utils&#x27;;
+import { DiffError } from &#x27;../@types&#x27;;
+import { DIFF_TYPES } from &#x27;../constants&#x27;;
 
-export type StubbornOptions &#x3D; {
-  host?: string;
-  defaultHeaders?: HeadersDefinition;
-};
+export class Output {
+  private currentTab &#x3D; 0;
+  constructor(private output: string[] &#x3D; []) {}
 
-/**
- * @example
- * &#x60;&#x60;&#x60;typescript
- * import { Stubborn } from &#x27;stubborn-ws&#x27;;
- * const sb &#x3D; new Stubborn();
- *
- * sb.get(&#x27;/&#x27;).setResponseBody({ some: &#x27;body&#x27; });
- *
- * const res &#x3D; await got(&#x60;${sb.getOrigin()}&#x60;, { json: true });
- *
- * expect(res.body).toEqual({ some: &#x27;body&#x27; });
- * &#x60;&#x60;&#x60;
- */
-export class Stubborn {
-  private server: Server;
-  private port: number | null;
-  private router: Router;
-  private options: StubbornOptions;
-  private emitter: EventEmitter &#x3D; new EventEmitter();
+  public add(lines: string | string[]) {
+    if (Array.isArray(lines)) {
+      lines.forEach(line &#x3D;&gt; this.add(line));
+      return this;
+    }
 
-  constructor(options: StubbornOptions &#x3D; {}) {
-    this.options &#x3D; Object.assign(
-      {
-        host: &#x27;localhost&#x27;,
-        defaultHeaders: {},
-      },
-      options,
-    );
-
-    this.port &#x3D; null;
-    this.server &#x3D; createServer();
-    this.router &#x3D; new Router({ host: this.options.host }, this.emitter);
-  }
-
-  /**
-   * Returns the server port.
-   *
-   * If the server is initialized with options.port set to 0 this method
-   * will return the randomly affected port only after the server is started
-   * @returns Listening port or null if the server is not started
-   */
-  public getPort(): number | null {
-    return getServerPort(this.server);
-  }
-
-  /**
-   * Returns the server origin (http://&lt;options.host&gt;:&lt;port&gt;)
-   * @returns the server origin
-   */
-  public getOrigin(): string {
-    return &#x60;http://${this.options.host}:${this.getPort()}&#x60;;
-  }
-
-  /**
-   * Remove all routes from the server
-   */
-  public clear() {
-    this.router.clear();
-
-    this.emitter.emit(EVENTS.CLEARED);
+    this.output.push(lines);
 
     return this;
   }
 
-  /**
-   * Create and Register a new DELETE route
-   *
-   * @param path Path matching definition
-   */
-  public delete(path: PathDefinition) {
-    return this.router.createRoute(METHODS.DELETE, path);
+  public category(cat: string) {
+    const ucCat &#x3D; cat[0].toUpperCase() + cat.slice(1);
+
+    return this.add(Color.bold.underline(ucCat));
   }
 
-  /**
-   * Create and Register a new GET route
-   *
-   * @param path Path matching definition
-   */
-  public get(path: PathDefinition) {
-    return this.router.createRoute(METHODS.GET, path);
+  public newLine() {
+    return this.add(&#x27;&#x27;);
   }
 
-  /**
-   * Create and Register a new PACH route
-   *
-   * @param path Path matching definition
-   * @param body Request body definition
-   */
-  public patch(path: PathDefinition, body: BodyDefinition &#x3D; &#x27;&#x27;) {
-    return this.router.createRoute(METHODS.PATCH, path).setBody(body);
+  public errorEq(error: DiffError) {
+    const substration &#x3D; &#x60;${this.substractionLabel(error)}: ${String(
+      error.value,
+    )}&#x60;;
+    const addition &#x3D; &#x60;${this.additionLabel(error)}: ${String(
+      error.definition,
+    )}&#x60;;
+    this.add(this.substration(this.tab(substration)));
+    this.add(this.addition(this.tab(addition)));
   }
 
-  /**
-   * Create and Register a new POST route
-   *
-   * @param path Path matching definition
-   * @param body Request body definition
-   */
-  public post(path: PathDefinition, body: BodyDefinition &#x3D; &#x27;&#x27;) {
-    return this.router.createRoute(METHODS.POST, path).setBody(body);
+  public errorMiss(error: DiffError) {
+    const addition &#x3D; &#x60;${this.additionLabel(error)}: ${String(
+      error.definition,
+    )}&#x60;;
+    this.add(this.addition(this.tab(addition)));
   }
 
-  /**
-   * Create and Register a new PUT route
-   *
-   * @param path Path matching definition
-   * @param body Request body definition
-   */
-  public put(path: PathDefinition, body: BodyDefinition &#x3D; &#x27;&#x27;) {
-    return this.router.createRoute(METHODS.PUT, path).setBody(body);
-  }
-  /**
-   * Register a new route
-   *
-   * @param route Route a Route object
-   */
-  public addRoute(route: Route) {
-    return this.router.addRoute(route);
+  public errorExt(error: DiffError) {
+    const subtraction &#x3D; &#x60;${this.substractionLabel(error)}: ${String(
+      error.value,
+    )}&#x60;;
+    this.add(this.substration(this.tab(subtraction)));
   }
 
-  /**
-   * Start the Stubborn server
-   * @returns Promise object resolved when server is started
-   */
-  public start(port: number &#x3D; 0) {
-    this.port &#x3D; port;
+  public render() {
+    return this.output.join(&#x27;\n&#x27;);
+  }
 
-    return new Promise(resolve &#x3D;&gt; {
-      this.server.listen(this.port);
-      this.router.handle(this.server);
-      resolve();
+  public pushTab() {
+    this.currentTab++;
+  }
+
+  public pullTab() {
+    this.currentTab--;
+  }
+
+  public addition(text: string) {
+    return Color.green(&#x60;+ ${text}&#x60;);
+  }
+
+  public substration(text: string) {
+    return Color.red(&#x60;- ${text}&#x60;);
+  }
+
+  public tab(text: string) {
+    return &#x27; &#x27;.repeat(this.currentTab * 2) + text;
+  }
+
+  public renderErrors(cat: string, errors: DiffError[]) {
+    if (errors.length &#x3D;&#x3D;&#x3D; 0) {
+      return;
+    }
+
+    this.newLine();
+
+    this.category(cat);
+    errors.length &#x3D;&#x3D;&#x3D; 1
+      ? this.renderOneError(errors)
+      : this.renderMultiplesErrors(errors);
+  }
+
+  public renderOneError(errors: DiffError[]) {
+    const error &#x3D; errors.pop() as DiffError;
+    this.renderError(error);
+  }
+
+  public renderMultiplesErrors(errors: DiffError[]) {
+    this.pushTab();
+
+    errors.sort((a: DiffError, b: DiffError) &#x3D;&gt; {
+      const types &#x3D; [
+        DIFF_TYPES.MISSING,
+        DIFF_TYPES.EXTRA,
+        DIFF_TYPES.FAIL_EQUALITY,
+        DIFF_TYPES.FAIL_MATCHING,
+        DIFF_TYPES.FAIL_FUNCTION,
+        DIFF_TYPES.INVALID_VALUE_TYPE,
+      ];
+      const aWeight &#x3D; types.length - types.indexOf(a.type);
+      const bWeight &#x3D; types.length - types.indexOf(b.type);
+
+      if (aWeight &#x3D;&#x3D;&#x3D; bWeight) {
+        return 0;
+      }
+
+      return aWeight &gt; bWeight ? -1 : 1;
     });
-  }
 
-  /**
-   * Stop the Stubborn server
-   *
-   * @returns Promise object resolved when server is stopped
-   */
-  public stop() {
-    return new Promise(resolve &#x3D;&gt; {
-      this.server.close(() &#x3D;&gt; resolve());
+    errors.forEach((e, i) &#x3D;&gt; {
+      if (i !&#x3D;&#x3D; 0 &amp;&amp; ![DIFF_TYPES.MISSING, DIFF_TYPES.EXTRA].includes(e.type)) {
+        this.newLine();
+      }
+
+      this.renderError(e);
     });
+    this.pullTab();
   }
 
-  public on(event: symbol, listener: (...args: any[]) &#x3D;&gt; void) {
-    this.emitter.on(event, listener);
+  public renderError(error: DiffError) {
+    switch (error.type) {
+      case DIFF_TYPES.FAIL_EQUALITY:
+        this.errorEq(error);
+        break;
+      case DIFF_TYPES.FAIL_MATCHING:
+        this.errorEq(error);
+        break;
+      case DIFF_TYPES.FAIL_FUNCTION:
+        this.errorEq(error);
+        break;
+      case DIFF_TYPES.MISSING:
+        this.errorMiss(error);
+        break;
+      case DIFF_TYPES.EXTRA:
+        this.errorExt(error);
+        break;
+      case DIFF_TYPES.INVALID_VALUE_TYPE:
+        this.errorEq(error);
+        break;
+    }
   }
 
-  public once(event: symbol, listener: (...args: any[]) &#x3D;&gt; void) {
-    this.emitter.once(event, listener);
+  private substractionLabel(error: DiffError) {
+    return error.path &#x3D;&#x3D;&#x3D; &#x27;&#x27; ? &#x27;Received&#x27; : error.path;
   }
 
-  public off(event: symbol, listener: (...args: any[]) &#x3D;&gt; void) {
-    this.emitter.off(event, listener);
+  private additionLabel(error: DiffError) {
+    return error.path &#x3D;&#x3D;&#x3D; &#x27;&#x27; ? &#x27;Expected&#x27; : error.path;
   }
 }
 </code></pre>
@@ -1674,7 +1655,7 @@ export class Stubborn {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
-            var COMPODOC_CURRENT_PAGE_URL = 'Stubborn.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'Output.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

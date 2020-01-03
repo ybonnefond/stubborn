@@ -55,10 +55,35 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </div>
                         <ul class="links collapse " ${ isNormalMode ? 'id="classes-links"' : 'id="xs-classes-links"' }>
                             <li class="link">
+                                <a href="classes/Debugger.html" data-type="entity-link">Debugger</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/Output.html" data-type="entity-link">Output</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/Route.html" data-type="entity-link">Route</a>
                             </li>
                             <li class="link">
                                 <a href="classes/Stubborn.html" data-type="entity-link">Stubborn</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#interfaces-links"' :
+                            'data-target="#xs-interfaces-links"' }>
+                            <span class="icon ion-md-information-circle-outline"></span>
+                            <span>Interfaces</span>
+                            <span class="icon ion-ios-arrow-down"></span>
+                        </div>
+                        <ul class="links collapse " ${ isNormalMode ? ' id="interfaces-links"' : 'id="xs-interfaces-links"' }>
+                            <li class="link">
+                                <a href="interfaces/BodyDefinitionArray.html" data-type="entity-link">BodyDefinitionArray</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/DiffError.html" data-type="entity-link">DiffError</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/JsonArray.html" data-type="entity-link">JsonArray</a>
                             </li>
                         </ul>
                     </li>

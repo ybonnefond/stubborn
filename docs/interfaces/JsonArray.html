@@ -1,0 +1,248 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>stubborn-ws documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">stubborn-ws documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Interfaces</li>
+  <li>JsonArray</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/@types/index.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Extends</h3>
+            </p>
+            <p class="comment">
+                    <code>Array</code>
+            </p>
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { IncomingMessage, ServerResponse } from &#x27;http&#x27;;
+import { DIFF_TYPES, METHODS, WILDCARD } from &#x27;../constants&#x27;;
+
+export type JsonPrimitive &#x3D; string | number | boolean | null;
+export type JsonObject &#x3D; { [member: string]: JsonValue };
+export interface JsonArray extends Array&lt;JsonValue&gt; {}
+export type JsonValue &#x3D; JsonPrimitive | JsonObject | JsonArray;
+
+// TODO use generic type in match function so each element (header, body, query, etc...) can specify the type of the value
+export type MatchFunction &#x3D; (value: JsonValue) &#x3D;&gt; boolean;
+export type DefinitionMatcher &#x3D; RegExp | MatchFunction | typeof WILDCARD;
+export type DefinitionValue &#x3D;
+  | DefinitionMatcher
+  | JsonValue
+  | undefined
+  | METHODS; // Any possible values for definition
+
+// Request part definitions types
+export type MethodDefinition &#x3D; METHODS;
+export type PathDefinition &#x3D; DefinitionMatcher | string;
+export type HeaderDefinition &#x3D; DefinitionMatcher | string | number;
+export type HeadersDefinition &#x3D;
+  | Record&lt;string, HeaderDefinition&gt;
+  | typeof WILDCARD;
+
+export type BodyDefinitionPrimitive &#x3D; DefinitionMatcher | JsonValue;
+export type BodyDefinitionObject &#x3D; {
+  [member: string]: BodyDefinitionValue;
+};
+export interface BodyDefinitionArray extends Array&lt;BodyDefinitionValue&gt; {}
+export type BodyDefinitionValue &#x3D;
+  | BodyDefinitionPrimitive
+  | BodyDefinitionObject
+  | BodyDefinitionArray;
+export type BodyDefinition &#x3D; undefined | BodyDefinitionValue;
+
+export type QueryParameterDefinitionPrimitives &#x3D;
+  | DefinitionMatcher
+  | string
+  | number;
+export type QueryParameterDefinition &#x3D;
+  | QueryParameterDefinitionPrimitives
+  | QueryParameterDefinitionPrimitives[];
+export type QueryDefinition &#x3D;
+  | Record&lt;string, QueryParameterDefinition&gt;
+  | typeof WILDCARD;
+
+export type TemplateFunction &#x3D; (request: Request, scope: any) &#x3D;&gt; JsonValue;
+export type TemplateObject &#x3D; { [key: string]: Template };
+export type TemplateArray &#x3D; { [index: number]: Template };
+
+export type Template &#x3D;
+  | JsonValue
+  | TemplateFunction
+  | TemplateObject
+  | TemplateArray;
+
+export type ResponseDefinition &#x3D; {
+  statusCode: number;
+  headers: Record&lt;string, string | TemplateFunction&gt;;
+  body: Template;
+};
+
+export type RequestHeaders &#x3D; Record&lt;string, string&gt;;
+export type RequestQuery &#x3D; Record&lt;string, string | string[]&gt;;
+export type RequestBody &#x3D; JsonValue | undefined;
+export type RequestPath &#x3D; string;
+export type RequestHash &#x3D; string;
+export type RequestMethod &#x3D; string;
+
+export type RequestInfo &#x3D; {
+  headers: RequestHeaders;
+  body: RequestBody;
+  path: RequestPath;
+  query: RequestQuery;
+  hash: RequestHash;
+  method: RequestMethod;
+};
+
+export type Request &#x3D; IncomingMessage &amp;
+  RequestInfo &amp; {
+    searchParams?: URLSearchParams;
+  };
+
+export type Response &#x3D; ServerResponse;
+export type NextFunction &#x3D; (err?: any) &#x3D;&gt; void;
+
+export type Middleware &#x3D; (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) &#x3D;&gt; any;
+
+export type RequestMatcher &#x3D; (req: Request) &#x3D;&gt; boolean;
+
+export type ResponseHeaders &#x3D; {
+  [key: string]: string;
+};
+
+export type ResponseBody &#x3D; JsonValue;
+
+export interface DiffError {
+  type: DIFF_TYPES;
+  definition: string | null;
+  value: JsonValue;
+  path: string;
+}
+</code></pre>
+    </div>
+</div>
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'JsonArray.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
