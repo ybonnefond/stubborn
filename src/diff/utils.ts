@@ -121,6 +121,10 @@ function stringify(val: any) {
     return val.toString();
   }
 
+  if (Array.isArray(val)) {
+    return `[${String(val)}]`;
+  }
+
   return String(val);
 }
 

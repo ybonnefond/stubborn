@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`index debug should output various stuff 1`] = `
+"Method
+- Received: post
++ Expected: put
+
+Path
+- Received: /test
++ Expected: /
+
+Headers
++   x-header-missing: missing-header-123
+-   x-header-extra: x-extra-header-123
+
+-   x-header-1: Bearer world
++   x-header-1: Bearer hello
+
+Query
++   missingParam: /^[0-9]+$/
+-   extraParam: 10
+
+-   param1: ten
++   param1: /^[0-9]+$/
+
+Body
++   missingKey: key missing
+-   extraKey: extra key value
+
+-   pets.0.type: dog
++   pets.0.type: cat
+
+-   firstname: 123
++   firstname: /^[a-z]+$/
+
+-   lastname: Donald
++   lastname: val => val === 'Doe'
+
+-   roles: writer
++   roles: [writer,reviewer]"
+`;

@@ -1,6 +1,7 @@
 import {
   EVENTS,
   JsonValue,
+  logDiffOn501,
   MatchFunction,
   METHODS,
   Route,
@@ -9,6 +10,7 @@ import {
 
 import { Request } from '../../src/@types';
 import { STATUS_CODES } from '../../src/constants';
+import { Debugger } from '../../src/debug/Debugger';
 import { init } from '../helpers';
 import { toReplyWith } from '../matchers';
 
@@ -22,7 +24,8 @@ describe('index', () => {
 
     expect(await request('/')).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
     expect(mockFn).toHaveBeenCalledTimes(1);
-    const [req]: [Request] = mockFn.mock.calls[0];
+    const [dbg]: [Debugger] = mockFn.mock.calls[0];
+    const req = dbg.getInfo();
     expect(req.method).toBe('GET');
     expect(req.path).toBe('/');
     expect(req.headers).toEqual({
@@ -795,6 +798,89 @@ describe('index', () => {
       expect(await request('/', { json: false })).toReplyWith(
         STATUS_CODES.SUCCESS,
       );
+    });
+  });
+
+  describe('debug', () => {
+    const pattern = [
+      '[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:[a-zA-Z\\d]*(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)',
+      '(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))',
+    ].join('|');
+
+    const ANSI_RE = new RegExp(pattern, 'g');
+    const strip = (string: string) => string.replace(ANSI_RE, '');
+
+    async function run(route: Route, req: any) {
+      const spy = jest.spyOn(global.console, 'log').mockReturnValue();
+
+      logDiffOn501(sb, route);
+
+      await req;
+
+      const [out] = spy.mock.calls[0];
+      spy.mockRestore();
+
+      return strip(out).trim();
+    }
+
+    it('should output method diff', async () => {
+      const route = sb.put('/');
+      const req = request('/', { method: 'POST' });
+
+      const out = await run(route, req);
+
+      expect(out).toEqual(
+        'Method\n' + '- Received: post\n' + '+ Expected: put',
+      );
+    });
+
+    it('should output path diff', async () => {
+      const route = sb.post(/test$/);
+      const req = request('/test-stuff', { method: 'POST' });
+
+      const out = await run(route, req);
+
+      expect(out).toEqual(
+        'Path\n' + '- Received: /test-stuff\n' + '+ Expected: /test$/',
+      );
+    });
+
+    it('should output various stuff', async () => {
+      const route = sb
+        .put('/', {
+          firstname: /^[a-z]+$/,
+          lastname: val => val === 'Doe',
+          roles: ['writer', 'reviewer'],
+          pets: [{ name: 'Schrödinger', type: 'cat' }],
+          missingKey: 'key missing',
+        })
+        .setQueryParameters({
+          missingParam: /^[0-9]+$/,
+          param1: /^[0-9]+$/,
+        })
+        .setHeader('x-header-missing', 'missing-header-123')
+        .setHeader('x-header-1', 'Bearer hello')
+        .setHeader('content-type', 'application/json');
+
+      const req = request('/test?param1=ten&extraParam=10', {
+        method: 'POST',
+        headers: {
+          'x-header-1': 'Bearer world',
+          'x-header-extra': 'x-extra-header-123',
+        },
+        json: true,
+        body: {
+          firstname: 123,
+          lastname: 'Donald',
+          extraKey: 'extra key value',
+          roles: 'writer',
+          pets: [{ name: 'Schrödinger', type: 'dog' }],
+        },
+      });
+
+      const out = await run(route, req);
+
+      expect(out).toMatchSnapshot();
     });
   });
 });
