@@ -11,7 +11,7 @@ import {
 import { Request } from '../../src/@types';
 import { STATUS_CODES } from '../../src/constants';
 import { Debugger } from '../../src/debug/Debugger';
-import { init } from '../helpers';
+import { init, stripAnsi } from '../helpers';
 import { toReplyWith } from '../matchers';
 
 describe('index', () => {
@@ -802,14 +802,6 @@ describe('index', () => {
   });
 
   describe('debug', () => {
-    const pattern = [
-      '[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:[a-zA-Z\\d]*(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)',
-      '(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))',
-    ].join('|');
-
-    const ANSI_RE = new RegExp(pattern, 'g');
-    const strip = (string: string) => string.replace(ANSI_RE, '');
-
     async function run(route: Route, req: any) {
       const spy = jest.spyOn(global.console, 'log').mockReturnValue();
 
@@ -820,7 +812,7 @@ describe('index', () => {
       const [out] = spy.mock.calls[0];
       spy.mockRestore();
 
-      return strip(out).trim();
+      return stripAnsi(out).trim();
     }
 
     it('should output method diff', async () => {
@@ -834,15 +826,16 @@ describe('index', () => {
       );
     });
 
-    it('should output path diff', async () => {
-      const route = sb.post(/test$/);
-      const req = request('/test-stuff', { method: 'POST' });
+    it('should output object', async () => {
+      const route = sb
+        .post(/test$/, {
+          name: (val: JsonValue) => val === 'tonton',
+        })
+        .setHeader('x-api-key', '123');
+      const req = request('/test-stuff');
 
       const out = await run(route, req);
-
-      expect(out).toEqual(
-        'Path\n' + '- Received: /test-stuff\n' + '+ Expected: /test$/',
-      );
+      expect(out).toMatchSnapshot();
     });
 
     it('should output various stuff', async () => {
