@@ -6,7 +6,7 @@
   "homepage": "https://github.com/ybonnefond/stubborn#stubborn",
   "main": "dist/index.js",
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "keywords": [
     "stubborn",
@@ -59,6 +59,7 @@
   "dependencies": {
     "@hapi/accept": "^4.0.0",
     "body-parser": "^1.19.0",
+    "chalk": "^3.0.0",
     "content-type": "^1.0.4",
     "lodash": "^4.17.15"
   },
@@ -69,10 +70,22 @@
     "testEnvironment": "node",
     "coverageDirectory": "coverage",
     "collectCoverage": false,
-    "collectCoverageFrom": ["src/**/*.ts", "!src/**/*.d.ts", "!src/**/@types/**"],
-    "setupFilesAfterEnv": ["<rootDir>/test/setup.ts"],
-    "testMatch": ["<rootDir>/test/specs/*.spec.ts", "<rootDir>/src/**/*.test.ts"],
-    "testPathIgnorePatterns": ["/node_modules/", "/dist/"],
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!src/**/*.d.ts",
+      "!src/**/@types/**"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/test/setup.ts"
+    ],
+    "testMatch": [
+      "<rootDir>/test/specs/*.spec.ts",
+      "<rootDir>/src/**/*.test.ts"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ],
     "transform": {
       "\\.ts$": "ts-jest"
     }

@@ -140,7 +140,7 @@ describe('queryDiff', () => {
       const errors = queryDiff({ page: ['20', '10', '22'] }, { page: '12' });
       expect(errors).toEqual([
         {
-          definition: String(['20', '10', '22']),
+          definition: '[20,10,22]',
           path: 'page',
           type: DIFF_TYPES.INVALID_VALUE_TYPE,
           value: '12',

@@ -20,6 +20,7 @@ import {
 } from './@types';
 
 import { EVENTS, METHODS, STATUS_CODES } from './constants';
+import { Debugger } from './debug/Debugger';
 import { requestDiff } from './diff/requestDiff';
 import { middlewares } from './middlewares';
 import { Route } from './Route';
@@ -145,20 +146,6 @@ function buildRequestHandler(router: Router, emitter: EventEmitter) {
 /**
  * @internal
  */
-function extractRequestInfo(req: Request): RequestInfo {
-  return {
-    method: req.method,
-    path: req.path,
-    headers: req.headers,
-    query: req.query,
-    body: req.body,
-    hash: req.hash,
-  };
-}
-
-/**
- * @internal
- */
 function buildMiddlewares(router: Router) {
   return [
     middlewares.urlParser({ host: router.getHost(), port: router.getPort() }),
@@ -206,6 +193,7 @@ function replyNotImplemented(
   req: Request,
   emitter: EventEmitter,
 ) {
+  const dbg = new Debugger(req);
   res.writeHead(STATUS_CODES.NOT_IMPLEMENTED, {
     'Content-Type': 'application/json',
   });
@@ -213,7 +201,7 @@ function replyNotImplemented(
     JSON.stringify(
       {
         message: 'No route matched',
-        request: extractRequestInfo(req),
+        request: dbg.getInfo(),
       },
       null,
       2,
@@ -222,7 +210,7 @@ function replyNotImplemented(
 
   res.end();
 
-  setImmediate(() => emitter.emit(EVENTS.NOT_IMPLEMENTED, req));
+  setImmediate(() => emitter.emit(EVENTS.NOT_IMPLEMENTED, dbg));
 }
 /**
  * @internal

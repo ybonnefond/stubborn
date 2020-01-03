@@ -19,15 +19,9 @@
 
 ## Installation
 
-Stubborn is tested on NodeJS 8.x and above.
-
-Npm:
-
 ```
 npm install --save-dev stubborn-ws
 ```
-
-Yarn:
 
 ```
 yarn add -D stubborn-ws
@@ -169,18 +163,15 @@ Stubborn is STUBBORN, therefore it will return a 501 if it does not exactly matc
 To help you find what missing in the route definition, you can compare it to the response body returned when receiving a 501:
 
 ```typescript
-import {EVENTS} from 'stubborn-ws';
+import {logDiff} from 'stubborn-ws';
 
 const route = sb
   .get('/')
   // This header definition will miss additional header added by got, like user-agent, connexion, etc...
   .setHeaders({ 'X-Api-Key': 'test' });
 
-console.log('--- DEFINITION ---\n', route.getDefinition());
-sb.on(
-  EVENTS.NOT_IMPLEMENTED, 
-  (req) => console.log('--- REQUEST ---\n', req)
-);
+// Will log in console the diff between the route and any request throwing a 501
+logDiffOn501(sb, route);
 
 const res = await request(sb.getOrigin(), {
   headers: { 'x-api-key': 'api key' },
