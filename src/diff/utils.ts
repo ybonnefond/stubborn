@@ -2,6 +2,7 @@ import { difference, intersection } from 'lodash';
 
 import { DiffError } from '../@types';
 import { DIFF_TYPES, WILDCARD } from '../constants';
+import { inspect } from '../inspect';
 
 type ObjectOrArray = Record<string | number, any>;
 type ValidateFn = (def: any, value: any, path: string) => DiffError[];
@@ -116,17 +117,45 @@ export function formatDiffError({
   };
 }
 
-function stringify(val: any) {
+function stringify(val: any): string {
   if (val instanceof Symbol) {
     return val.toString();
   }
 
-  if (Array.isArray(val)) {
-    return `[${String(val)}]`;
+  if (val instanceof RegExp) {
+    return val.toString();
+  }
+
+  if (typeof val === 'function') {
+    return val.toString();
+  }
+
+  if (typeof val === 'object' && val !== null) {
+    return inspect(val, { colors: true });
   }
 
   return String(val);
 }
+
+// function stringify(val: any) {
+//   if (val instanceof Symbol) {
+//     return val.toString();
+//   }
+//
+//   if (Array.isArray(val)) {
+//     return `[${String(val)}]`;
+//   }
+//
+//   if(typeof val === 'object') {
+//     return val.toSource();
+//     // return JSON.stringify(Object.keys(val).reduce((acc: any, key: any) => {
+//     //   acc[key] = stringify(val[key]);
+//     //   return acc;
+//     // }, {} as any));
+//   }
+//
+//   return String(val);
+// }
 
 function checkValues(
   definitions: ObjectOrArray,

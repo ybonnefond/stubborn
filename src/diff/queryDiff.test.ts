@@ -1,3 +1,4 @@
+import { stripAnsi } from '../../test/helpers';
 import { JsonValue } from '../@types';
 import { DIFF_TYPES, WILDCARD } from '../constants';
 import { queryDiff } from './queryDiff';
@@ -138,9 +139,13 @@ describe('queryDiff', () => {
 
     it('should fail if definition is an array and value is not', () => {
       const errors = queryDiff({ page: ['20', '10', '22'] }, { page: '12' });
+
+      expect(stripAnsi(errors[0].definition as string)).toBe(
+        "[ '20', '10', '22' ]",
+      );
       expect(errors).toEqual([
         {
-          definition: '[20,10,22]',
+          definition: expect.any(String),
           path: 'page',
           type: DIFF_TYPES.INVALID_VALUE_TYPE,
           value: '12',

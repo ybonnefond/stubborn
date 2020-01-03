@@ -1,5 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`index debug should output object 1`] = `
+"Method
+- Received: get
++ Expected: post
+
+Path
+- Received: /test-stuff
++ Expected: /test$/
+
+Headers
++ x-api-key: 123
+
+Body
+- Received: undefined
++ Expected: { name: (val) => val === 'tonton' }"
+`;
+
 exports[`index debug should output various stuff 1`] = `
 "Method
 - Received: post
@@ -37,5 +54,5 @@ Body
 +   lastname: val => val === 'Doe'
 
 -   roles: writer
-+   roles: [writer,reviewer]"
++   roles: [ 'writer', 'reviewer' ]"
 `;
