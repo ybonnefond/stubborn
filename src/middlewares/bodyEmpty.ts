@@ -27,7 +27,11 @@ function hasBody(req: Request) {
 
   const length = req.headers['content-length'];
 
-  if (length !== undefined && !isNaN(parseInt(length, 10))) {
+  if (
+    length !== undefined &&
+    !isNaN(parseInt(length, 10)) &&
+    parseInt(length, 10) > 0
+  ) {
     return true;
   }
 
