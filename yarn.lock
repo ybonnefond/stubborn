@@ -479,10 +479,12 @@
     "@types/tough-cookie" "*"
     form-data "^2.5.0"
 
-"@types/hapi__accept@^3.2.0":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@types/hapi__accept/-/hapi__accept-3.2.0.tgz#4bf7b9fa7ff9736ad7cee70883e04f47c3fc70ac"
-  integrity sha512-6KaLx2GAjy0Wqa6QTVqisEfKfzI4men6Dq+JZnLb1GDwlZoun0FrYugRnvmJ7D92DoYLpc+IHICxloyBqm/wFw==
+"@types/hapi__accept@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@types/hapi__accept/-/hapi__accept-5.0.0.tgz#4e44cec68d39f6fcaf0838b2a4375c36fcb3990d"
+  integrity sha512-KK92yG2WOvwtk8Nofpk5tuFZOOw4/lTAtELb6iUztGhL8HdI6yhWm3MYpHts4FvfWOSGEuhhWlsF8k8jywN7lw==
+  dependencies:
+    hapi__accept "*"
 
 "@types/http-cache-semantics@*":
   version "4.0.0"
@@ -2555,6 +2557,11 @@ handlebars@^4.1.2, handlebars@^4.3.3, handlebars@^4.5.3:
     source-map "^0.6.1"
   optionalDependencies:
     uglify-js "^3.1.4"
+
+hapi__accept@*:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/hapi__accept/-/hapi__accept-0.0.1.tgz#cc81c969db13a9c02ceb6814b2ace3e636bfc5fa"
+  integrity sha512-vozC93OoSgabKumQASPkIuOo0DUj2dsboozpa4SAh1SV8+8eBIQou5XG2wTWHi+lVMbJQRsNdqS0b8yLw64QAw==
 
 har-schema@^2.0.0:
   version "2.0.0"
