@@ -209,6 +209,14 @@
     is-absolute "^1.0.0"
     is-negated-glob "^1.0.0"
 
+"@hapi/accept@*":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@hapi/accept/-/accept-5.0.0.tgz#b0e06dd57351ff0724172af6e5d22a4e74d99ead"
+  integrity sha512-LMz1AkD9kzmbXWNw5s+aQg0Yp9WQDXOSD0G4ke3cJ/S5H+qyUIy224/hVng1L8zn9H1cEpofyd3gh+XCrwGvYg==
+  dependencies:
+    "@hapi/boom" "9.x.x"
+    "@hapi/hoek" "9.x.x"
+
 "@hapi/accept@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@hapi/accept/-/accept-4.0.0.tgz#ec54acc3304185091e98cd6fdfa7a815e5aaaf31"
@@ -224,10 +232,22 @@
   dependencies:
     "@hapi/hoek" "8.x.x"
 
+"@hapi/boom@9.x.x":
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/@hapi/boom/-/boom-9.0.0.tgz#28f9e77ecf2dea1fe3a8982b9d8827aa5137e33a"
+  integrity sha512-D+Or4yahLq3L7D1Jf0fR1+Lgr+HPK1lej8tc6hS/fBLmK66XdpvTyKv8YUR5ls1GeQy+KGtbpKAs+ZxyzNtUyA==
+  dependencies:
+    "@hapi/hoek" "9.x.x"
+
 "@hapi/hoek@8.x.x":
   version "8.5.0"
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-8.5.0.tgz#2f9ce301c8898e1c3248b0a8564696b24d1a9a5a"
   integrity sha512-7XYT10CZfPsH7j9F1Jmg1+d0ezOux2oM2GfArAzLwWe4mE2Dr3hVjsAL6+TFY49RRJlCdJDMw3nJsLFroTc8Kw==
+
+"@hapi/hoek@9.x.x":
+  version "9.0.2"
+  resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.0.2.tgz#57597083f763eafbfdc902d16ec868aa787b24d2"
+  integrity sha512-LyibKv2QnD9BPI5g2L+g85yiIPv3ajYpENGFgy4u0xCLPhXWG1Zdx29neSB8sgX0/wz6k5TMjHzTwJ6+DaBYOA==
 
 "@jest/console@^24.7.1", "@jest/console@^24.9.0":
   version "24.9.0"
@@ -480,11 +500,11 @@
     form-data "^2.5.0"
 
 "@types/hapi__accept@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@types/hapi__accept/-/hapi__accept-5.0.0.tgz#4e44cec68d39f6fcaf0838b2a4375c36fcb3990d"
-  integrity sha512-KK92yG2WOvwtk8Nofpk5tuFZOOw4/lTAtELb6iUztGhL8HdI6yhWm3MYpHts4FvfWOSGEuhhWlsF8k8jywN7lw==
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@types/hapi__accept/-/hapi__accept-5.0.1.tgz#43200e30d6151e4df29041b7884d9fcd41a79208"
+  integrity sha512-24/EDBwrfMTbaZRe8wm7U9rEJbLbWZEhbCgjVTgs2G+41Q6sxsNaNpRN01RKekQ/PC2LdoY53xWnzUHu+07CMQ==
   dependencies:
-    hapi__accept "*"
+    "@hapi/accept" "*"
 
 "@types/http-cache-semantics@*":
   version "4.0.0"
@@ -2557,11 +2577,6 @@ handlebars@^4.1.2, handlebars@^4.3.3, handlebars@^4.5.3:
     source-map "^0.6.1"
   optionalDependencies:
     uglify-js "^3.1.4"
-
-hapi__accept@*:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/hapi__accept/-/hapi__accept-0.0.1.tgz#cc81c969db13a9c02ceb6814b2ace3e636bfc5fa"
-  integrity sha512-vozC93OoSgabKumQASPkIuOo0DUj2dsboozpa4SAh1SV8+8eBIQou5XG2wTWHi+lVMbJQRsNdqS0b8yLw64QAw==
 
 har-schema@^2.0.0:
   version "2.0.0"
