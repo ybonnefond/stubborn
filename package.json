@@ -52,7 +52,7 @@
     "jsdoc-to-markdown": "^5.0.1",
     "prettier": "^1.18.2",
     "ts-jest": "^24.1.0",
-    "tslint": "^5.20.0",
+    "tslint": "^6.0.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.6.3"
   },
