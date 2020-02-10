@@ -343,7 +343,7 @@
     is-absolute "^1.0.0"
     is-negated-glob "^1.0.0"
 
-"@hapi/accept@*":
+"@hapi/accept@*", "@hapi/accept@^5.0.0":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@hapi/accept/-/accept-5.0.0.tgz#b0e06dd57351ff0724172af6e5d22a4e74d99ead"
   integrity sha512-LMz1AkD9kzmbXWNw5s+aQg0Yp9WQDXOSD0G4ke3cJ/S5H+qyUIy224/hVng1L8zn9H1cEpofyd3gh+XCrwGvYg==
@@ -351,32 +351,12 @@
     "@hapi/boom" "9.x.x"
     "@hapi/hoek" "9.x.x"
 
-"@hapi/accept@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@hapi/accept/-/accept-4.0.0.tgz#ec54acc3304185091e98cd6fdfa7a815e5aaaf31"
-  integrity sha512-1wfaS05XyraV4FG8GVcsATorTokAO3i3rAIzffxmqEGUct87tKkIvwtcNDfpEz6AhN77R8uPU0FO5DD3AJutHg==
-  dependencies:
-    "@hapi/boom" "8.x.x"
-    "@hapi/hoek" "8.x.x"
-
-"@hapi/boom@8.x.x":
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/@hapi/boom/-/boom-8.0.1.tgz#13f1f2f2a3abfb0787c79e35e238c8aff6aa1661"
-  integrity sha512-SnBM2GzEYEA6AGFKXBqNLWXR3uNBui0bkmklYXX1gYtevVhDTy2uakwkSauxvIWMtlANGRhzChYg95If3FWCwA==
-  dependencies:
-    "@hapi/hoek" "8.x.x"
-
 "@hapi/boom@9.x.x":
   version "9.0.0"
   resolved "https://registry.yarnpkg.com/@hapi/boom/-/boom-9.0.0.tgz#28f9e77ecf2dea1fe3a8982b9d8827aa5137e33a"
   integrity sha512-D+Or4yahLq3L7D1Jf0fR1+Lgr+HPK1lej8tc6hS/fBLmK66XdpvTyKv8YUR5ls1GeQy+KGtbpKAs+ZxyzNtUyA==
   dependencies:
     "@hapi/hoek" "9.x.x"
-
-"@hapi/hoek@8.x.x":
-  version "8.5.0"
-  resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-8.5.0.tgz#2f9ce301c8898e1c3248b0a8564696b24d1a9a5a"
-  integrity sha512-7XYT10CZfPsH7j9F1Jmg1+d0ezOux2oM2GfArAzLwWe4mE2Dr3hVjsAL6+TFY49RRJlCdJDMw3nJsLFroTc8Kw==
 
 "@hapi/hoek@9.x.x":
   version "9.0.2"
