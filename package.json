@@ -48,7 +48,7 @@
     "coveralls": "^3.0.6",
     "got": "^10.2.1",
     "jest": "^25.1.0",
-    "jest-diff": "^25.1.0",
+    "jest-diff": "^26.0.0",
     "jsdoc-to-markdown": "^5.0.1",
     "prettier": "^1.18.2",
     "ts-jest": "^25.0.0",
