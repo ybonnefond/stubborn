@@ -46,7 +46,7 @@
     "@types/jest": "^24.0.22",
     "@types/lodash": "^4.14.138",
     "coveralls": "^3.0.6",
-    "got": "^10.2.1",
+    "got": "^11.3.0",
     "jest": "^25.1.0",
     "jest-diff": "^25.1.0",
     "jsdoc-to-markdown": "^5.0.1",
