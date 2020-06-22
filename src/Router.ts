@@ -297,8 +297,8 @@ function applyTemplate(
   req: Request,
   parentTemplate?: Template,
 ): JsonValue {
-  if (null === template || 'undefined' === typeof template) {
-    return '';
+  if (null === template) {
+    return template;
   }
 
   if (Array.isArray(template)) {
@@ -307,24 +307,21 @@ function applyTemplate(
     });
   }
 
-  const type = typeof template;
-
-  switch (type) {
+  switch (typeof template) {
     case 'function':
       return (template as TemplateFunction)(req, parentTemplate);
     case 'object':
-      return Object.keys(template).reduce((obj, key) => {
-        obj[key] = applyTemplate(
-          (template as TemplateObject)[key],
-          req,
-          template,
-        );
+      const _template = template as TemplateObject;
+      return Object.keys(_template).reduce((obj, key) => {
+        // undefined values cannot be set on headers or body
+        if ('undefined' !== typeof _template[key]) {
+          obj[key] = applyTemplate(_template[key], req, template);
+        }
         return obj;
       }, {} as Record<string | number, JsonValue>);
     case 'symbol':
       return String(template).replace(/^Symbol\((.*)\)$/, '$1');
-
-    default:
-      return template as JsonValue;
   }
+
+  return template as JsonValue;
 }
