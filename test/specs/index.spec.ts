@@ -656,6 +656,48 @@ describe('index', () => {
         },
       });
     });
+
+    it('should return a null value in response body', async () => {
+      sb.post('/').setResponseBody({ key: 'ok', nullValue: null });
+
+      const res = await request('/', {
+        method: 'post',
+      });
+      expect(res).toReplyWith(STATUS_CODES.SUCCESS);
+
+      expect(res.body).toStrictEqual({ key: 'ok', nullValue: null });
+    });
+
+    it('should not return undefined values in response body', async () => {
+      sb.post('/').setResponseBody({ key: 'ok', undefinedValue: undefined });
+
+      const res = await request('/', {
+        method: 'post',
+      });
+      expect(res).toReplyWith(STATUS_CODES.SUCCESS);
+
+      expect(res.body).toStrictEqual({
+        key: 'ok',
+      });
+    });
+
+    it('should transform as a JSON.stringify would do undefined values within arrays', async () => {
+      sb.post('/').setResponseBody({
+        key: 'ok',
+        undefinedValue: undefined,
+        arrayValue: [undefined, { something: 'else' }],
+      });
+
+      const res = await request('/', {
+        method: 'post',
+      });
+      expect(res).toReplyWith(STATUS_CODES.SUCCESS);
+
+      expect(res.body).toStrictEqual({
+        key: 'ok',
+        arrayValue: [null, { something: 'else' }],
+      });
+    });
   });
 
   describe('README examples', () => {
