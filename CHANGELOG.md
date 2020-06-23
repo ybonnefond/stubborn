@@ -1,3 +1,10 @@
+## [5.0.4](https://github.com/ybonnefond/stubborn/compare/v5.0.3...v5.0.4) (2020-06-23)
+
+
+### Bug Fixes
+
+* fix packaged files ([56c446c](https://github.com/ybonnefond/stubborn/commit/56c446c35066cb4b38cbb08d4822cbcbb82c627e))
+
 ## [5.0.3](https://github.com/ybonnefond/stubborn/compare/v5.0.2...v5.0.3) (2020-06-23)
 
 
