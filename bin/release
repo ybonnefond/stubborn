@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const Octokit = require('@octokit/rest');
+const { Octokit } = require("@octokit/rest");
 const semanticRelease = require('semantic-release');
 
 const GH_USER = 'ybonnefond';
