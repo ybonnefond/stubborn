@@ -23,7 +23,7 @@ let releaseCommitMessage =
 
 // Export semantic-release configuration
 const config = {
-  branches: 'master',
+  branches: ['master'],
   tagFormat,
   plugins: [
     ['@semantic-release/commit-analyzer', commitOptions],
