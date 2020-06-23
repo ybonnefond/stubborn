@@ -739,9 +739,7 @@ describe('index', () => {
     });
 
     it('should respond using WILDCARD for parameter and headers', async () => {
-      sb.get('/')
-        .setQueryParameters({ page: WILDCARD })
-        .setHeaders(WILDCARD);
+      sb.get('/').setQueryParameters({ page: WILDCARD }).setHeaders(WILDCARD);
 
       expect(
         await request('/?page=2', {
