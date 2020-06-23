@@ -37,7 +37,7 @@ The very fact that Stubborn responds to the request validates that the parameter
 
 Stubborn response headers and body can be hardcoded or defined using a template.
 
-You can find a [complete working test suite]('./test/specs/readme.spec.ts') of the following examples [here]('./test/specs/readme.spec.ts').
+You can find a [complete working test suite](test/specs/readme.spec.ts) of the following examples [here](test/specs/readme.spec.ts).
 
 ```typescript
 import got from 'got';
