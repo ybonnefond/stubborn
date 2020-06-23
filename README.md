@@ -163,7 +163,7 @@ Stubborn is STUBBORN, therefore it will return a 501 if it does not exactly matc
 To help you find what missing in the route definition, you can compare it to the response body returned when receiving a 501:
 
 ```typescript
-import {logDiff} from 'stubborn-ws';
+import { logDiff } from 'stubborn-ws';
 
 const route = sb
   .get('/')
@@ -178,7 +178,6 @@ const res = await request(sb.getOrigin(), {
 });
 
 expect(res.statusCode).toBe(501);
-
 ```
 
 #### Q: How do I know if stubborn has been called and matched the route defined?
@@ -221,19 +220,3 @@ If the request matches the route it will respond according to the route response
       // ...
     });
 ```
-
-## Contributing
-
-### Release
-
-```
-git checkout master
-git pull --rebase
-yarn doc
-git add .
-git commit -m 'doc(): Update documentation'
-yarn publish --<major|minor|patch>
-git push --follow-tags
-```
-
-Then go to github to [draft a new release](https://github.com/ybonnefond/stubborn/releases/new)
