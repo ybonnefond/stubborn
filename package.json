@@ -31,7 +31,7 @@
     "lint:tslint:fix": "yarn lint:tslint --fix",
     "lint:prettier": "yarn prettier -l '{src,test}/**/*.{ts,js,md,json}'",
     "lint:prettier:fix": "yarn prettier --write '{src,test}/**/*.{ts,js,md,json}'",
-    "test-ci": "mkdir -p coverage && yarn lint && yarn test --coverage --coverageReporters=lcov && cat ./coverage/lcov.info | coveralls",
+    "test:ci": "mkdir -p coverage && yarn lint && yarn test --coverage --coverageReporters=lcov && cat ./coverage/lcov.info | coveralls",
     "doc": "compodoc -p tsconfig.json -d docs --disableInternal --hideGenerator",
     "release": "yarn doc && yarn publish"
   },
@@ -41,6 +41,7 @@
     "@commitlint/cli": "^9.0.1",
     "@commitlint/config-conventional": "^9.0.1",
     "@compodoc/compodoc": "^1.1.9",
+    "@octokit/rest": "^18.0.0",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/exec": "^5.0.0",
     "@semantic-release/git": "^9.0.0",
