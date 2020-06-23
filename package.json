@@ -31,7 +31,7 @@
     "lint:tslint:fix": "yarn lint:tslint --fix",
     "lint:prettier": "yarn prettier -l '{src,test}/**/*.{ts,js,md,json}'",
     "lint:prettier:fix": "yarn prettier --write '{src,test}/**/*.{ts,js,md,json}'",
-    "test:ci": "mkdir -p coverage && yarn lint && yarn test --coverage --coverageReporters=lcov && cat ./coverage/lcov.info | coveralls && echo 'Coveralls uploaded'",
+    "test:ci": "mkdir -p coverage && yarn lint && yarn test --coverage --coverageReporters=lcov",
     "doc": "compodoc -p tsconfig.json -d docs --disableInternal --hideGenerator",
     "release": "yarn doc && yarn publish"
   },
@@ -51,7 +51,6 @@
     "@types/hapi__accept": "^5.0.0",
     "@types/jest": "^24.0.22",
     "@types/lodash": "^4.14.138",
-    "coveralls": "^3.0.6",
     "got": "^11.3.0",
     "husky": "^4.2.5",
     "jest": "^25.1.0",
