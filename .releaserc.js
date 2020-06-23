@@ -65,12 +65,7 @@ const config = {
       '@semantic-release/git',
       {
         message: releaseCommitMessage,
-        assets: [
-          'CHANGELOG.md',
-          'package.json',
-          'package-lock.json',
-          'npm-shrinkwrap.json',
-        ],
+        assets: ['CHANGELOG.md', 'package.json', 'yarn.lock'],
       },
     ],
     [
