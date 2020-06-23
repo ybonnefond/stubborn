@@ -67,7 +67,7 @@
   "dependencies": {
     "@hapi/accept": "^4.0.0",
     "body-parser": "^1.19.0",
-    "chalk": "^3.0.0",
+    "chalk": "^4.1.0",
     "content-type": "^1.0.4",
     "lodash": "^4.17.15"
   },
