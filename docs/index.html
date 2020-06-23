@@ -54,10 +54,11 @@
 <p>Stubborn is a testing tool that let you <strong>hot</strong> load and unload routes into a webserver.
 Requests are <strong>strictly</strong> matched against routes definitions based on Method, Path, Query parameters, Headers and Body.
 If the request does not exactly match one route definition (ex: extra parameter, missing parameter, value does not match, etc), Stubborn will respond with a 501.</p>
-<p>The very fact that Stubborn respond to the request validates that the parameters sent are the expected one, any change in the code that send the request will break the test. Any breaking change will be picked up by your test.</p>
+<p>The very fact that Stubborn responds to the request validates that the parameters sent are the expected one, any change in the code that send the request will break the test. Any breaking change will be picked up by your test.</p>
 <p>Stubborn response headers and body can be hardcoded or defined using a template.</p>
-<div><pre class="line-numbers"><code class="language-typescript">import request from &#39;got&#39;;
-import { Stubborn } from &#39;stubborn-ws&#39;;
+<p>You can find a <a href="&#39;./test/specs/readme.spec.ts&#39;">complete working test suite</a> of the following examples <a href="&#39;./test/specs/readme.spec.ts&#39;">here</a>.</p>
+<div><pre class="line-numbers"><code class="language-typescript">import got from &#39;got&#39;;
+import { Stubborn, STATUS_CODES, WILDCARD } from &#39;stubborn-ws&#39;;
 
 describe(&#39;Test&#39;, () =&gt; {
   const sb = new Stubborn();
@@ -72,69 +73,73 @@ describe(&#39;Test&#39;, () =&gt; {
     const body = { some: &#39;body&#39; };
     sb.get(&#39;/&#39;).setResponseBody({ some: &#39;body&#39; });
 
-    const res = await request(`${sb.getOrigin()}`, { json: true });
+    const res = await request(`/`);
 
+    expect(res.statusCode).toBe(STATUS_CODES.SUCCESS);
     expect(res.body).toEqual(body);
   });
+
+  function request(path = &#39;/&#39;, options = {}) {
+    return got(`${sb.getOrigin()}${path}`, {
+      method: &#39;GET&#39;,
+      responseType: &#39;json&#39;,
+      throwHttpErrors: false,
+      ...options,
+    });
+  }
 });</code></pre></div><p>Stubborn <strong>strictly</strong> matches the request against the route definition.</p>
 <p>If a query parameter or a header is missing, stubborn will return a 501 (not implemented)</p>
 <div><pre class="line-numbers"><code class="language-typescript">it(&#39;should respond 501 if a parameter is missing&#39;, async () =&gt; {
   sb.get(&#39;/&#39;).setQueryParameters({ page: &#39;1&#39; });
 
-  const res = await request(`${sb.getOrigin()}`, { throwHttpErrors: false });
+  const res = await request(`/`);
 
-  expect(res.statusCode).toEqual(501);
+  expect(res.statusCode).toEqual(STATUS_CODES.NOT_IMPLEMENTED);
 });</code></pre></div><p>If a query parameter or a header is added, stubborn will return a 501 (not implemented)</p>
 <div><pre class="line-numbers"><code class="language-typescript">it(&#39;should respond 501 if a parameter is added&#39;, async () =&gt; {
   sb.get(&#39;/&#39;).setQueryParameters({ page: &#39;1&#39; });
 
-  const res = await request(`${sb.getOrigin()}?page=1&amp;limit=10`, {
-    throwHttpErrors: false,
-  });
+  const res = await request(`/?page=1&amp;limit=10`);
 
-  expect(res.statusCode).toEqual(501);
+  expect(res.statusCode).toEqual(STATUS_CODES.NOT_IMPLEMENTED);
 });</code></pre></div><p>If a query parameter or a header does not match the route definition, stubborn will return a 501 (not implemented)</p>
 <div><pre class="line-numbers"><code class="language-typescript">it(&#39;should respond 501 if a parameter does not match the definition&#39;, async () =&gt; {
   sb.get(&#39;/&#39;).setQueryParameters({ page: &#39;1&#39; });
 
-  const res = await request(`${sb.getOrigin()}?page=2`, {
-    throwHttpErrors: false,
-  });
+  const res = await request(`/?page=2`);
 
-  expect(res.statusCode).toEqual(501);
+  expect(res.statusCode).toEqual(STATUS_CODES.NOT_IMPLEMENTED);
 });</code></pre></div><p>You can use <code>null</code> as wildcard</p>
 <div><pre class="line-numbers"><code class="language-typescript">it(&#39;should match using wildcard&#39;, async () =&gt; {
-  sb.get(&#39;/&#39;)
-    .setQueryParameters({ page: null })
-    .setHeaders(null);
+  sb.get(&#39;/&#39;).setQueryParameters({ page: WILDCARD }).setHeaders(WILDCARD);
 
-  const res = await request(`${sb.getOrigin()}?page=2`, {
+  const res = await request(`/?page=2`, {
     headers: { &#39;x-api-key&#39;: &#39;api key&#39;, &#39;any-other-header&#39;: &#39;stuff&#39; },
-    throwHttpErrors: false,
   });
 
-  expect(res.statusCode).toEqual(200);
+  expect(res.statusCode).toEqual(STATUS_CODES.SUCCESS);
 });</code></pre></div><p>You can use regex to match a parameter, header or body</p>
 <div><pre class="line-numbers"><code class="language-typescript">it(&#39;should match using a regexp&#39;, async () =&gt; {
   sb.post(&#39;/&#39;, {
     slug: /^[a-z\-]*$/,
   });
 
-  const res = await request(`${sb.getOrigin()}?page=2`, {
+  const res = await request(`/?page=2`, {
     method: &#39;POST&#39;,
-    body: { slug: &#39;stubborn-ws&#39; },
+    json: { slug: &#39;stubborn-ws&#39; },
   });
 
   expect(res.statusCode).toEqual(200);
 });</code></pre></div><p>You can use a function to match a parameter, header or body</p>
-<div><pre class="line-numbers"><code class="language-typescript">it(&#39;should match using a function&#39;, async () =&gt; {
+<div><pre class="line-numbers"><code class="language-typescript">import { STATUS_CODES } from &#39;stubborn-ws&#39;;
+it(&#39;should match using a function&#39;, async () =&gt; {
   sb.get(&#39;/&#39;).setQueryParameters({
     page: value =&gt; parseInt(value as string) &gt; 0,
   });
 
-  const res = await request(&#39;/?page=2&#39;);
+  const res = await request(`/?page=2`);
 
-  expect(res).toReplyWith(STATUS_CODES.SUCCESS);
+  expect(res.statusCode).toBe(STATUS_CODES.SUCCESS);
 });</code></pre></div><h2 id="public-api">Public API</h2>
 <p>See the <a href="https://ybonnefond.github.io/stubborn/">API documentation</a></p>
 <h2 id="faq">FAQ</h2>

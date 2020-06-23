@@ -96,11 +96,11 @@
     "*.{ts,js}": [
       "prettier --write",
       "yarn doc",
-      "git add"
+      "git add ."
     ],
     "*.{json,md}": [
       "prettier --write",
-      "git add"
+      "git add ."
     ]
   },
   "husky": {
