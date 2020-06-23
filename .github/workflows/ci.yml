@@ -33,13 +33,19 @@ jobs:
         env:
           HUSKY_SKIP_INSTALL: true
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: "Build & tests"
+      - name: "Run tests"
         run: |
           yarn test:ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           COVERALLS_REPO_TOKEN: "${{ secrets.COVERALLS_REPO_TOKEN }}"
           COVERALLS_GIT_BRANCH: "${{ github.ref }}"
+      - name: "Upload Coverage"
+        uses: coverallsapp/github-action@v1.1.1
+        with:
+          parallel: true
+          flag-name: run-${{ matrix.test_number }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "Release"
         run: |
           USE_LOCAL_EXTENDS=1 node ./bin/release
