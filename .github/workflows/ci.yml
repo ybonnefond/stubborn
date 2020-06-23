@@ -38,6 +38,8 @@ jobs:
           yarn test:ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          COVERALLS_REPO_TOKEN: "${{ secrets.COVERALLS_REPO_TOKEN }}"
+          COVERALLS_GIT_BRANCH: "${{ github.ref }}"
       - name: "Release"
         run: |
           USE_LOCAL_EXTENDS=1 node ./bin/release
