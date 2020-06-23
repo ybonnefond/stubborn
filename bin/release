@@ -35,7 +35,7 @@ ${nextRelease.notes}
       {
         // Shareable config
         extends: process.env.USE_LOCAL_EXTENDS
-          ? './src/release.config.js'
+          ? './.releaserc.js'
           : '@bridge/semantic-release-config',
         branches: isPR ? process.env.GITHUB_HEAD_REF : 'master',
         dryRun: isPR,
@@ -57,12 +57,12 @@ ${nextRelease.notes}
 
     if (isPR) {
       const GH_EVENT = require(process.env.GITHUB_EVENT_PATH);
-      const owner = GH_EVENT.organization.login;
+      const owner = GH_USER;
       const repo = GH_EVENT.repository.name;
       const issue_number = GH_EVENT.number;
       const body = PR_COMMENT_TITLE + getPRComment(result);
 
-      const octokit = Octokit({
+      const octokit = new Octokit({
         auth: process.env.ACTION_GH_TOKEN,
       });
 
