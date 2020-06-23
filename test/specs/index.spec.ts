@@ -629,7 +629,7 @@ describe('index', () => {
           custom: (req: Request) => req.query.page,
           arr: ['1', '2', () => '3', { one: () => 'un' }],
           sym: Symbol('bol'),
-        });
+        } as any);
 
       expect(await request('/?page=10')).toReplyWith(STATUS_CODES.SUCCESS, {
         custom: '10',
@@ -686,7 +686,7 @@ describe('index', () => {
         key: 'ok',
         undefinedValue: undefined,
         arrayValue: [undefined, { something: 'else' }],
-      });
+      } as any);
 
       const res = await request('/', {
         method: 'post',

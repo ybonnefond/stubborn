@@ -1,4 +1,4 @@
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import { createServer, Server } from 'http';
 
 import { BodyDefinition, HeadersDefinition, PathDefinition } from './@types';
