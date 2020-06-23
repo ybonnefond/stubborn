@@ -33,13 +33,15 @@ Stubborn is a testing tool that let you **hot** load and unload routes into a we
 Requests are **strictly** matched against routes definitions based on Method, Path, Query parameters, Headers and Body.
 If the request does not exactly match one route definition (ex: extra parameter, missing parameter, value does not match, etc), Stubborn will respond with a 501.
 
-The very fact that Stubborn respond to the request validates that the parameters sent are the expected one, any change in the code that send the request will break the test. Any breaking change will be picked up by your test.
+The very fact that Stubborn responds to the request validates that the parameters sent are the expected one, any change in the code that send the request will break the test. Any breaking change will be picked up by your test.
 
 Stubborn response headers and body can be hardcoded or defined using a template.
 
+You can find a [complete working test suite]('./test/specs/readme.spec.ts') of the following examples [here]('./test/specs/readme.spec.ts').
+
 ```typescript
-import request from 'got';
-import { Stubborn } from 'stubborn-ws';
+import got from 'got';
+import { Stubborn, STATUS_CODES, WILDCARD } from 'stubborn-ws';
 
 describe('Test', () => {
   const sb = new Stubborn();
@@ -54,10 +56,20 @@ describe('Test', () => {
     const body = { some: 'body' };
     sb.get('/').setResponseBody({ some: 'body' });
 
-    const res = await request(`${sb.getOrigin()}`, { json: true });
+    const res = await request(`/`);
 
+    expect(res.statusCode).toBe(STATUS_CODES.SUCCESS);
     expect(res.body).toEqual(body);
   });
+
+  function request(path = '/', options = {}) {
+    return got(`${sb.getOrigin()}${path}`, {
+      method: 'GET',
+      responseType: 'json',
+      throwHttpErrors: false,
+      ...options,
+    });
+  }
 });
 ```
 
@@ -69,9 +81,9 @@ If a query parameter or a header is missing, stubborn will return a 501 (not imp
 it('should respond 501 if a parameter is missing', async () => {
   sb.get('/').setQueryParameters({ page: '1' });
 
-  const res = await request(`${sb.getOrigin()}`, { throwHttpErrors: false });
+  const res = await request(`/`);
 
-  expect(res.statusCode).toEqual(501);
+  expect(res.statusCode).toEqual(STATUS_CODES.NOT_IMPLEMENTED);
 });
 ```
 
@@ -81,11 +93,9 @@ If a query parameter or a header is added, stubborn will return a 501 (not imple
 it('should respond 501 if a parameter is added', async () => {
   sb.get('/').setQueryParameters({ page: '1' });
 
-  const res = await request(`${sb.getOrigin()}?page=1&limit=10`, {
-    throwHttpErrors: false,
-  });
+  const res = await request(`/?page=1&limit=10`);
 
-  expect(res.statusCode).toEqual(501);
+  expect(res.statusCode).toEqual(STATUS_CODES.NOT_IMPLEMENTED);
 });
 ```
 
@@ -95,11 +105,9 @@ If a query parameter or a header does not match the route definition, stubborn w
 it('should respond 501 if a parameter does not match the definition', async () => {
   sb.get('/').setQueryParameters({ page: '1' });
 
-  const res = await request(`${sb.getOrigin()}?page=2`, {
-    throwHttpErrors: false,
-  });
+  const res = await request(`/?page=2`);
 
-  expect(res.statusCode).toEqual(501);
+  expect(res.statusCode).toEqual(STATUS_CODES.NOT_IMPLEMENTED);
 });
 ```
 
@@ -107,16 +115,13 @@ You can use `null` as wildcard
 
 ```typescript
 it('should match using wildcard', async () => {
-  sb.get('/')
-    .setQueryParameters({ page: null })
-    .setHeaders(null);
+  sb.get('/').setQueryParameters({ page: WILDCARD }).setHeaders(WILDCARD);
 
-  const res = await request(`${sb.getOrigin()}?page=2`, {
+  const res = await request(`/?page=2`, {
     headers: { 'x-api-key': 'api key', 'any-other-header': 'stuff' },
-    throwHttpErrors: false,
   });
 
-  expect(res.statusCode).toEqual(200);
+  expect(res.statusCode).toEqual(STATUS_CODES.SUCCESS);
 });
 ```
 
@@ -128,9 +133,9 @@ it('should match using a regexp', async () => {
     slug: /^[a-z\-]*$/,
   });
 
-  const res = await request(`${sb.getOrigin()}?page=2`, {
+  const res = await request(`/?page=2`, {
     method: 'POST',
-    body: { slug: 'stubborn-ws' },
+    json: { slug: 'stubborn-ws' },
   });
 
   expect(res.statusCode).toEqual(200);
@@ -140,14 +145,15 @@ it('should match using a regexp', async () => {
 You can use a function to match a parameter, header or body
 
 ```typescript
+import { STATUS_CODES } from 'stubborn-ws';
 it('should match using a function', async () => {
   sb.get('/').setQueryParameters({
     page: value => parseInt(value as string) > 0,
   });
 
-  const res = await request('/?page=2');
+  const res = await request(`/?page=2`);
 
-  expect(res).toReplyWith(STATUS_CODES.SUCCESS);
+  expect(res.statusCode).toBe(STATUS_CODES.SUCCESS);
 });
 ```
 
