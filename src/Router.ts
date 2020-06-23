@@ -1,4 +1,4 @@
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import { OutgoingHttpHeaders, Server } from 'http';
 
 import accept from '@hapi/accept';
