@@ -2,9 +2,14 @@
   "name": "stubborn-ws",
   "version": "5.0.3",
   "description": "Web server to mock external HTTP APIs in tests",
-  "types": "dist/index.d.ts",
   "homepage": "https://github.com/ybonnefond/stubborn#stubborn",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "files": [
+    "dist//src/index.{d.ts,js}",
+    "dist/src/**/*.{js,ts}",
+    "dist/test/**/*.{js,ts}"
+  ],
   "engines": {
     "node": ">=10"
   },
@@ -71,9 +76,6 @@
     "content-type": "^1.0.4",
     "lodash": "^4.17.15"
   },
-  "files": [
-    "/dist"
-  ],
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
