@@ -1,3 +1,10 @@
+## [5.0.3](https://github.com/ybonnefond/stubborn/compare/v5.0.2...v5.0.3) (2020-06-23)
+
+
+### Automatic Dependencies Upgrade
+
+* bump dependencies ([0de24fa](https://github.com/ybonnefond/stubborn/commit/0de24fa95e067337a8bdde932e682849c8b26e73))
+
 ## [5.0.2](https://github.com/ybonnefond/stubborn/compare/v5.0.1...v5.0.2) (2020-06-23)
 
 
