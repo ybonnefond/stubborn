@@ -1,3 +1,10 @@
+# [5.1.0](https://github.com/ybonnefond/stubborn/compare/v5.0.4...v5.1.0) (2020-06-26)
+
+
+### Features
+
+* add logDiffon501 method to route ([003d4ef](https://github.com/ybonnefond/stubborn/commit/003d4efc3ca08d15d29c2b9559bb1ec2be720c47))
+
 ## [5.0.4](https://github.com/ybonnefond/stubborn/compare/v5.0.3...v5.0.4) (2020-06-23)
 
 
