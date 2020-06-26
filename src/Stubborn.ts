@@ -1,6 +1,7 @@
 import { EventEmitter } from 'events';
 import { createServer, Server } from 'http';
 
+import { Emitter } from './@types/Emitter';
 import { BodyDefinition, HeadersDefinition, PathDefinition } from './@types';
 import { EVENTS, METHODS } from './constants';
 import { Route } from './Route';
@@ -25,7 +26,7 @@ export type StubbornOptions = {
  * expect(res.body).toEqual({ some: 'body' });
  * ```
  */
-export class Stubborn {
+export class Stubborn implements Emitter {
   private server: Server;
   private port: number | null;
   private router: Router;
@@ -157,15 +158,18 @@ export class Stubborn {
     });
   }
 
-  public on(event: symbol, listener: (...args: any[]) => void) {
+  public on(event: symbol, listener: (...args: any[]) => void): this {
     this.emitter.on(event, listener);
+    return this;
   }
 
-  public once(event: symbol, listener: (...args: any[]) => void) {
+  public once(event: symbol, listener: (...args: any[]) => void): this {
     this.emitter.once(event, listener);
+    return this;
   }
 
-  public off(event: symbol, listener: (...args: any[]) => void) {
+  public off(event: symbol, listener: (...args: any[]) => void): this {
     this.emitter.off(event, listener);
+    return this;
   }
 }

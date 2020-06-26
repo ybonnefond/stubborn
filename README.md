@@ -166,18 +166,15 @@ See the [API documentation](https://ybonnefond.github.io/stubborn/)
 #### Q: Stubborn is not matching my route definition and always return a 501
 
 Stubborn is STUBBORN, therefore it will return a 501 if it does not exactly match the route definition you have set up.
-To help you find what missing in the route definition, you can compare it to the response body returned when receiving a 501:
+To help you find what missing in the route definition, you can compare it to the response body returned when receiving a 501 using the logDiff() method of a route:
 
 ```typescript
-import { logDiff } from 'stubborn-ws';
-
 const route = sb
   .get('/')
   // This header definition will miss additional header added by got, like user-agent, connexion, etc...
-  .setHeaders({ 'X-Api-Key': 'test' });
-
-// Will log in console the diff between the route and any request throwing a 501
-logDiffOn501(sb, route);
+  .setHeaders({ 'X-Api-Key': 'test' })
+  // Will log in console the diff between the route and any request throwing a 501
+  .logDiffOn501();
 
 const res = await request(sb.getOrigin(), {
   headers: { 'x-api-key': 'api key' },

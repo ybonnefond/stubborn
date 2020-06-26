@@ -22,6 +22,7 @@ export class Route {
   private query: QueryDefinition = {};
 
   private response: ResponseDefinition;
+  private logDiffOn501Request: boolean = false;
 
   private calls: RequestInfo[] = [];
 
@@ -381,5 +382,23 @@ export class Route {
    */
   public addCall(req: RequestInfo) {
     this.calls.push(req);
+  }
+
+  /**
+   * Set log diff on request for this route
+   *
+   * If this method is called and a request does not match any route, stubborn will output the diff between the current route and the request
+   */
+  public logDiffOn501() {
+    this.logDiffOn501Request = true;
+
+    return this;
+  }
+
+  /**
+   * Get weather stubborn should output the diff with the current route if the request does not match any route
+   */
+  public shouldLogDiffOn501() {
+    return this.logDiffOn501Request;
   }
 }

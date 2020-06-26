@@ -56,7 +56,7 @@ Requests are <strong>strictly</strong> matched against routes definitions based 
 If the request does not exactly match one route definition (ex: extra parameter, missing parameter, value does not match, etc), Stubborn will respond with a 501.</p>
 <p>The very fact that Stubborn responds to the request validates that the parameters sent are the expected one, any change in the code that send the request will break the test. Any breaking change will be picked up by your test.</p>
 <p>Stubborn response headers and body can be hardcoded or defined using a template.</p>
-<p>You can find a <a href="&#39;./test/specs/readme.spec.ts&#39;">complete working test suite</a> of the following examples <a href="&#39;./test/specs/readme.spec.ts&#39;">here</a>.</p>
+<p>You can find a <a href="test/specs/readme.spec.ts">complete working test suite</a> of the following examples <a href="test/specs/readme.spec.ts">here</a>.</p>
 <div><pre class="line-numbers"><code class="language-typescript">import got from &#39;got&#39;;
 import { Stubborn, STATUS_CODES, WILDCARD } from &#39;stubborn-ws&#39;;
 
@@ -145,16 +145,13 @@ it(&#39;should match using a function&#39;, async () =&gt; {
 <h2 id="faq">FAQ</h2>
 <h4 id="q-stubborn-is-not-matching-my-route-definition-and-always-return-a-501">Q: Stubborn is not matching my route definition and always return a 501</h4>
 <p>Stubborn is STUBBORN, therefore it will return a 501 if it does not exactly match the route definition you have set up.
-To help you find what missing in the route definition, you can compare it to the response body returned when receiving a 501:</p>
-<div><pre class="line-numbers"><code class="language-typescript">import { logDiff } from &#39;stubborn-ws&#39;;
-
-const route = sb
+To help you find what missing in the route definition, you can compare it to the response body returned when receiving a 501 using the logDiff() method of a route:</p>
+<div><pre class="line-numbers"><code class="language-typescript">const route = sb
   .get(&#39;/&#39;)
   // This header definition will miss additional header added by got, like user-agent, connexion, etc...
-  .setHeaders({ &#39;X-Api-Key&#39;: &#39;test&#39; });
-
-// Will log in console the diff between the route and any request throwing a 501
-logDiffOn501(sb, route);
+  .setHeaders({ &#39;X-Api-Key&#39;: &#39;test&#39; })
+  // Will log in console the diff between the route and any request throwing a 501
+  .logDiffOn501();
 
 const res = await request(sb.getOrigin(), {
   headers: { &#39;x-api-key&#39;: &#39;api key&#39; },
