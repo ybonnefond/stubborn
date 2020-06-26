@@ -754,10 +754,8 @@ describe('index', () => {
   });
 
   describe('debug', () => {
-    async function run(route: Route, req: any) {
+    async function run(req: any) {
       const spy = jest.spyOn(global.console, 'log').mockReturnValue();
-
-      logDiffOn501(sb, route);
 
       await req;
 
@@ -771,7 +769,9 @@ describe('index', () => {
       const route = sb.put('/');
       const req = request('/', { method: 'POST' });
 
-      const out = await run(route, req);
+      logDiffOn501(sb, route);
+
+      const out = await run(req);
 
       expect(out).toEqual(
         'Method\n' + '- Received: post\n' + '+ Expected: put',
@@ -785,8 +785,9 @@ describe('index', () => {
         })
         .setHeader('x-api-key', '123');
       const req = request('/test-stuff');
+      logDiffOn501(sb, route);
 
-      const out = await run(route, req);
+      const out = await run(req);
       expect(out).toMatchSnapshot();
     });
 
@@ -822,9 +823,22 @@ describe('index', () => {
         },
       });
 
-      const out = await run(route, req);
+      logDiffOn501(sb, route);
+
+      const out = await run(req);
 
       expect(out).toMatchSnapshot();
+    });
+
+    it('should output method diff using logDiff on route', async () => {
+      sb.put('/').logDiffOn501();
+      const req = request('/', { method: 'POST' });
+
+      const out = await run(req);
+
+      expect(out).toEqual(
+        'Method\n' + '- Received: post\n' + '+ Expected: put',
+      );
     });
   });
 });

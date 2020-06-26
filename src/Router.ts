@@ -24,7 +24,7 @@ import { Debugger } from './debug/Debugger';
 import { requestDiff } from './diff/requestDiff';
 import { middlewares } from './middlewares';
 import { Route } from './Route';
-import { getServerPort } from './utils';
+import { getServerPort, logDiffOn501 } from './utils';
 /**
  * @internal
  */
@@ -131,6 +131,7 @@ function runMiddleware(mw: Middleware, req: Request, res: Response) {
  */
 function buildRequestHandler(router: Router, emitter: EventEmitter) {
   return (req: Request, res: Response, next: NextFunction) => {
+    registerLogDiff(router, emitter);
     const route = findRoute(router.getRoutes(), req);
 
     if (null === route) {
@@ -141,6 +142,14 @@ function buildRequestHandler(router: Router, emitter: EventEmitter) {
 
     next();
   };
+}
+
+function registerLogDiff(router: Router, emitter: EventEmitter) {
+  router.getRoutes().forEach(route => {
+    if (route.shouldLogDiffOn501()) {
+      logDiffOn501(emitter, route);
+    }
+  });
 }
 
 /**
