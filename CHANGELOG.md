@@ -1,3 +1,10 @@
+## [5.1.1](https://github.com/ybonnefond/stubborn/compare/v5.1.0...v5.1.1) (2020-07-07)
+
+
+### Automatic Dependencies Upgrade
+
+* [security] bump npm from 6.14.5 to 6.14.6 ([7df3365](https://github.com/ybonnefond/stubborn/commit/7df3365c15f8ec4bcefd6369ea5527f36eadd7f7))
+
 # [5.1.0](https://github.com/ybonnefond/stubborn/compare/v5.0.4...v5.1.0) (2020-06-26)
 
 
