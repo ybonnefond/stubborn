@@ -1,3 +1,10 @@
+## [5.1.3](https://github.com/ybonnefond/stubborn/compare/v5.1.2...v5.1.3) (2020-07-08)
+
+
+### Automatic Dependencies Upgrade
+
+* bump lodash from 4.17.18 to 4.17.19 ([463449c](https://github.com/ybonnefond/stubborn/commit/463449caedbfcbaf8649129cfc273a7d36ee3d0a))
+
 ## [5.1.2](https://github.com/ybonnefond/stubborn/compare/v5.1.1...v5.1.2) (2020-07-08)
 
 
