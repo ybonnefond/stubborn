@@ -178,6 +178,9 @@
                             <a href="#reduceToSingleString" title="src/inspect.ts"><b>reduceToSingleString</b>&nbsp;&nbsp;&nbsp;(src/.../inspect.ts)</a>
                         </li>
                         <li>
+                            <a href="#registerLogDiff" title="src/Router.ts"><b>registerLogDiff</b>&nbsp;&nbsp;&nbsp;(src/.../Router.ts)</a>
+                        </li>
+                        <li>
                             <a href="#requestDiff" title="src/diff/requestDiff.ts"><b>requestDiff</b>&nbsp;&nbsp;&nbsp;(src/.../requestDiff.ts)</a>
                         </li>
                         <li>
@@ -2982,7 +2985,7 @@ in the best way possible given the different types.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>logDiffOn501(stubborn, route)</code>
+<code>logDiffOn501(emitter, route)</code>
                 </td>
             </tr>
 
@@ -2999,17 +3002,22 @@ in the best way possible given the different types.</p>
                                 <tr>
                                     <td>Name</td>
                                     <td>Optional</td>
+                                    <td>Description</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>stubborn</td>
+                                    <td>emitter</td>
 
                                     <td>
                                         No
                                     </td>
 
 
+                                    <td>
+                                        <p>Stubborn instance</p>
+
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>route</td>
@@ -3019,6 +3027,10 @@ in the best way possible given the different types.</p>
                                     </td>
 
 
+                                    <td>
+                                        <p>Route</p>
+
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -3166,6 +3178,70 @@ in the best way possible given the different types.</p>
                     </div>
                     <div class="io-description">
                         
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>src/Router.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="registerLogDiff"></a>
+                    <span class="name">
+                        <b>
+                            registerLogDiff
+                        </b>
+                        <a href="#registerLogDiff"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>registerLogDiff(router, emitter)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>router</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>emitter</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
                     </div>
                 </td>
             </tr>
