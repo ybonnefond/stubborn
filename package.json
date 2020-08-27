@@ -95,7 +95,6 @@
   "lint-staged": {
     "*.{ts,js}": [
       "prettier --write",
-      "yarn doc",
       "git add ."
     ],
     "*.{json,md}": [
