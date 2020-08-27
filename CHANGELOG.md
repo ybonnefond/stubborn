@@ -1,3 +1,10 @@
+# [5.2.0](https://github.com/ybonnefond/stubborn/compare/v5.1.4...v5.2.0) (2020-08-27)
+
+
+### Features
+
+* allow to remove a route ([9787627](https://github.com/ybonnefond/stubborn/commit/97876270b12222179f8387bbc9fa564288badcb1))
+
 ## [5.1.4](https://github.com/ybonnefond/stubborn/compare/v5.1.3...v5.1.4) (2020-08-15)
 
 
