@@ -753,6 +753,18 @@ describe('index', () => {
     });
   });
 
+  describe('removeRoute', () => {
+    it('should return SUCCESS if method is GET', async () => {
+      const route = new Route(METHODS.GET, '/');
+      sb.addRoute(route);
+
+      expect(await request('/')).toReplyWith(STATUS_CODES.SUCCESS);
+
+      sb.removeRoute(route);
+      expect(await request('/')).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
+    });
+  });
+
   describe('debug', () => {
     async function run(req: any) {
       const spy = jest.spyOn(global.console, 'log').mockReturnValue();

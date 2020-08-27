@@ -63,6 +63,12 @@ export class Router {
     return route;
   }
 
+  public removeRoute(route: Route) {
+    this.routes.delete(route);
+
+    return route;
+  }
+
   public createRoute(method: METHODS, path: PathDefinition) {
     return this.addRoute(new Route(method, path));
   }

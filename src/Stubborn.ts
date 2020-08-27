@@ -134,6 +134,15 @@ export class Stubborn implements Emitter {
   }
 
   /**
+   * Remove an existing route
+   *
+   * @param route Route a Route object
+   */
+  public removeRoute(route: Route) {
+    return this.router.removeRoute(route);
+  }
+
+  /**
    * Start the Stubborn server
    * @returns Promise object resolved when server is started
    */
