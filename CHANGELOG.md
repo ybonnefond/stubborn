@@ -1,3 +1,10 @@
+## [5.2.1](https://github.com/ybonnefond/stubborn/compare/v5.2.0...v5.2.1) (2020-09-11)
+
+
+### Automatic Dependencies Upgrade
+
+* [security] bump node-fetch from 2.6.0 to 2.6.1 ([e065d1a](https://github.com/ybonnefond/stubborn/commit/e065d1a9ca2b0025c7212fa03187a8e784ecb0e4))
+
 # [5.2.0](https://github.com/ybonnefond/stubborn/compare/v5.1.4...v5.2.0) (2020-08-27)
 
 
