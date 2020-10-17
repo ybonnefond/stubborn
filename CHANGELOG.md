@@ -1,3 +1,10 @@
+## [5.2.2](https://github.com/ybonnefond/stubborn/compare/v5.2.1...v5.2.2) (2020-10-17)
+
+
+### Automatic Dependencies Upgrade
+
+* [security] bump npm-user-validate from 1.0.0 to 1.0.1 ([4f53c32](https://github.com/ybonnefond/stubborn/commit/4f53c32afee19186e22ee8a2a4566b9b7ae06856))
+
 ## [5.2.1](https://github.com/ybonnefond/stubborn/compare/v5.2.0...v5.2.1) (2020-09-11)
 
 
