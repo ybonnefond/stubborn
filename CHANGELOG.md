@@ -1,3 +1,10 @@
+# [5.3.0](https://github.com/ybonnefond/stubborn/compare/v5.2.2...v5.3.0) (2020-11-18)
+
+
+### Features
+
+* add title with request's method and path on logDiffOn501 ([eba1ebe](https://github.com/ybonnefond/stubborn/commit/eba1ebe8cf7945967137f3c91f20e26058cd31f1))
+
 ## [5.2.2](https://github.com/ybonnefond/stubborn/compare/v5.2.1...v5.2.2) (2020-10-17)
 
 
