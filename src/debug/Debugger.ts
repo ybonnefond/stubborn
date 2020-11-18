@@ -24,6 +24,8 @@ export class Debugger {
   public logDiff(route: Route) {
     const out = new Output();
 
+    out.add(`## Request: ${this.request.method} ${this.request.path}`);
+
     out.renderErrors(
       'Method',
       methodDiff(route.getMethod(), this.request.method),

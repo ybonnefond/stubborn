@@ -786,7 +786,10 @@ describe('index', () => {
       const out = await run(req);
 
       expect(out).toEqual(
-        'Method\n' + '- Received: post\n' + '+ Expected: put',
+        '## Request: POST /\n\n' +
+          'Method\n' +
+          '- Received: post\n' +
+          '+ Expected: put',
       );
     });
 
@@ -849,7 +852,10 @@ describe('index', () => {
       const out = await run(req);
 
       expect(out).toEqual(
-        'Method\n' + '- Received: post\n' + '+ Expected: put',
+        '## Request: POST /\n\n' +
+          'Method\n' +
+          '- Received: post\n' +
+          '+ Expected: put',
       );
     });
   });
