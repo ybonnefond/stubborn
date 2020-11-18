@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`index debug should output object 1`] = `
-"Method
+"## Request: GET /test-stuff
+
+Method
 - Received: get
 + Expected: post
 
@@ -18,7 +20,9 @@ Body
 `;
 
 exports[`index debug should output various stuff 1`] = `
-"Method
+"## Request: POST /test
+
+Method
 - Received: post
 + Expected: put
 
