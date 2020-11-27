@@ -111,20 +111,6 @@ it('should respond 501 if a parameter does not match the definition', async () =
 });
 ```
 
-You can use `null` as wildcard
-
-```typescript
-it('should match using wildcard', async () => {
-  sb.get('/').setQueryParameters({ page: WILDCARD }).setHeaders(WILDCARD);
-
-  const res = await request(`/?page=2`, {
-    headers: { 'x-api-key': 'api key', 'any-other-header': 'stuff' },
-  });
-
-  expect(res.statusCode).toEqual(STATUS_CODES.SUCCESS);
-});
-```
-
 You can use regex to match a parameter, header or body
 
 ```typescript
@@ -154,6 +140,21 @@ it('should match using a function', async () => {
   const res = await request(`/?page=2`);
 
   expect(res.statusCode).toBe(STATUS_CODES.SUCCESS);
+});
+```
+
+Although this is not advised, you can use the `WILDCARD` constant to match any values:
+
+```typescript
+import { WILDCARD } from 'stubborn-ws';
+it('should match using wildcard', async () => {
+  sb.get('/').setQueryParameters({ page: WILDCARD }).setHeaders(WILDCARD);
+
+  const res = await request(`/?page=2`, {
+    headers: { 'x-api-key': 'api key', 'any-other-header': 'stuff' },
+  });
+
+  expect(res.statusCode).toEqual(STATUS_CODES.SUCCESS);
 });
 ```
 
