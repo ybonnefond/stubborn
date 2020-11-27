@@ -125,7 +125,7 @@ function runMiddleware(mw: Middleware, req: Request, res: Response) {
           return reject(err);
         }
 
-        return resolve();
+        return resolve(null);
       });
     } catch (err) {
       reject(err);

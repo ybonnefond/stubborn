@@ -152,7 +152,7 @@ export class Stubborn implements Emitter {
     return new Promise(resolve => {
       this.server.listen(this.port);
       this.router.handle(this.server);
-      resolve();
+      resolve(null);
     });
   }
 
@@ -163,7 +163,7 @@ export class Stubborn implements Emitter {
    */
   public stop() {
     return new Promise(resolve => {
-      this.server.close(() => resolve());
+      this.server.close(() => resolve(null));
     });
   }
 
