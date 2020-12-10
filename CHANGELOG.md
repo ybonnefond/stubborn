@@ -1,3 +1,10 @@
+## [5.3.1](https://github.com/ybonnefond/stubborn/compare/v5.3.0...v5.3.1) (2020-12-10)
+
+
+### Automatic Dependencies Upgrade
+
+* [security] bump ini from 1.3.5 to 1.3.7 ([1d45f92](https://github.com/ybonnefond/stubborn/commit/1d45f926ccedd09bc7ff658b011b6409e8cab7a3))
+
 # [5.3.0](https://github.com/ybonnefond/stubborn/compare/v5.2.2...v5.3.0) (2020-11-18)
 
 
