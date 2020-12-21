@@ -1,3 +1,10 @@
+## [5.3.2](https://github.com/ybonnefond/stubborn/compare/v5.3.1...v5.3.2) (2020-12-21)
+
+
+### Automatic Dependencies Upgrade
+
+* [security] bump node-notifier from 8.0.0 to 8.0.1 ([5ea3da5](https://github.com/ybonnefond/stubborn/commit/5ea3da57318c1fbd90b99ef8bf412c056a1387a2))
+
 ## [5.3.1](https://github.com/ybonnefond/stubborn/compare/v5.3.0...v5.3.1) (2020-12-10)
 
 
