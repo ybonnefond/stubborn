@@ -1,3 +1,10 @@
+## [5.3.3](https://github.com/ybonnefond/stubborn/compare/v5.3.2...v5.3.3) (2021-02-05)
+
+
+### Automatic Dependencies Upgrade
+
+* bump @hapi/accept from 5.0.1 to 5.0.2 ([5be48f0](https://github.com/ybonnefond/stubborn/commit/5be48f045a1dec14e60fc64b1f58ff4bf9e0ebaa))
+
 ## [5.3.2](https://github.com/ybonnefond/stubborn/compare/v5.3.1...v5.3.2) (2020-12-21)
 
 
