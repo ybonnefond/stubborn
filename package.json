@@ -1,6 +1,6 @@
 {
   "name": "stubborn-ws",
-  "version": "5.3.3",
+  "version": "5.3.4",
   "description": "Web server to mock external HTTP APIs in tests",
   "homepage": "https://github.com/ybonnefond/stubborn#stubborn",
   "main": "dist/src/index.js",

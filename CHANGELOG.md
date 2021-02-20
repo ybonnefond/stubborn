@@ -1,3 +1,10 @@
+## [5.3.4](https://github.com/ybonnefond/stubborn/compare/v5.3.3...v5.3.4) (2021-02-20)
+
+
+### Automatic Dependencies Upgrade
+
+* bump lodash from 4.17.20 to 4.17.21 ([fac4187](https://github.com/ybonnefond/stubborn/commit/fac4187aa1187886b09663e731c9a776f893e29f))
+
 ## [5.3.3](https://github.com/ybonnefond/stubborn/compare/v5.3.2...v5.3.3) (2021-02-05)
 
 
