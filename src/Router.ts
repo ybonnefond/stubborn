@@ -196,8 +196,12 @@ function reply(route: Route, res: Response, req: Request) {
   const body = applyTemplate(route.getResponseBody(), req);
 
   res.writeHead(route.getResponseStatusCode(), headers);
+  const data = encodeBody(req, headers, body);
 
-  res.write(encodeBody(req, headers, body));
+  if (data !== null) {
+    res.write(data);
+  }
+
   res.end();
 }
 /**
