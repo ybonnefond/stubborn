@@ -1,3 +1,10 @@
+## [5.3.7](https://github.com/ybonnefond/stubborn/compare/v5.3.6...v5.3.7) (2021-06-11)
+
+
+### Automatic Dependencies Upgrade
+
+* [security] bump hosted-git-info from 2.8.8 to 2.8.9 ([828e4f8](https://github.com/ybonnefond/stubborn/commit/828e4f8c58a72e72b078aec5ccad8cc12857c57b))
+
 ## [5.3.6](https://github.com/ybonnefond/stubborn/compare/v5.3.5...v5.3.6) (2021-06-11)
 
 
