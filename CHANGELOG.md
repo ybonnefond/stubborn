@@ -1,3 +1,10 @@
+## [5.3.6](https://github.com/ybonnefond/stubborn/compare/v5.3.5...v5.3.6) (2021-06-11)
+
+
+### Automatic Dependencies Upgrade
+
+* [security] bump ssri from 6.0.1 to 6.0.2 ([474d3b3](https://github.com/ybonnefond/stubborn/commit/474d3b37a3545e8783895a6652c1b49aac5bcbd9))
+
 ## [5.3.5](https://github.com/ybonnefond/stubborn/compare/v5.3.4...v5.3.5) (2021-06-11)
 
 
