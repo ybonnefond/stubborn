@@ -1,3 +1,10 @@
+## [5.3.8](https://github.com/ybonnefond/stubborn/compare/v5.3.7...v5.3.8) (2021-06-11)
+
+
+### Automatic Dependencies Upgrade
+
+* [security] bump y18n from 3.2.1 to 3.2.2 ([b92e576](https://github.com/ybonnefond/stubborn/commit/b92e57651c8aa2f537b1d59b25578c9a8578e806))
+
 ## [5.3.7](https://github.com/ybonnefond/stubborn/compare/v5.3.6...v5.3.7) (2021-06-11)
 
 
