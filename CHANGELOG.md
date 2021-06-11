@@ -1,3 +1,10 @@
+## [5.3.5](https://github.com/ybonnefond/stubborn/compare/v5.3.4...v5.3.5) (2021-06-11)
+
+
+### Bug Fixes
+
+* res.write throwing error if body is null ([d22119e](https://github.com/ybonnefond/stubborn/commit/d22119e4f263ba2f611cc93dc053bf33622264f3))
+
 ## [5.3.4](https://github.com/ybonnefond/stubborn/compare/v5.3.3...v5.3.4) (2021-02-20)
 
 
