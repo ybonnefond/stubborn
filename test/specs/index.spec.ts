@@ -698,6 +698,15 @@ describe('index', () => {
         arrayValue: [null, { something: 'else' }],
       });
     });
+
+    it('should not set a response if no response is provided and not json', async () => {
+      const STATUS_CODE = 200;
+      sb.delete('/').setResponseStatusCode(STATUS_CODE);
+
+      expect(
+        await request('/', { method: 'DELETE', responseType: 'text' }),
+      ).toReplyWith(STATUS_CODE);
+    });
   });
 
   describe('Retain Calls', () => {
