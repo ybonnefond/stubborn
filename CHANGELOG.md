@@ -1,3 +1,10 @@
+## [5.3.9](https://github.com/ybonnefond/stubborn/compare/v5.3.8...v5.3.9) (2021-06-12)
+
+
+### Automatic Dependencies Upgrade
+
+* [security] bump trim-newlines from 3.0.0 to 3.0.1 ([8824574](https://github.com/ybonnefond/stubborn/commit/8824574e26070f24ae15ed79067fb9fc79cf87bf))
+
 ## [5.3.8](https://github.com/ybonnefond/stubborn/compare/v5.3.7...v5.3.8) (2021-06-11)
 
 
