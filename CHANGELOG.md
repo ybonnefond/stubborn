@@ -1,3 +1,10 @@
+## [5.3.10](https://github.com/ybonnefond/stubborn/compare/v5.3.9...v5.3.10) (2021-06-12)
+
+
+### Automatic Dependencies Upgrade
+
+* [security] bump handlebars from 4.7.6 to 4.7.7 ([ff51a8f](https://github.com/ybonnefond/stubborn/commit/ff51a8fc31927d66c656fe5e6674ee9531ab0f4d))
+
 ## [5.3.9](https://github.com/ybonnefond/stubborn/compare/v5.3.8...v5.3.9) (2021-06-12)
 
 
