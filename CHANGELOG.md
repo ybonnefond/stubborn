@@ -1,3 +1,10 @@
+## [5.3.12](https://github.com/ybonnefond/stubborn/compare/v5.3.11...v5.3.12) (2021-06-14)
+
+
+### Automatic Dependencies Upgrade
+
+* [security] bump normalize-url from 4.5.0 to 4.5.1 ([341bc30](https://github.com/ybonnefond/stubborn/commit/341bc30267f84cf29f00971e041b145f2665a4e2))
+
 ## [5.3.11](https://github.com/ybonnefond/stubborn/compare/v5.3.10...v5.3.11) (2021-06-14)
 
 
