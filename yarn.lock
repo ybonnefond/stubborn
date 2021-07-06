@@ -1177,9 +1177,9 @@
   integrity sha512-IifnIjNa42pJz1IS5lfvOwJew+zwFkrfq1Sj0uCDCuJhpEMH6qBVXdCab5g7JKoWoLLngsh+3DH/0JEEinyqKg==
 
 "@types/got@^9.6.7":
-  version "9.6.11"
-  resolved "https://registry.yarnpkg.com/@types/got/-/got-9.6.11.tgz#482b402cc5ee459481aeeadb08142ebb1a9afb26"
-  integrity sha512-dr3IiDNg5TDesGyuwTrN77E1Cd7DCdmCFtEfSGqr83jMMtcwhf/SGPbN2goY4JUWQfvxwY56+e5tjfi+oXeSdA==
+  version "9.6.12"
+  resolved "https://registry.yarnpkg.com/@types/got/-/got-9.6.12.tgz#fd42a6e1f5f64cd6bb422279b08c30bb5a15a56f"
+  integrity sha512-X4pj/HGHbXVLqTpKjA2ahI4rV/nNBc9mGO2I/0CgAra+F2dKgMXnENv2SRpemScBzBAI4vMelIVYViQxlSE6xA==
   dependencies:
     "@types/node" "*"
     "@types/tough-cookie" "*"
