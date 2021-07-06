@@ -1172,9 +1172,9 @@
     "@types/node" "*"
 
 "@types/content-type@^1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@types/content-type/-/content-type-1.1.3.tgz#3688bd77fc12f935548eef102a4e34c512b03a07"
-  integrity sha512-pv8VcFrZ3fN93L4rTNIbbUzdkzjEyVMp5mPVjsFfOYTDOZMZiZ8P1dhu+kEv3faYyKzZgLlSvnyQNFg+p/v5ug==
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@types/content-type/-/content-type-1.1.4.tgz#fbbad10da69ea754f8270ada7421bd3554a8fb46"
+  integrity sha512-IifnIjNa42pJz1IS5lfvOwJew+zwFkrfq1Sj0uCDCuJhpEMH6qBVXdCab5g7JKoWoLLngsh+3DH/0JEEinyqKg==
 
 "@types/got@^9.6.7":
   version "9.6.11"
