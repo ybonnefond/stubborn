@@ -1,3 +1,10 @@
+## [5.3.13](https://github.com/ybonnefond/stubborn/compare/v5.3.12...v5.3.13) (2021-07-30)
+
+
+### Automatic Dependencies Upgrade
+
+* bump chalk from 4.1.1 to 4.1.2 ([1dfd2d6](https://github.com/ybonnefond/stubborn/commit/1dfd2d607271ab232612bebea6aa42cc678c231f))
+
 ## [5.3.12](https://github.com/ybonnefond/stubborn/compare/v5.3.11...v5.3.12) (2021-06-14)
 
 
