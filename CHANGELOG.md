@@ -1,3 +1,10 @@
+## [5.3.14](https://github.com/ybonnefond/stubborn/compare/v5.3.13...v5.3.14) (2021-08-03)
+
+
+### Automatic Dependencies Upgrade
+
+* [security] bump tar from 4.4.13 to 4.4.15 ([7522554](https://github.com/ybonnefond/stubborn/commit/75225543096a9fcdc348e3c39fcf6c4e490ffc65))
+
 ## [5.3.13](https://github.com/ybonnefond/stubborn/compare/v5.3.12...v5.3.13) (2021-07-30)
 
 
