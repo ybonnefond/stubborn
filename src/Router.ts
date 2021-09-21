@@ -193,7 +193,10 @@ function reply(route: Route, res: Response, req: Request) {
     route.getResponseHeaders(),
     req,
   ) as OutgoingHttpHeaders;
-  const body = applyTemplate(route.getResponseBody(), req);
+
+  const rawBody = route.getResponseBody();
+  const body =
+    rawBody instanceof Buffer ? rawBody : applyTemplate(rawBody, req);
 
   res.writeHead(route.getResponseStatusCode(), headers);
   const data = encodeBody(req, headers, body);

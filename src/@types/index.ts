@@ -58,7 +58,7 @@ export type Template =
 export type ResponseDefinition = {
   statusCode: number;
   headers: Record<string, string | TemplateFunction>;
-  body: Template;
+  body: Template | Buffer;
 };
 
 export type RequestHeaders = Record<string, string>;
@@ -97,7 +97,7 @@ export type ResponseHeaders = {
   [key: string]: string;
 };
 
-export type ResponseBody = JsonValue;
+export type ResponseBody = JsonValue | Buffer;
 
 export interface DiffError {
   type: DIFF_TYPES;

@@ -284,7 +284,7 @@ export class Route {
    * ```
    * @param body Body replied if route is matched
    */
-  public setResponseBody(body: Template) {
+  public setResponseBody(body: Template | Buffer) {
     this.response.body = body;
 
     return this;
