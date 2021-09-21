@@ -622,6 +622,13 @@ describe('index', () => {
       ).toReplyWith(STATUS_CODES.SUCCESS, { custom: 'body' });
     });
 
+    it('should respond with provided buffer body', async () => {
+      sb.get('/').setResponseBody(Buffer.from('Hello buffer', 'utf-8'));
+
+      const response = await request('/', { responseType: 'text' });
+      expect(response).toReplyWith(STATUS_CODES.SUCCESS, 'Hello buffer');
+    });
+
     it('should respond with dynamic body', async () => {
       sb.get('/')
         .setQueryParameters({ page: '10' })
