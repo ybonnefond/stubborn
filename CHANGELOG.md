@@ -1,3 +1,10 @@
+# [5.4.0](https://github.com/ybonnefond/stubborn/compare/v5.3.14...v5.4.0) (2021-09-21)
+
+
+### Features
+
+* support buffer as response body ([17368e6](https://github.com/ybonnefond/stubborn/commit/17368e65d36a5dd29dca43280e1488cf023f8d4e))
+
 ## [5.3.14](https://github.com/ybonnefond/stubborn/compare/v5.3.13...v5.3.14) (2021-08-03)
 
 
