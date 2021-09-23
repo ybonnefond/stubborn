@@ -23,6 +23,8 @@
 npm install --save-dev stubborn-ws
 ```
 
+or
+
 ```
 yarn add -D stubborn-ws
 ```
