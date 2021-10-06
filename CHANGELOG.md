@@ -1,3 +1,10 @@
+# [5.5.0](https://github.com/ybonnefond/stubborn/compare/v5.4.0...v5.5.0) (2021-10-06)
+
+
+### Features
+
+* support AWS JSON 1.0 and 1.1 content-types ([1811453](https://github.com/ybonnefond/stubborn/commit/18114532d53ad4203f58435739311211600b7fda))
+
 # [5.4.0](https://github.com/ybonnefond/stubborn/compare/v5.3.14...v5.4.0) (2021-09-21)
 
 
