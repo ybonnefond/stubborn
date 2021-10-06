@@ -278,8 +278,7 @@ describe('index', () => {
       it('should support AWS json 1.0 content type and parse body', async () => {
         sb.post('/', { input: 'something' })
           .setHeader('Content-Type', 'application/x-amz-json-1.1')
-          .setResponseBody({ output: 'anything' })
-          .logDiffOn501();
+          .setResponseBody({ output: 'anything' });
 
         const res = await request('/', {
           method: 'post',
@@ -295,8 +294,7 @@ describe('index', () => {
       it('should support AWS json 1.1 content type and parse body', async () => {
         sb.post('/', { input: 'something' })
           .setHeader('Content-Type', 'application/x-amz-json-1.1')
-          .setResponseBody({ output: 'anything' })
-          .logDiffOn501();
+          .setResponseBody({ output: 'anything' });
 
         const res = await request('/', {
           method: 'post',
