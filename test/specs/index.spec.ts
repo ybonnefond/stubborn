@@ -274,6 +274,40 @@ describe('index', () => {
         const body = JSON.parse(res.body as string);
         expect(body).toStrictEqual({ key: 'ok' });
       });
+
+      it('should support AWS json 1.0 content type and parse body', async () => {
+        sb.post('/', { input: 'something' })
+          .setHeader('Content-Type', 'application/x-amz-json-1.1')
+          .setResponseBody({ output: 'anything' })
+          .logDiffOn501();
+
+        const res = await request('/', {
+          method: 'post',
+          body: '{"input": "something"}',
+          responseType: 'json',
+          headers: { 'Content-Type': 'application/x-amz-json-1.1' },
+        });
+        expect(res).toReplyWith(STATUS_CODES.SUCCESS);
+
+        expect(res.body).toStrictEqual({ output: 'anything' });
+      });
+
+      it('should support AWS json 1.1 content type and parse body', async () => {
+        sb.post('/', { input: 'something' })
+          .setHeader('Content-Type', 'application/x-amz-json-1.1')
+          .setResponseBody({ output: 'anything' })
+          .logDiffOn501();
+
+        const res = await request('/', {
+          method: 'post',
+          body: '{"input": "something"}',
+          responseType: 'json',
+          headers: { 'Content-Type': 'application/x-amz-json-1.1' },
+        });
+        expect(res).toReplyWith(STATUS_CODES.SUCCESS);
+
+        expect(res.body).toStrictEqual({ output: 'anything' });
+      });
     });
 
     describe('Query', () => {
