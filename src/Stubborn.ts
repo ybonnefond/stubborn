@@ -181,4 +181,14 @@ export class Stubborn implements Emitter {
     this.emitter.off(event, listener);
     return this;
   }
+
+  public setMaxListeners(nb: number): this {
+    this.emitter.setMaxListeners(nb);
+
+    return this;
+  }
+
+  public getMaxListeners(): number {
+    return this.emitter.getMaxListeners();
+  }
 }

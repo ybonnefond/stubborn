@@ -649,9 +649,10 @@ describe('index', () => {
     it('should respond with provided object body', async () => {
       sb.get('/').setResponseBody({ custom: 'body' });
 
-      expect(
-        await request('/', { responseType: 'json' }),
-      ).toReplyWith(STATUS_CODES.SUCCESS, { custom: 'body' });
+      expect(await request('/', { responseType: 'json' })).toReplyWith(
+        STATUS_CODES.SUCCESS,
+        { custom: 'body' },
+      );
     });
 
     it('should respond with provided buffer body', async () => {

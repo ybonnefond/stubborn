@@ -1,9 +1,9 @@
 import { Server } from 'http';
 import { AddressInfo } from 'net';
-import { Emitter } from './@types/Emitter';
 import { EVENTS } from './constants';
 import { Debugger } from './debug/Debugger';
 import { Route } from './Route';
+import { Emitter } from './@types/Emitter';
 
 /**
  * @internal
@@ -33,6 +33,7 @@ export function logDiffOn501(emitter: Emitter, route: Route) {
     dbg.logDiff(route);
   };
 
+  emitter.setMaxListeners(emitter.getMaxListeners() + 1);
   emitter.on(EVENTS.NOT_IMPLEMENTED, handler);
   emitter.once(EVENTS.CLEARED, () => {
     emitter.off(EVENTS.NOT_IMPLEMENTED, handler);
