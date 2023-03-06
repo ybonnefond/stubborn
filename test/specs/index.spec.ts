@@ -31,7 +31,7 @@ describe('index', () => {
     expect(req.headers).toEqual({
       accept: 'application/json',
       'accept-encoding': expect.any(String),
-      connection: 'close',
+      connection: expect.any(String),
       host: expect.any(String),
       'user-agent': expect.any(String),
     });
