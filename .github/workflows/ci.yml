@@ -12,7 +12,6 @@ jobs:
     strategy:
       matrix:
         node-version: [16.x, 17.x, 18.x, 19.x]
-
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
@@ -54,6 +53,41 @@ jobs:
           ACTION_GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GH_TOKEN: ${{ secrets.CI_GH_TOKEN }}
+
+
+  release:
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        name: Setup node 19.x
+        with:
+          node-version: 19.x
+      - name: "Cache node modules"
+        id: cache
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: "Install dependencies"
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn install --pure-lockfile
+        env:
+          HUSKY_SKIP_INSTALL: true
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: "Release"
+        run: |
+          USE_LOCAL_EXTENDS=1 node ./bin/release
+        env:
+          SEMVER_RELEASE_TYPE: LIBRARY_NODE
+          ACTION_GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GH_TOKEN: ${{ secrets.CI_GH_TOKEN }}
+
   # https://github.community/t5/GitHub-Actions/Workflow-is-failing-if-no-job-can-be-ran-due-to-condition/m-p/38186#M3250
   always_job:
     name: Aways run job
