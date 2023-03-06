@@ -18,16 +18,13 @@ jobs:
         name: Setup node ${{ matrix.node-version }}
         with:
           node-version: ${{ matrix.node-version }}
-      - name: "Cache node modules"
-        id: cache
-        uses: actions/cache@v1
+
+      - name: Setup node
+        uses: actions/setup-node@v3
         with:
-          path: node_modules
-          key: ${{ runner.os }}-${{ matrix.node-version }}-node-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ matrix.node-version }}-node-
+          cache: 'yarn'
+          node-version: ${{ matrix.node }}
       - name: "Install dependencies"
-        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn install --pure-lockfile
         env:
           HUSKY_SKIP_INSTALL: true
@@ -55,22 +52,12 @@ jobs:
       - uses: actions/checkout@v3
         with:
           persist-credentials: false
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         name: Setup node 18.14.2
         with:
+          cache: 'yarn'
           node-version: "18.14.2"
-      - name: "Cache node modules"
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            **/node_modules
-            ${{ needs.install.outputs.npm-cache-dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
       - name: "Install dependencies"
-        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn install --pure-lockfile
         env:
           HUSKY_SKIP_INSTALL: true
