@@ -67,7 +67,7 @@
     "jsdoc-to-markdown": "^6.0.1",
     "lint-staged": "^11.0.0",
     "prettier": "^2.0.5",
-    "semantic-release": "^17.1.0",
+    "semantic-release": "^19.0.3",
     "ts-jest": "^26.1.1",
     "tslint": "^6.0.0",
     "tslint-config-prettier": "^1.18.0",
