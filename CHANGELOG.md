@@ -1,3 +1,32 @@
+# [6.0.0](https://github.com/ybonnefond/stubborn/compare/v5.5.0...v6.0.0) (2023-03-06)
+
+
+### Bug Fixes
+
+* remove max event listener warning ([faa6a7e](https://github.com/ybonnefond/stubborn/commit/faa6a7ed9dc45b87d4aed888e24c78fa62828fae))
+
+
+### chore
+
+* update dependencies ([0f8ad66](https://github.com/ybonnefond/stubborn/commit/0f8ad66f03991a96415fcbb100f4a3cca5263112))
+
+
+### Features
+
+* drop support for node < LTS ([3903fb0](https://github.com/ybonnefond/stubborn/commit/3903fb066aa73a22684a5c12fa93a00fb496166f))
+
+
+### BREAKING CHANGES
+
+* CHANGE
+node 12.x, 13.x, 14.x, 15.x are no longer supported
+Only version >= to latest LTS are now supported
+* CHANGE
+Drop support for node 10.x and 11.x
+
+If you are not using node 10 or 11 you can upgrade
+from 5.x to 6.x eyes closed 😘
+
 # [5.5.0](https://github.com/ybonnefond/stubborn/compare/v5.4.0...v5.5.0) (2021-10-06)
 
 
