@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-const { Octokit } = require("@octokit/rest");
-const semanticRelease = require('semantic-release');
+import { Octokit } from "@octokit/rest";
+import semanticRelease from 'semantic-release';
 
 const GH_USER = 'ybonnefond';
 const GH_USER_EMAIL = 'ybonnefond@gmail.com';
@@ -56,7 +56,12 @@ ${nextRelease.notes}
     );
 
     if (isPR) {
-      const GH_EVENT = require(process.env.GITHUB_EVENT_PATH);
+      const { default: GH_EVENT } = await import(process.env.GITHUB_EVENT_PATH, {
+        assert: {
+          type: "json",
+        },
+      });
+
       const owner = GH_USER;
       const repo = GH_EVENT.repository.name;
       const issue_number = GH_EVENT.number;
