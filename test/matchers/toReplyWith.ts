@@ -1,4 +1,5 @@
 import { diff } from 'jest-diff';
+import { HttpClientResponse } from '../helpers/httpClient';
 
 declare global {
   namespace jest {
@@ -21,10 +22,16 @@ declare global {
 
 export function toReplyWith(
   this: any,
-  response: any,
-  statusCode: any,
-  body?: any,
-  headers?: any,
+  response: HttpClientResponse,
+  {
+    status,
+    body,
+    headers,
+  }: {
+    status: number;
+    body?: unknown;
+    headers?: Record<string, string>;
+  },
 ) {
   const fail = (message: string, { expected, received }: any = {}) => {
     const extra = expected
@@ -34,23 +41,21 @@ export function toReplyWith(
       pass: false,
       message: () =>
         `${message}\n${extra}\nRequest received:\n${JSON.stringify(
-          response.body,
+          response.data,
           null,
           2,
         )}`, // eslint-disable-line no-magic-numbers
     };
   };
 
-  if (statusCode !== response.statusCode) {
-    return fail(
-      `expects ${statusCode} status code, got ${response.statusCode}`,
-    );
+  if (status !== response.status) {
+    return fail(`expects ${status} status code, got ${response.status}`);
   }
 
-  if (body && !this.equals(body, response.body)) {
+  if (body && !this.equals(body, response.data)) {
     return fail('Body does not match', {
       expected: body,
-      received: response.body,
+      received: response.data,
     });
   }
 

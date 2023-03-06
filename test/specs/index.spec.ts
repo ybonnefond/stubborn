@@ -11,18 +11,22 @@ import {
 import { Request } from '../../src/@types';
 import { STATUS_CODES } from '../../src/constants';
 import { Debugger } from '../../src/debug/Debugger';
-import { init, stripAnsi } from '../helpers';
+import { stripAnsi } from '../helpers';
 import { toReplyWith } from '../matchers';
+import { test } from '../test';
 
 describe('index', () => {
   expect.extend({ toReplyWith });
-  const { sb, request } = init();
+  const sb = test.getStubbornInstance();
+  const httpClient = test.getHttpClient();
 
   it('should return NOT_IMPLEMENTED if no routes are configured', async () => {
     const mockFn = jest.fn();
     sb.on(EVENTS.NOT_IMPLEMENTED, mockFn);
 
-    expect(await request('/')).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
+    expect(await httpClient.request({ path: '/' })).toReplyWith({
+      status: STATUS_CODES.NOT_IMPLEMENTED,
+    });
     expect(mockFn).toHaveBeenCalledTimes(1);
     const [dbg]: [Debugger] = mockFn.mock.calls[0];
     const req = dbg.getInfo();
@@ -45,79 +49,81 @@ describe('index', () => {
       it('should return NOT_IMPLEMENTED if method does not match', async () => {
         sb.get('/');
 
-        expect(await request('/', { method: 'POST' })).toReplyWith(
-          STATUS_CODES.NOT_IMPLEMENTED,
-        );
+        expect(await httpClient.request({ method: 'POST' })).toReplyWith({
+          status: STATUS_CODES.NOT_IMPLEMENTED,
+        });
       });
 
       it('should return SUCCESS if method is GET', async () => {
         sb.get('/');
 
-        expect(await request('/')).toReplyWith(STATUS_CODES.SUCCESS);
+        expect(
+          await httpClient.request({
+            method: 'GET',
+            path: '/',
+          }),
+        ).toReplyWith({
+          status: STATUS_CODES.SUCCESS,
+        });
       });
 
       it('should return SUCCESS if method is POST', async () => {
         sb.post('/');
 
-        expect(await request('/', { method: 'POST' })).toReplyWith(
-          STATUS_CODES.SUCCESS,
-        );
-      });
-
-      it('should return SUCCESS if method is POST with empty body', async () => {
-        sb.post('/', '');
-
-        expect(await request('/', { method: 'POST', body: '' })).toReplyWith(
-          STATUS_CODES.SUCCESS,
-        );
+        expect(await httpClient.request({ method: 'POST' })).toReplyWith({
+          status: STATUS_CODES.SUCCESS,
+        });
       });
 
       it('should return SUCCESS if method is POST with string body', async () => {
         sb.post('/', 'body');
 
         expect(
-          await request('/', { method: 'POST', body: 'body' }),
-        ).toReplyWith(STATUS_CODES.SUCCESS);
+          await httpClient.request({
+            method: 'POST',
+            data: 'body',
+          }),
+        ).toReplyWith({ status: STATUS_CODES.SUCCESS });
       });
 
       it('should return SUCCESS if method is PUT', async () => {
         sb.put('/');
 
-        expect(await request('/', { method: 'PUT' })).toReplyWith(
-          STATUS_CODES.SUCCESS,
-        );
+        expect(await httpClient.request({ method: 'PUT' })).toReplyWith({
+          status: STATUS_CODES.SUCCESS,
+        });
       });
 
       it('should return SUCCESS if method is PUT with string body', async () => {
         sb.put('/', 'body');
 
-        expect(await request('/', { method: 'PUT', body: 'body' })).toReplyWith(
-          STATUS_CODES.SUCCESS,
-        );
+        expect(
+          await httpClient.request({ method: 'PUT', data: 'body' }),
+        ).toReplyWith({ status: STATUS_CODES.SUCCESS });
       });
 
       it('should return SUCCESS if method is PATCH', async () => {
         sb.patch('/');
 
-        expect(await request('/', { method: 'PATCH' })).toReplyWith(
-          STATUS_CODES.SUCCESS,
-        );
+        expect(await httpClient.request({ method: 'PATCH' })).toReplyWith({
+          status: STATUS_CODES.SUCCESS,
+        });
       });
 
       it('should return SUCCESS if method is PATCH with string body', async () => {
         sb.patch('/', 'body');
 
         expect(
-          await request('/', { method: 'PATCH', body: 'body' }),
-        ).toReplyWith(STATUS_CODES.SUCCESS);
+          await httpClient.request({ method: 'PATCH', data: 'body' }),
+        ).toReplyWith({ status: STATUS_CODES.SUCCESS });
       });
 
       it('should return SUCCESS if method is DELETE', async () => {
         sb.delete('/');
 
-        expect(await request('/', { method: 'DELETE' })).toReplyWith(
-          STATUS_CODES.SUCCESS,
-        );
+        expect(await httpClient.request({ method: 'DELETE' })).toReplyWith({
+          status: STATUS_CODES.SUCCESS,
+        });
       });
     });
 
@@ -125,35 +131,41 @@ describe('index', () => {
       it('should return NOT_IMPLEMENTED if path does not strictly match', async () => {
         sb.get('/test');
 
-        expect(await request('/test2')).toReplyWith(
-          STATUS_CODES.NOT_IMPLEMENTED,
-        );
+        expect(await httpClient.request({ path: '/test2' })).toReplyWith({
+          status: STATUS_CODES.NOT_IMPLEMENTED,
+        });
       });
 
       it('should return SUCCESS if path strictly match', async () => {
         sb.get('/test');
 
-        expect(await request('/test')).toReplyWith(STATUS_CODES.SUCCESS);
+        expect(await httpClient.request({ path: '/test' })).toReplyWith({
+          status: STATUS_CODES.SUCCESS,
+        });
       });
 
       it('should return NOT_IMPLEMENTED if path does not match a regex', async () => {
         sb.get(/\/test\/[0-9]{1}/);
 
-        expect(await request('/test2', { method: 'GET' })).toReplyWith(
-          STATUS_CODES.NOT_IMPLEMENTED,
-        );
+        expect(
+          await httpClient.request({ path: '/test2', method: 'GET' }),
+        ).toReplyWith({ status: STATUS_CODES.NOT_IMPLEMENTED });
       });
 
       it('should return SUCCESS if path match regexp', async () => {
         sb.get(/\/test\/[0-9]{1}/);
 
-        expect(await request('/test/2')).toReplyWith(STATUS_CODES.SUCCESS);
+        expect(await httpClient.request({ path: '/test/2' })).toReplyWith({
+          status: STATUS_CODES.SUCCESS,
+        });
       });
 
       it('should return SUCCESS if path match custom function', async () => {
         sb.get(path => path === '/test/2');
 
-        expect(await request('/test/2')).toReplyWith(STATUS_CODES.SUCCESS);
+        expect(await httpClient.request({ path: '/test/2' })).toReplyWith({
+          status: STATUS_CODES.SUCCESS,
+        });
       });
     });
 
@@ -162,84 +174,106 @@ describe('index', () => {
         sb.get('/').setHeaders(WILDCARD);
 
         expect(
-          await request('/', { headers: { Authorization: 'token' } }),
-        ).toReplyWith(STATUS_CODES.SUCCESS);
+          await httpClient.request({
+            headers: { Authorization: 'token' },
+          }),
+        ).toReplyWith({ status: STATUS_CODES.SUCCESS });
       });
 
       it('should return NOT_IMPLEMENTED if header is not in definition', async () => {
         sb.get('/');
 
         expect(
-          await request('/', { headers: { Authorization: 'token' } }),
-        ).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
+          await httpClient.request({
+            headers: { Authorization: 'token' },
+          }),
+        ).toReplyWith({ status: STATUS_CODES.NOT_IMPLEMENTED });
       });
 
       it('should return NOT_IMPLEMENTED if header in definition is not provided', async () => {
         sb.get('/').setHeaders({ Authorization: 'token' });
 
-        expect(await request('/')).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
+        expect(await httpClient.request({ path: '/' })).toReplyWith({
+          status: STATUS_CODES.NOT_IMPLEMENTED,
+        });
       });
 
       it('should return NOT_IMPLEMENTED if headers name are different', async () => {
         sb.get('/').setHeaders({ Authorization: 'token' });
 
         expect(
-          await request('/', { headers: { 'x-api-key': 'api-key' } }),
-        ).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
+          await httpClient.request({
+            headers: { 'x-api-key': 'api-key' },
+          }),
+        ).toReplyWith({ status: STATUS_CODES.NOT_IMPLEMENTED });
       });
 
       it('should return NOT_IMPLEMENTED if headers values are different', async () => {
         sb.get('/').setHeaders({ Authorization: 'token' });
 
         expect(
-          await request('/', { headers: { Authorization: 'not-token' } }),
-        ).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
+          await httpClient.request({
+            headers: { Authorization: 'not-token' },
+          }),
+        ).toReplyWith({ status: STATUS_CODES.NOT_IMPLEMENTED });
       });
 
       it('should return SUCCESS if header is WILDCARD and in request', async () => {
         sb.get('/').setHeaders({ Authorization: WILDCARD });
 
         expect(
-          await request('/', { headers: { Authorization: 'token' } }),
-        ).toReplyWith(STATUS_CODES.SUCCESS);
+          await httpClient.request({
+            headers: { Authorization: 'token' },
+          }),
+        ).toReplyWith({ status: STATUS_CODES.SUCCESS });
       });
 
       it('should return SUCCESS if header is WILDCARD and not in request', async () => {
         sb.get('/').setHeaders({ Authorization: WILDCARD });
 
-        expect(await request('/')).toReplyWith(STATUS_CODES.SUCCESS);
+        expect(await httpClient.request({ path: '/' })).toReplyWith({
+          status: STATUS_CODES.SUCCESS,
+        });
       });
 
       it('should return SUCCESS if header is strictly equal to the definition', async () => {
         sb.get('/').setHeaders({ Authorization: 'token' });
 
         expect(
-          await request('/', { headers: { Authorization: 'token' } }),
-        ).toReplyWith(STATUS_CODES.SUCCESS);
+          await httpClient.request({
+            headers: { Authorization: 'token' },
+          }),
+        ).toReplyWith({ status: STATUS_CODES.SUCCESS });
       });
 
       it('should return SUCCESS if header is strictly equal to the definition and case is different', async () => {
         sb.get('/').setHeaders({ Authorization: 'token' });
 
         expect(
-          await request('/', { headers: { AUTHORIZATION: 'token' } }),
-        ).toReplyWith(STATUS_CODES.SUCCESS);
+          await httpClient.request({
+            headers: { AUTHORIZATION: 'token' },
+          }),
+        ).toReplyWith({ status: STATUS_CODES.SUCCESS });
       });
 
       it('should return NOT_IMPLEMENTED if header does not match the definition', async () => {
         sb.get('/').setHeaders({ Authorization: /^Bearer [0-9]{1}$/ });
 
         expect(
-          await request('/', { headers: { Authorization: 'Bearer 11' } }),
-        ).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
+          await httpClient.request({
+            headers: { Authorization: 'Bearer 11' },
+          }),
+        ).toReplyWith({ status: STATUS_CODES.NOT_IMPLEMENTED });
       });
 
       it('should return SUCCESS if header match a regexp', async () => {
         sb.get('/').setHeaders({ Authorization: /^Bearer [0-9]{1}$/ });
 
         expect(
-          await request('/', { headers: { Authorization: 'Bearer 9' } }),
-        ).toReplyWith(STATUS_CODES.SUCCESS);
+          await httpClient.request({
+            headers: { Authorization: 'Bearer 9' },
+          }),
+        ).toReplyWith({ status: STATUS_CODES.SUCCESS });
       });
 
       it('should return SUCCESS if header match a custom function', async () => {
@@ -248,30 +282,34 @@ describe('index', () => {
         });
 
         expect(
-          await request('/', { headers: { Authorization: 'Bearer 9' } }),
-        ).toReplyWith(STATUS_CODES.SUCCESS);
+          await httpClient.request({
+            headers: { Authorization: 'Bearer 9' },
+          }),
+        ).toReplyWith({ status: STATUS_CODES.SUCCESS });
       });
 
       it('should return SUCCESS when setting a specific header', async () => {
         sb.get('/').setHeader('Authorization', 'Bearer 9');
 
         expect(
-          await request('/', { headers: { Authorization: 'Bearer 9' } }),
-        ).toReplyWith(STATUS_CODES.SUCCESS);
+          await httpClient.request({
+            headers: { Authorization: 'Bearer 9' },
+          }),
+        ).toReplyWith({ status: STATUS_CODES.SUCCESS });
       });
 
       it('should convert json if JSON Accept header', async () => {
         sb.post('/', '{"key": "value"}').setResponseBody({ key: 'ok' });
 
-        const res = await request('/', {
-          method: 'post',
-          body: '{"key": "value"}',
+        const res = await httpClient.request({
+          method: 'POST',
+          data: '{"key": "value"}',
           responseType: 'text',
           headers: { Accept: 'application/vnd.api+json' },
         });
-        expect(res).toReplyWith(STATUS_CODES.SUCCESS);
+        expect(res).toReplyWith({ status: STATUS_CODES.SUCCESS });
 
-        const body = JSON.parse(res.body as string);
+        const body = JSON.parse(res.data as string);
         expect(body).toStrictEqual({ key: 'ok' });
       });
 
@@ -280,15 +318,15 @@ describe('index', () => {
           .setHeader('Content-Type', 'application/x-amz-json-1.1')
           .setResponseBody({ output: 'anything' });
 
-        const res = await request('/', {
-          method: 'post',
-          body: '{"input": "something"}',
+        const res = await httpClient.request({
+          method: 'POST',
+          data: '{"input": "something"}',
           responseType: 'json',
           headers: { 'Content-Type': 'application/x-amz-json-1.1' },
         });
-        expect(res).toReplyWith(STATUS_CODES.SUCCESS);
+        expect(res).toReplyWith({ status: STATUS_CODES.SUCCESS });
 
-        expect(res.body).toStrictEqual({ output: 'anything' });
+        expect(res.data).toStrictEqual({ output: 'anything' });
       });
 
       it('should support AWS json 1.1 content type and parse body', async () => {
@@ -296,15 +334,15 @@ describe('index', () => {
           .setHeader('Content-Type', 'application/x-amz-json-1.1')
           .setResponseBody({ output: 'anything' });
 
-        const res = await request('/', {
-          method: 'post',
-          body: '{"input": "something"}',
+        const res = await httpClient.request({
+          method: 'POST',
+          data: '{"input": "something"}',
           responseType: 'json',
           headers: { 'Content-Type': 'application/x-amz-json-1.1' },
         });
-        expect(res).toReplyWith(STATUS_CODES.SUCCESS);
+        expect(res).toReplyWith({ status: STATUS_CODES.SUCCESS });
 
-        expect(res.body).toStrictEqual({ output: 'anything' });
+        expect(res.data).toStrictEqual({ output: 'anything' });
       });
     });
 
@@ -312,97 +350,129 @@ describe('index', () => {
       it('should return NOT_IMPLEMENTED if query parameters is not in definition', async () => {
         sb.get('/');
 
-        expect(await request('/?page=10')).toReplyWith(
-          STATUS_CODES.NOT_IMPLEMENTED,
-        );
+        expect(
+          await httpClient.request({
+            query: { page: '10' },
+          }),
+        ).toReplyWith({ status: STATUS_CODES.NOT_IMPLEMENTED });
       });
 
       it('should return NOT_IMPLEMENTED if query parameter in definition is not provided', async () => {
         sb.get('/').setQueryParameters({ page: 10 });
 
-        expect(await request('/')).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
+        expect(await httpClient.request({ path: '/' })).toReplyWith({
+          status: STATUS_CODES.NOT_IMPLEMENTED,
+        });
       });
 
       it('should return NOT_IMPLEMENTED if query parameters are different', async () => {
         sb.get('/').setQueryParameters({ page: 10 });
 
-        expect(await request('/?limit=5')).toReplyWith(
-          STATUS_CODES.NOT_IMPLEMENTED,
-        );
+        expect(
+          await httpClient.request({
+            query: { limit: '5' },
+          }),
+        ).toReplyWith({ status: STATUS_CODES.NOT_IMPLEMENTED });
       });
 
       it('should return NOT_IMPLEMENTED if query parameter value is not strictly equal to definition', async () => {
         sb.get('/').setQueryParameters({ page: 10 });
 
-        expect(await request('/?page=11')).toReplyWith(
-          STATUS_CODES.NOT_IMPLEMENTED,
-        );
+        expect(
+          await httpClient.request({
+            query: { page: '11' },
+          }),
+        ).toReplyWith({ status: STATUS_CODES.NOT_IMPLEMENTED });
       });
 
       it('should return SUCCESS if query parameter is strictly equal to the definition', async () => {
         sb.get('/').setQueryParameters({ page: '10' });
 
-        expect(await request('/?page=10')).toReplyWith(STATUS_CODES.SUCCESS);
+        expect(
+          await httpClient.request({
+            query: { page: '10' },
+          }),
+        ).toReplyWith({ status: STATUS_CODES.SUCCESS });
       });
 
       it('should return SUCCESS if query parameters are wildcarded', async () => {
         sb.get('/').setQueryParameters(WILDCARD);
 
-        expect(await request('/?page=10')).toReplyWith(STATUS_CODES.SUCCESS);
+        expect(
+          await httpClient.request({
+            query: { page: '10' },
+          }),
+        ).toReplyWith({ status: STATUS_CODES.SUCCESS });
       });
 
       it('should return SUCCESS if query parameter is WILDCARD and in query', async () => {
         sb.get('/').setQueryParameters({ page: WILDCARD });
 
-        expect(await request('/?page=10')).toReplyWith(STATUS_CODES.SUCCESS);
+        expect(
+          await httpClient.request({
+            query: { page: '10' },
+          }),
+        ).toReplyWith({ status: STATUS_CODES.SUCCESS });
       });
 
       it('should return SUCCESS if query parameter is WILDCARD and not in query', async () => {
         sb.get('/').setQueryParameters({ page: WILDCARD });
 
-        expect(await request('/')).toReplyWith(STATUS_CODES.SUCCESS);
+        expect(await httpClient.request({ path: '/' })).toReplyWith({
+          status: STATUS_CODES.SUCCESS,
+        });
       });
 
       it('should return SUCCESS if query parameter matches multiple values', async () => {
         sb.get('/').setQueryParameters({ image: ['id1', 'id2'] });
 
-        expect(await request('/?image=id1&image=id2')).toReplyWith(
-          STATUS_CODES.SUCCESS,
-        );
+        expect(
+          await httpClient.request({
+            query: new URLSearchParams('image=id1&image=id2'),
+          }),
+        ).toReplyWith({ status: STATUS_CODES.SUCCESS });
       });
 
       it('should return SUCCESS if query parameter does not match multiple values', async () => {
         sb.get('/').setQueryParameters({ image: ['id1', 'id2'] });
 
-        expect(await request('/?image=id1&image=id3')).toReplyWith(
-          STATUS_CODES.NOT_IMPLEMENTED,
-        );
+        expect(
+          await httpClient.request({
+            query: new URLSearchParams('image=id1&image=id3'),
+          }),
+        ).toReplyWith({ status: STATUS_CODES.NOT_IMPLEMENTED });
       });
 
       it('should return NOT_IMPLEMENTED if header does not match the definition', async () => {
         sb.get('/').setQueryParameters({ page: /^\d+$/ });
 
-        expect(await request('/?page=two')).toReplyWith(
-          STATUS_CODES.NOT_IMPLEMENTED,
-        );
+        expect(
+          await httpClient.request({ query: { page: 'two' } }),
+        ).toReplyWith({ status: STATUS_CODES.NOT_IMPLEMENTED });
       });
 
       it('should return SUCCESS if header match a regexp', async () => {
         sb.get('/').setQueryParameters({ page: /^\d+$/ });
 
-        expect(await request('/?page=100')).toReplyWith(STATUS_CODES.SUCCESS);
+        expect(
+          await httpClient.request({ query: { page: '100' } }),
+        ).toReplyWith({ status: STATUS_CODES.SUCCESS });
       });
 
       it('should return SUCCESS if header match a custom function', async () => {
         sb.get('/').setQueryParameters({ page: param => param === '100' });
 
-        expect(await request('/?page=100')).toReplyWith(STATUS_CODES.SUCCESS);
+        expect(
+          await httpClient.request({ query: { page: '100' } }),
+        ).toReplyWith({ status: STATUS_CODES.SUCCESS });
       });
 
       it('should return SUCCESS when setting a specific query parameter', async () => {
         sb.get('/').setQueryParameter('page', '100');
 
-        expect(await request('/?page=100')).toReplyWith(STATUS_CODES.SUCCESS);
+        expect(
+          await httpClient.request({ query: { page: '100' } }),
+        ).toReplyWith({ status: STATUS_CODES.SUCCESS });
       });
     });
 
@@ -411,12 +481,12 @@ describe('index', () => {
         sb.post('/');
 
         expect(
-          await request('/', {
+          await httpClient.request({
             method: 'POST',
-            body: 'test',
+            data: 'test',
             responseType: 'text',
           }),
-        ).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
+        ).toReplyWith({ status: STATUS_CODES.NOT_IMPLEMENTED });
       });
 
       describe('Text body', () => {
@@ -424,48 +494,47 @@ describe('index', () => {
           sb.post('/', 'test').setHeaders({ 'Content-Type': 'text/plain' });
 
           expect(
-            await request('/', {
+            await httpClient.request({
               method: 'POST',
-              json: false,
               headers: { 'Content-Type': 'text/plain' },
             }),
-          ).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
+          ).toReplyWith({ status: STATUS_CODES.NOT_IMPLEMENTED });
         });
 
         it('should return NOT_IMPLEMENTED if body in request but not in definition', async () => {
           sb.post('/').setHeaders({ 'Content-Type': 'text/plain' });
 
           expect(
-            await request('/', {
+            await httpClient.request({
               method: 'POST',
-              body: 'test',
+              data: 'test',
               headers: { 'Content-Type': 'text/plain' },
             }),
-          ).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
+          ).toReplyWith({ status: STATUS_CODES.NOT_IMPLEMENTED });
         });
 
         it('should return SUCCESS if definition is strictly equal to body', async () => {
           sb.post('/', 'test').setHeaders({ 'Content-Type': 'text/plain' });
 
           expect(
-            await request('/', {
+            await httpClient.request({
               method: 'POST',
-              body: 'test',
+              data: 'test',
               headers: { 'Content-Type': 'text/plain' },
             }),
-          ).toReplyWith(STATUS_CODES.SUCCESS);
+          ).toReplyWith({ status: STATUS_CODES.SUCCESS });
         });
 
         it('should return NOT_IMPLEMENTED if string body does not equal definition body', async () => {
           sb.post('/', 'test').setHeaders({ 'Content-Type': 'text/plain' });
 
           expect(
-            await request('/', {
+            await httpClient.request({
               method: 'POST',
-              body: 'test2',
+              data: 'test2',
               headers: { 'Content-Type': 'text/plain' },
             }),
-          ).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
+          ).toReplyWith({ status: STATUS_CODES.NOT_IMPLEMENTED });
         });
       });
 
@@ -476,11 +545,14 @@ describe('index', () => {
           });
 
           expect(
-            await request('/', {
+            await httpClient.request({
               method: 'POST',
-              json: { key: 'value' },
+              data: { key: 'value' },
+              headers: {
+                'Content-Type': 'application/json',
+              },
             }),
-          ).toReplyWith(STATUS_CODES.SUCCESS);
+          ).toReplyWith({ status: STATUS_CODES.SUCCESS });
         });
 
         it('should return NOT_IMPLEMENTED if values are different in object body', async () => {
@@ -489,11 +561,11 @@ describe('index', () => {
           });
 
           expect(
-            await request('/', {
+            await httpClient.request({
               method: 'POST',
-              json: { key: 'value' },
+              data: { key: 'value' },
             }),
-          ).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
+          ).toReplyWith({ status: STATUS_CODES.NOT_IMPLEMENTED });
         });
 
         it('should return NOT_IMPLEMENTED if keys are different in object body', async () => {
@@ -502,11 +574,11 @@ describe('index', () => {
           });
 
           expect(
-            await request('/', {
+            await httpClient.request({
               method: 'POST',
-              json: { key: 'value' },
+              data: { key: 'value' },
             }),
-          ).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
+          ).toReplyWith({ status: STATUS_CODES.NOT_IMPLEMENTED });
         });
 
         it('should return NOT_IMPLEMENTED if count keys are different in object definition', async () => {
@@ -515,11 +587,11 @@ describe('index', () => {
           });
 
           expect(
-            await request('/', {
+            await httpClient.request({
               method: 'POST',
-              json: { key: 'value' },
+              data: { key: 'value' },
             }),
-          ).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
+          ).toReplyWith({ status: STATUS_CODES.NOT_IMPLEMENTED });
         });
 
         it('should return SUCCESS if json body is equal to definition with complex object', async () => {
@@ -528,11 +600,14 @@ describe('index', () => {
           }).setHeaders({ 'Content-Type': 'application/json' });
 
           expect(
-            await request('/', {
+            await httpClient.request({
               method: 'POST',
-              json: { subObject: { subArray: [{ key: 'value' }] } },
+              data: { subObject: { subArray: [{ key: 'value' }] } },
+              headers: {
+                'Content-Type': 'application/json',
+              },
             }),
-          ).toReplyWith(STATUS_CODES.SUCCESS);
+          ).toReplyWith({ status: STATUS_CODES.SUCCESS });
         });
 
         it('should return SUCCESS if body equals definition with regex', async () => {
@@ -541,11 +616,14 @@ describe('index', () => {
           });
 
           expect(
-            await request('/', {
+            await httpClient.request({
               method: 'POST',
-              json: { key: 11, key2: [{ subkey: 13 }] },
+              data: { key: 11, key2: [{ subkey: 13 }] },
+              headers: {
+                'Content-Type': 'application/json',
+              },
             }),
-          ).toReplyWith(STATUS_CODES.SUCCESS);
+          ).toReplyWith({ status: STATUS_CODES.SUCCESS });
         });
 
         it('should return SUCCESS if body equals definition with custom function', async () => {
@@ -558,11 +636,14 @@ describe('index', () => {
           }).setHeaders({ 'Content-Type': 'application/json' });
 
           expect(
-            await request('/', {
+            await httpClient.request({
               method: 'POST',
-              json: { key: 'test', key2: [{ subkey: 'toto' }] },
+              data: { key: 'test', key2: [{ subkey: 'toto' }] },
+              headers: {
+                'Content-Type': 'application/json',
+              },
             }),
-          ).toReplyWith(STATUS_CODES.SUCCESS);
+          ).toReplyWith({ status: STATUS_CODES.SUCCESS });
         });
       });
     });
@@ -570,60 +651,68 @@ describe('index', () => {
 
   describe('Response', () => {
     it('should respond with NOT_IMPLEMENTED status code and request information', async () => {
-      const options = {
-        method: 'POST',
-        headers: {
-          'x-api-key': 'API_KEY',
+      const data = () => ({ key: 'value' });
+      const headers = () => ({
+        'x-api-key': 'API_KEY',
+      });
+
+      expect(
+        await httpClient.request({
+          method: 'POST',
+          query: { page: '10', limit: '100' },
+          headers: headers(),
+          data: data(),
+        }),
+      ).toReplyWith({
+        status: STATUS_CODES.NOT_IMPLEMENTED,
+        message: expect.any(String),
+        request: {
+          method: 'POST',
+          path: '/',
+          headers: expect.objectContaining(headers()),
+          query: { page: '10', limit: '100' },
+          body: data(),
+          hash: expect.any(String),
         },
-        json: { key: 'value' },
-      };
-      expect(await request('/?page=10&limit=100', options)).toReplyWith(
-        STATUS_CODES.NOT_IMPLEMENTED,
-        {
-          message: expect.any(String),
-          request: {
-            method: 'POST',
-            path: '/',
-            headers: expect.objectContaining(options.headers),
-            query: { page: '10', limit: '100' },
-            body: options.json,
-            hash: expect.any(String),
-          },
-        },
-      );
+      });
     });
 
     it('should respond with provided status code', async () => {
       const STATUS_CODE = 201;
       sb.get('/').setResponseStatusCode(STATUS_CODE);
 
-      expect(await request('/')).toReplyWith(STATUS_CODE);
+      expect(await httpClient.request({ path: '/' })).toReplyWith({
+        status: STATUS_CODE,
+      });
     });
 
     it('should respond with provided headers', async () => {
       sb.get('/').setResponseHeaders({ custom: 'header' });
 
-      expect(await request('/')).toReplyWith(
-        STATUS_CODES.SUCCESS,
-        '',
-        expect.objectContaining({ custom: 'header' }),
-      );
+      expect(await httpClient.request({ path: '/' })).toReplyWith({
+        status: STATUS_CODES.SUCCESS,
+        body: '',
+        headers: expect.objectContaining({ custom: 'header' }),
+      });
     });
 
     it('should respond with provided header', async () => {
       sb.get('/').setResponseHeader('custom', 'header');
 
-      expect(await request('/')).toReplyWith(
-        STATUS_CODES.SUCCESS,
-        '',
-        expect.objectContaining({ custom: 'header' }),
-      );
+      expect(await httpClient.request({ path: '/' })).toReplyWith({
+        status: STATUS_CODES.SUCCESS,
+        body: '',
+        headers: expect.objectContaining({ custom: 'header' }),
+      });
     });
 
     it('should respond with a json encoded body if accept header is json', async () => {
       sb.get('/').setResponseBody('toto');
 
-      expect(await request('/')).toReplyWith(STATUS_CODES.SUCCESS, 'toto');
+      expect(await httpClient.request({ path: '/' })).toReplyWith({
+        status: STATUS_CODES.SUCCESS,
+        body: 'toto',
+      });
     });
 
     it('should encode JSON is response content-type header is provided', async () => {
@@ -631,35 +720,46 @@ describe('index', () => {
         .setResponseBody('toto')
         .setResponseHeader('Content-Type', 'application/json; charset=utf-8');
 
-      expect(await request('/', { responseType: 'text' })).toReplyWith(
-        STATUS_CODES.SUCCESS,
-        JSON.stringify('toto'),
-      );
+      expect(await httpClient.request({ responseType: 'text' })).toReplyWith({
+        status: STATUS_CODES.SUCCESS,
+        body: JSON.stringify('toto'),
+      });
     });
 
-    it('should respond with no encodding if accept and content-type is not provided', async () => {
+    it('should respond with no encoding if accept and content-type is not provided', async () => {
       sb.get('/').setResponseBody('toto');
 
-      expect(await request('/', { responseType: 'text' })).toReplyWith(
-        STATUS_CODES.SUCCESS,
-        'toto',
-      );
+      expect(await httpClient.request({ responseType: 'text' })).toReplyWith({
+        status: STATUS_CODES.SUCCESS,
+        body: '"toto"',
+      });
     });
 
     it('should respond with provided object body', async () => {
       sb.get('/').setResponseBody({ custom: 'body' });
 
-      expect(await request('/', { responseType: 'json' })).toReplyWith(
-        STATUS_CODES.SUCCESS,
-        { custom: 'body' },
-      );
+      expect(await httpClient.request({ responseType: 'json' })).toReplyWith({
+        status: STATUS_CODES.SUCCESS,
+        body: {
+          custom: 'body',
+        },
+      });
     });
 
     it('should respond with provided buffer body', async () => {
       sb.get('/').setResponseBody(Buffer.from('Hello buffer', 'utf-8'));
 
-      const response = await request('/', { responseType: 'text' });
-      expect(response).toReplyWith(STATUS_CODES.SUCCESS, 'Hello buffer');
+      const response = await httpClient.request({
+        responseType: 'text',
+        headers: {
+          accept: 'text/plain',
+        },
+      });
+
+      expect(response).toReplyWith({
+        status: STATUS_CODES.SUCCESS,
+        body: 'Hello buffer',
+      });
     });
 
     it('should respond with dynamic body', async () => {
@@ -671,10 +771,13 @@ describe('index', () => {
           sym: Symbol('bol'),
         } as any);
 
-      expect(await request('/?page=10')).toReplyWith(STATUS_CODES.SUCCESS, {
-        custom: '10',
-        arr: ['1', '2', '3', { one: 'un' }],
-        sym: 'bol',
+      expect(await httpClient.request({ query: { page: '10' } })).toReplyWith({
+        status: STATUS_CODES.SUCCESS,
+        body: {
+          custom: '10',
+          arr: ['1', '2', '3', { one: 'un' }],
+          sym: 'bol',
+        },
       });
     });
 
@@ -689,10 +792,17 @@ describe('index', () => {
           },
         });
 
-      expect(await request('/?page=22')).toReplyWith(STATUS_CODES.SUCCESS, {
-        custom: {
-          val1: 'some value',
-          val2: 'some value - page: 22',
+      expect(
+        await httpClient.request({
+          query: { page: '22' },
+        }),
+      ).toReplyWith({
+        status: STATUS_CODES.SUCCESS,
+        body: {
+          custom: {
+            val1: 'some value',
+            val2: 'some value - page: 22',
+          },
         },
       });
     });
@@ -700,23 +810,23 @@ describe('index', () => {
     it('should return a null value in response body', async () => {
       sb.post('/').setResponseBody({ key: 'ok', nullValue: null });
 
-      const res = await request('/', {
-        method: 'post',
+      const res = await httpClient.request({
+        method: 'POST',
       });
-      expect(res).toReplyWith(STATUS_CODES.SUCCESS);
+      expect(res).toReplyWith({ status: STATUS_CODES.SUCCESS });
 
-      expect(res.body).toStrictEqual({ key: 'ok', nullValue: null });
+      expect(res.data).toStrictEqual({ key: 'ok', nullValue: null });
     });
 
     it('should not return undefined values in response body', async () => {
       sb.post('/').setResponseBody({ key: 'ok', undefinedValue: undefined });
 
-      const res = await request('/', {
-        method: 'post',
+      const res = await httpClient.request({
+        method: 'POST',
       });
-      expect(res).toReplyWith(STATUS_CODES.SUCCESS);
+      expect(res).toReplyWith({ status: STATUS_CODES.SUCCESS });
 
-      expect(res.body).toStrictEqual({
+      expect(res.data).toStrictEqual({
         key: 'ok',
       });
     });
@@ -728,12 +838,12 @@ describe('index', () => {
         arrayValue: [undefined, { something: 'else' }],
       } as any);
 
-      const res = await request('/', {
-        method: 'post',
+      const res = await httpClient.request({
+        method: 'POST',
       });
-      expect(res).toReplyWith(STATUS_CODES.SUCCESS);
+      expect(res).toReplyWith({ status: STATUS_CODES.SUCCESS });
 
-      expect(res.body).toStrictEqual({
+      expect(res.data).toStrictEqual({
         key: 'ok',
         arrayValue: [null, { something: 'else' }],
       });
@@ -744,8 +854,11 @@ describe('index', () => {
       sb.delete('/').setResponseStatusCode(STATUS_CODE);
 
       expect(
-        await request('/', { method: 'DELETE', responseType: 'text' }),
-      ).toReplyWith(STATUS_CODE);
+        await httpClient.request({
+          method: 'DELETE',
+          responseType: 'text',
+        }),
+      ).toReplyWith({ status: STATUS_CODE });
     });
   });
 
@@ -761,18 +874,23 @@ describe('index', () => {
       const TOTAL_CALLS = 3;
 
       for (let i = 1; i <= TOTAL_CALLS; i++) {
-        await request();
+        await httpClient.request({ path: '/' });
         expect(route.countCalls()).toBe(i);
       }
     });
 
-    it('should retain a striped version of the request', async () => {
+    it('should retain a striped version of the httpClient.request', async () => {
       const route = sb
         .post('/', WILDCARD)
         .setHeaders(WILDCARD)
         .setQueryParameters(WILDCARD);
 
-      await request('/?page=100', { method: 'POST', json: { some: 'body' } });
+      await httpClient.request({
+        query: { page: '100' },
+        method: 'POST',
+        data: { some: 'body' },
+        headers: { 'content-type': 'application/json' },
+      });
 
       expect(route.countCalls()).toBe(1);
       expect(route.getCall(0)).toEqual({
@@ -786,7 +904,7 @@ describe('index', () => {
           'accept-encoding': expect.any(String),
           connection: expect.any(String),
           'content-length': expect.any(String),
-          'content-type': expect.any(String),
+          'content-type': 'application/json',
           host: expect.any(String),
           'user-agent': expect.any(String),
         },
@@ -798,7 +916,9 @@ describe('index', () => {
     it('should return SUCCESS if method is GET', async () => {
       sb.addRoute(new Route(METHODS.GET, '/'));
 
-      expect(await request('/')).toReplyWith(STATUS_CODES.SUCCESS);
+      expect(await httpClient.request({ path: '/' })).toReplyWith({
+        status: STATUS_CODES.SUCCESS,
+      });
     });
   });
 
@@ -807,10 +927,14 @@ describe('index', () => {
       const route = new Route(METHODS.GET, '/');
       sb.addRoute(route);
 
-      expect(await request('/')).toReplyWith(STATUS_CODES.SUCCESS);
+      expect(await httpClient.request({ path: '/' })).toReplyWith({
+        status: STATUS_CODES.SUCCESS,
+      });
 
       sb.removeRoute(route);
-      expect(await request('/')).toReplyWith(STATUS_CODES.NOT_IMPLEMENTED);
+      expect(await httpClient.request({ path: '/' })).toReplyWith({
+        status: STATUS_CODES.NOT_IMPLEMENTED,
+      });
     });
   });
 
@@ -828,7 +952,7 @@ describe('index', () => {
 
     it('should output method diff', async () => {
       const route = sb.put('/');
-      const req = request('/', { method: 'POST' });
+      const req = httpClient.request({ method: 'POST' });
 
       logDiffOn501(sb, route);
 
@@ -848,7 +972,9 @@ describe('index', () => {
           name: (val: JsonValue) => val === 'tonton',
         })
         .setHeader('x-api-key', '123');
-      const req = request('/test-stuff');
+      const req = httpClient.request({
+        path: '/test-stuff',
+      });
       logDiffOn501(sb, route);
 
       const out = await run(req);
@@ -872,13 +998,16 @@ describe('index', () => {
         .setHeader('x-header-1', 'Bearer hello')
         .setHeader('content-type', 'application/json');
 
-      const req = request('/test?param1=ten&extraParam=10', {
+      const req = httpClient.request({
+        path: '/test',
+        query: { param1: 'ten', extraParam: '10' },
         method: 'POST',
         headers: {
           'x-header-1': 'Bearer world',
           'x-header-extra': 'x-extra-header-123',
+          'content-type': 'application/json',
         },
-        json: {
+        data: {
           firstname: 123,
           lastname: 'Donald',
           extraKey: 'extra key value',
@@ -896,7 +1025,7 @@ describe('index', () => {
 
     it('should output method diff using logDiff on route', async () => {
       sb.put('/').logDiffOn501();
-      const req = request('/', { method: 'POST' });
+      const req = httpClient.request({ method: 'POST' });
 
       const out = await run(req);
 
