@@ -23,9 +23,9 @@ jobs:
         uses: actions/cache@v1
         with:
           path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ matrix.node-version }}-node-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-${{ matrix.node-version }}-node-
       - name: "Install dependencies"
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn install --pure-lockfile
