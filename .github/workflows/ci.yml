@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     strategy:
@@ -37,16 +37,26 @@ jobs:
           COVERALLS_REPO_TOKEN: "${{ secrets.COVERALLS_REPO_TOKEN }}"
           COVERALLS_GIT_BRANCH: "${{ github.ref }}"
       - name: "Upload Coverage"
-        uses: coverallsapp/github-action@v1.1.1
+        uses: coverallsapp/github-action@v1
         with:
           parallel: true
-          flag-name: run-${{ matrix.test_number }}
+          flag-name: run-${{ join(matrix.*, '-') }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+  finish:
+    needs: test
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@v1
+        with:
+          parallel-finished: true
+          carryforward: "run-18.x,run-19.x"
 
   release:
     runs-on: ubuntu-latest
-    needs: [build]
+    needs: [test]
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     steps:
       - uses: actions/checkout@v3
