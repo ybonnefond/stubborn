@@ -166,6 +166,7 @@ function buildMiddlewares(router: Router) {
     middlewares.urlParser({ host: router.getHost(), port: router.getPort() }),
     middlewares.bodyJson(),
     middlewares.bodyUrlEncoded(),
+    middlewares.bodyMultipartFormData(),
     middlewares.bodyRaw(),
     middlewares.bodyEmpty(),
   ];

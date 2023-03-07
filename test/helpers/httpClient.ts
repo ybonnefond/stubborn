@@ -1,3 +1,4 @@
+import FormData from 'form-data';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Stubborn } from '../../src';
 
@@ -6,7 +7,7 @@ export interface HttpClientRequest {
   headers?: Record<string, string>;
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
   responseType?: 'json' | 'text' | 'arraybuffer';
-  data?: string | Record<string, unknown>;
+  data?: string | Record<string, unknown> | FormData;
   query?: Record<string, string> | URLSearchParams;
 }
 
@@ -33,6 +34,7 @@ export class HttpClient {
       data: req.data || '',
       responseType: req.responseType || 'json',
       params: req.query,
+      maxRedirects: 0,
       headers: {
         accept: 'application/json',
         'content-type': null,

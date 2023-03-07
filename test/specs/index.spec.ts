@@ -1,3 +1,5 @@
+import { Readable } from 'stream';
+import FormData from 'form-data';
 import {
   EVENTS,
   JsonValue,
@@ -642,6 +644,70 @@ describe('index', () => {
               headers: {
                 'Content-Type': 'application/json',
               },
+            }),
+          ).toReplyWith({ status: STATUS_CODES.SUCCESS });
+        });
+      });
+
+      describe('multipart/form-data', () => {
+        it('should return SUCCESS with a form field', async () => {
+          const form = new FormData();
+          form.append('field1', 'value1');
+
+          sb.post('/', { field1: 'value1' }).setHeaders({
+            ...form.getHeaders(),
+          });
+
+          expect(
+            await httpClient.request({
+              method: 'POST',
+              data: form,
+              headers: { ...form.getHeaders() },
+            }),
+          ).toReplyWith({ status: STATUS_CODES.SUCCESS });
+        });
+
+        it('should return SUCCESS with a form field with stream', async () => {
+          const form = new FormData();
+          form.append('stream1', Readable.from(Buffer.from('Hello')));
+
+          sb.post('/', { stream1: 'Hello' })
+            .setHeaders({
+              ...form.getHeaders(),
+              'transfer-encoding': 'chunked',
+            })
+            .logDiffOn501();
+
+          expect(
+            await httpClient.request({
+              method: 'POST',
+              data: form,
+              headers: { ...form.getHeaders() },
+            }),
+          ).toReplyWith({ status: STATUS_CODES.SUCCESS });
+        });
+
+        it('should return SUCCESS with a form field with streamed file', async () => {
+          const form = new FormData();
+          form.append('file', Readable.from(Buffer.from('Hello')), {
+            filename: 'file.txt',
+          });
+
+          sb.post('/', {
+            file: {
+              filename: 'file.txt',
+              content: 'Hello',
+            },
+          }).setHeaders({
+            ...form.getHeaders(),
+            'transfer-encoding': 'chunked',
+          });
+
+          expect(
+            await httpClient.request({
+              method: 'POST',
+              data: form,
+              headers: { ...form.getHeaders() },
             }),
           ).toReplyWith({ status: STATUS_CODES.SUCCESS });
         });
