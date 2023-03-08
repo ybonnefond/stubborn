@@ -1,3 +1,10 @@
+# [6.1.0](https://github.com/ybonnefond/stubborn/compare/v6.0.0...v6.1.0) (2023-03-08)
+
+
+### Features
+
+* support multipart/form-data content type ([cea8793](https://github.com/ybonnefond/stubborn/commit/cea879317860d90da37f977cf912c5de62e9970b))
+
 # [6.0.0](https://github.com/ybonnefond/stubborn/compare/v5.5.0...v6.0.0) (2023-03-06)
 
 
