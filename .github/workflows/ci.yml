@@ -13,8 +13,8 @@ jobs:
       matrix:
         node-version: [18.x, 19.x]
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         name: Setup node ${{ matrix.node-version }}
         with:
           node-version: ${{ matrix.node-version }}
