@@ -143,11 +143,38 @@ function buildRequestHandler(router: Router, emitter: EventEmitter) {
     if (null === route) {
       replyNotImplemented(res, req, emitter);
     } else {
-      reply(route, res, req);
+      reply(router, route, res, req);
     }
 
     next();
   };
+}
+
+function reply(router: Router, route: Route, res: Response, req: Request) {
+  const stripedReq = stripReq(req);
+  route.addCall(stripedReq);
+
+  if (route.hasReachMaxCalls()) {
+    router.removeRoute(route);
+  }
+
+  const headers = applyTemplate(
+    route.getResponseHeaders(),
+    req,
+  ) as OutgoingHttpHeaders;
+
+  const rawBody = route.getResponseBody();
+  const body =
+    rawBody instanceof Buffer ? rawBody : applyTemplate(rawBody, req);
+
+  res.writeHead(route.getResponseStatusCode(), headers);
+  const data = encodeBody(req, headers, body);
+
+  if (data !== null) {
+    res.write(data);
+  }
+
+  res.end();
 }
 
 function registerLogDiff(router: Router, emitter: EventEmitter) {
@@ -183,31 +210,7 @@ function findRoute(routes: Set<Route>, req: Request) {
 
   return null;
 }
-/**
- * @internal
- */
-function reply(route: Route, res: Response, req: Request) {
-  const stripedReq = stripReq(req);
-  route.addCall(stripedReq);
 
-  const headers = applyTemplate(
-    route.getResponseHeaders(),
-    req,
-  ) as OutgoingHttpHeaders;
-
-  const rawBody = route.getResponseBody();
-  const body =
-    rawBody instanceof Buffer ? rawBody : applyTemplate(rawBody, req);
-
-  res.writeHead(route.getResponseStatusCode(), headers);
-  const data = encodeBody(req, headers, body);
-
-  if (data !== null) {
-    res.write(data);
-  }
-
-  res.end();
-}
 /**
  * @internal
  */
