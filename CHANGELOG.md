@@ -1,3 +1,10 @@
+# [6.2.0](https://github.com/ybonnefond/stubborn/compare/v6.1.0...v6.2.0) (2023-03-16)
+
+
+### Features
+
+* automatic remove route after matching X times ([60b6b39](https://github.com/ybonnefond/stubborn/commit/60b6b399f87558f0932bb047e94a1b19e70fe722))
+
 # [6.1.0](https://github.com/ybonnefond/stubborn/compare/v6.0.0...v6.1.0) (2023-03-08)
 
 
