@@ -248,3 +248,48 @@ If the request matches the route it will respond according to the route response
       // ...
     });
 ```
+
+#### Q: Can I send the same request multiple times and have different response?
+
+Stubborn returns the first route that match a request even if multiple routes could match that request.
+Using `Route.removeRouteAfterMatching` you can tell stubborn to remove a route from the router, and if another route matching then it will be used.
+
+```typescript
+// First return a 400
+sb.addRoute(
+  new Route(METHODS.GET, '/')
+    .setResponseStatusCode(400)
+    .removeRouteAfterMatching({ times: 1 }), // Match one time then remove
+);
+
+// Then return a 500
+sb.addRoute(
+  new Route(METHODS.GET, '/')
+    .setResponseStatusCode(500)
+    .removeRouteAfterMatching({ times: 1 }), // Match one time then remove
+);
+
+// Finally always return 200
+sb.addRoute(
+  new Route(METHODS.GET, '/').setResponseStatusCode(200),
+);
+
+// First call match the first route, then the route is removed
+expect(await httpClient.request({ path: '/' })).toReplyWith({
+  status: 400,
+});
+
+// Second call match the second route, then the route is removed
+expect(await httpClient.request({ path: '/' })).toReplyWith({
+  status: 500,
+});
+
+// Any subsequent calls match the last route which is never removed
+expect(await httpClient.request({ path: '/' })).toReplyWith({
+  status: 200,
+});
+
+expect(await httpClient.request({ path: '/' })).toReplyWith({
+  status: 200,
+});
+```

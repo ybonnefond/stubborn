@@ -10,6 +10,10 @@ export enum STATUS_CODES {
   // 2xx Success
   SUCCESS = 200,
 
+  // 4xx Client Error
+  BAD_REQUEST = 400,
+  NOT_FOUND = 404,
+
   // 5xx Server Errors
   NOT_IMPLEMENTED = 501,
 }

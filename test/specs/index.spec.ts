@@ -10,12 +10,12 @@ import {
   WILDCARD,
 } from '../../src';
 
-import { Request } from '../../src/@types';
-import { STATUS_CODES } from '../../src/constants';
+import { STATUS_CODES, Request } from '../../src';
 import { Debugger } from '../../src/debug/Debugger';
 import { stripAnsi } from '../helpers';
 import { toReplyWith } from '../matchers';
 import { test } from '../test';
+import { InvalidRemoveAfterMatchingTimesParameterError } from '../../src/errors/InvalidRemoveAfterMatchingTimesParameterError';
 
 describe('index', () => {
   expect.extend({ toReplyWith });
@@ -1000,6 +1000,110 @@ describe('index', () => {
       sb.removeRoute(route);
       expect(await httpClient.request({ path: '/' })).toReplyWith({
         status: STATUS_CODES.NOT_IMPLEMENTED,
+      });
+    });
+
+    describe('removeRouteAfterMatching', () => {
+      describe('Given times is not a number', () => {
+        it('should throw InvalidRemoveAfterMatchingTimesParameterError', () => {
+          const route = new Route(METHODS.GET, '/');
+          expect(() =>
+            route.removeRouteAfterMatching({
+              times: 'not a number' as unknown as number,
+            }),
+          ).toThrow(InvalidRemoveAfterMatchingTimesParameterError);
+        });
+      });
+
+      describe.each([-15, -1, 0])('Given times is %s', times => {
+        it('should throw InvalidRemoveAfterMatchingTimesParameterError', () => {
+          const route = new Route(METHODS.GET, '/');
+          expect(() =>
+            route.removeRouteAfterMatching({
+              times,
+            }),
+          ).toThrow(InvalidRemoveAfterMatchingTimesParameterError);
+        });
+      });
+
+      describe('Given times is a valid value', () => {
+        it('should return response until times is reached', async () => {
+          const route = new Route(METHODS.GET, '/');
+          route.removeRouteAfterMatching({ times: 2 });
+          sb.addRoute(route);
+
+          expect(await httpClient.request({ path: '/' })).toReplyWith({
+            status: STATUS_CODES.SUCCESS,
+          });
+          expect(await httpClient.request({ path: '/' })).toReplyWith({
+            status: STATUS_CODES.SUCCESS,
+          });
+          expect(await httpClient.request({ path: '/' })).toReplyWith({
+            status: STATUS_CODES.NOT_IMPLEMENTED,
+          });
+        });
+      });
+
+      describe('Given I want to change response after multiple calls', () => {
+        it('should switch to next route after x calls', async () => {
+          const TIMES = 3;
+
+          sb.addRoute(
+            new Route(METHODS.GET, '/')
+              .setResponseStatusCode(STATUS_CODES.BAD_REQUEST)
+              .removeRouteAfterMatching({ times: TIMES }),
+          );
+
+          sb.addRoute(
+            new Route(METHODS.GET, '/').setResponseStatusCode(
+              STATUS_CODES.SUCCESS,
+            ),
+          );
+
+          for (let i = 0; i < TIMES; i++) {
+            expect(await httpClient.request({ path: '/' })).toReplyWith({
+              status: STATUS_CODES.BAD_REQUEST,
+            });
+          }
+
+          expect(await httpClient.request({ path: '/' })).toReplyWith({
+            status: STATUS_CODES.SUCCESS,
+          });
+        });
+      });
+
+      describe('Given I want to change response after multiple calls and fallback to a default', () => {
+        it('should switch to next route after x calls', async () => {
+          [
+            new Route(METHODS.GET, '/')
+              .setResponseStatusCode(STATUS_CODES.BAD_REQUEST)
+              .removeRouteAfterMatching({ times: 1 }),
+
+            new Route(METHODS.GET, '/')
+              .setResponseStatusCode(STATUS_CODES.NOT_FOUND)
+              .removeRouteAfterMatching({ times: 1 }),
+
+            new Route(METHODS.GET, '/').setResponseStatusCode(
+              STATUS_CODES.SUCCESS,
+            ),
+          ].forEach(route => sb.addRoute(route));
+
+          expect(await httpClient.request({ path: '/' })).toReplyWith({
+            status: STATUS_CODES.BAD_REQUEST,
+          });
+
+          expect(await httpClient.request({ path: '/' })).toReplyWith({
+            status: STATUS_CODES.NOT_FOUND,
+          });
+
+          expect(await httpClient.request({ path: '/' })).toReplyWith({
+            status: STATUS_CODES.SUCCESS,
+          });
+
+          expect(await httpClient.request({ path: '/' })).toReplyWith({
+            status: STATUS_CODES.SUCCESS,
+          });
+        });
       });
     });
   });

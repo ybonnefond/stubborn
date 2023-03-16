@@ -12,6 +12,7 @@ import {
 } from './@types';
 
 import { METHODS, STATUS_CODES, WILDCARD } from './constants';
+import { InvalidRemoveAfterMatchingTimesParameterError } from './errors/InvalidRemoveAfterMatchingTimesParameterError';
 
 /**
  * Object holding the route definitions, requests matchers and response templates
@@ -25,6 +26,7 @@ export class Route {
   private logDiffOn501Request: boolean = false;
 
   private calls: RequestInfo[] = [];
+  private maxCalls: number | null = null;
 
   constructor(private method: METHODS, private path: PathDefinition) {
     this.setHeaders({
@@ -400,5 +402,31 @@ export class Route {
    */
   public shouldLogDiffOn501() {
     return this.logDiffOn501Request;
+  }
+
+  /**
+   * Specify the number of times the route should match a request before being removed from the router
+   * ex: setting { times: 1 } and sending twice the same request will result to a 501 on the second request
+   *
+   * @param times
+   * @return this
+   */
+  public removeRouteAfterMatching({ times }: { times: number }) {
+    const isValidTimes = typeof times === 'number' && times > 0;
+    if (!isValidTimes) {
+      throw new InvalidRemoveAfterMatchingTimesParameterError();
+    }
+
+    this.maxCalls = times;
+
+    return this;
+  }
+
+  public hasReachMaxCalls(): boolean {
+    if (this.maxCalls === null) {
+      return false;
+    }
+
+    return this.calls.length >= this.maxCalls;
   }
 }
