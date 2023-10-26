@@ -36,12 +36,20 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           COVERALLS_REPO_TOKEN: "${{ secrets.COVERALLS_REPO_TOKEN }}"
           COVERALLS_GIT_BRANCH: "${{ github.ref }}"
-      - name: "Upload Coverage"
+      - name: "Coverall Coverage"
         uses: coverallsapp/github-action@v1
         with:
           parallel: true
           flag-name: run-${{ join(matrix.*, '-') }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: "CodeClimate coverage"
+        uses: paambaati/codeclimate-action@v5.0.0
+        env:
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+        with:
+          coverageCommand: echo "test run"
+          coverageLocations: |
+            ${{github.workspace}}/coverage/lcov.info:lcov
 
   finish:
     needs: test
