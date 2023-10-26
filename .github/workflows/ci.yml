@@ -11,7 +11,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     strategy:
       matrix:
-        node-version: [18.x, 19.x]
+        node-version: [18.x, 19.x, 20.x]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -52,7 +52,7 @@ jobs:
         uses: coverallsapp/github-action@v1
         with:
           parallel-finished: true
-          carryforward: "run-18.x,run-19.x"
+          carryforward: "run-18.x,run-19.x,run-20.x"
 
   release:
     runs-on: ubuntu-latest
