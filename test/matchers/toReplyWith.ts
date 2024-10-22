@@ -33,20 +33,7 @@ export function toReplyWith(
     headers?: Record<string, string>;
   },
 ) {
-  const fail = (message: string, { expected, received }: any = {}) => {
-    const extra = expected
-      ? diff(expected, received, { expand: this.expand })
-      : '';
-    return {
-      pass: false,
-      message: () =>
-        `${message}\n${extra}\nRequest received:\n${JSON.stringify(
-          response.data,
-          null,
-          2,
-        )}`, // eslint-disable-line no-magic-numbers
-    };
-  };
+  const fail = makeFail(this, response);
 
   if (status !== response.status) {
     return fail(`expects ${status} status code, got ${response.status}`);
@@ -69,5 +56,23 @@ export function toReplyWith(
   return {
     message: () => 'response ok',
     pass: true,
+  };
+}
+
+function makeFail(thisObj: any, response: HttpClientResponse) {
+  return (message: string, { expected, received }: any = {}) => {
+    const extra = expected
+      ? diff(expected, received, { expand: thisObj.expand })
+      : '';
+
+    return {
+      pass: false,
+      message: () =>
+        `${message}\n${extra}\nRequest received:\n${JSON.stringify(
+          response.data,
+          null,
+          2,
+        )}`, // eslint-disable-line no-magic-numbers
+    };
   };
 }
