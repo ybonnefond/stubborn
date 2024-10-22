@@ -40,7 +40,7 @@ export function logDiffOn501(emitter: Emitter, route: Route) {
   });
 
   const handlerMatched = (dbg: Debugger) => {
-    dbg.warnLogDiffOnMatched();
+    dbg.warnLogDiffOnMatched(route);
   };
 
   emitter.setMaxListeners(emitter.getMaxListeners() + 1);

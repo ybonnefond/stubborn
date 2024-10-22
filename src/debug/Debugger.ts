@@ -19,15 +19,19 @@ export class Debugger {
     };
   }
 
-  public warnLogDiffOnMatched() {
+  public warnLogDiffOnMatched(route: Route) {
     const out = new Output();
 
     out.add(`## Request: ${this.request.method} ${this.request.path}`);
 
-    out.warn(
-      'Request matched a route with a .logDiffOn501() without any error.',
-    );
+    out.warn('Detected logDiffOn501 on a matched route without error ');
     out.add(out.yellow('Did you forget to remove the call to logDiffOn501?'));
+    const position = route.getLogDiffPosition();
+    if (position !== null) {
+      out.pushTab();
+      out.add(out.tab(out.yellow(`at ${Object.values(position).join(':')}`)));
+      out.pullTab();
+    }
     out.newLine(2);
 
     process.stdout.write(out.render());
