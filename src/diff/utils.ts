@@ -65,7 +65,7 @@ function checkMissing(
           type: DIFF_TYPES.MISSING,
           definition: String(def),
           value: null,
-          path: formatPath(key, prefix),
+          path: formatPath({ path: key, prefix }),
         });
       }
     }
@@ -89,7 +89,7 @@ function checkExtra(
         formatDiffError({
           type: DIFF_TYPES.EXTRA,
           value: val,
-          path: formatPath(key, prefix),
+          path: formatPath({ path: key, prefix }),
         }),
       );
     }
@@ -172,7 +172,10 @@ function checkValues(
     if (def !== WILDCARD) {
       const val = values[key];
 
-      errors = [...errors, ...validate(def, val, formatPath(key, prefix))];
+      errors = [
+        ...errors,
+        ...validate(def, val, formatPath({ path: key, prefix })),
+      ];
     }
   }
 
@@ -207,8 +210,9 @@ export function checkValue(
   return value !== definition ? formatError(DIFF_TYPES.FAIL_EQUALITY) : [];
 }
 
-function formatPath(path: string, prefix: string = '') {
-  if (prefix === '') {
+function formatPath({ path, prefix }: { path: string; prefix?: string }) {
+  const isValidPrefix = typeof prefix === 'string' && prefix.length > 0;
+  if (!isValidPrefix) {
     return path;
   }
 
