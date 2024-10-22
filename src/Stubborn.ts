@@ -30,11 +30,11 @@ export class Stubborn implements Emitter {
   private server: Server;
   private port: number | null;
   private router: Router;
-  private options: StubbornOptions;
+  private stubbornOptions: StubbornOptions;
   private emitter: EventEmitter = new EventEmitter();
 
   constructor(options: StubbornOptions = {}) {
-    this.options = Object.assign(
+    this.stubbornOptions = Object.assign(
       {
         host: 'localhost',
         defaultHeaders: {},
@@ -44,7 +44,7 @@ export class Stubborn implements Emitter {
 
     this.port = null;
     this.server = createServer();
-    this.router = new Router({ host: this.options.host }, this.emitter);
+    this.router = new Router({ host: this.stubbornOptions.host }, this.emitter);
   }
 
   /**
@@ -63,7 +63,7 @@ export class Stubborn implements Emitter {
    * @returns the server origin
    */
   public getOrigin(): string {
-    return `http://${this.options.host}:${this.getPort()}`;
+    return `http://${this.stubbornOptions.host}:${this.getPort()}`;
   }
 
   /**
@@ -133,6 +133,16 @@ export class Stubborn implements Emitter {
    */
   public head(path: PathDefinition) {
     return this.router.createRoute(METHODS.HEAD, path);
+  }
+
+  /**
+   * Create and Register a new HEAD route
+   *
+   * @param path Path matching definition
+   * @param body Request body definition
+   */
+  public options(path: PathDefinition) {
+    return this.router.createRoute(METHODS.OPTIONS, path);
   }
 
   /**

@@ -82,6 +82,19 @@ describe('index', () => {
         });
       });
 
+      it('should return SUCCESS if method is OPTIONS', async () => {
+        sb.options('/');
+
+        expect(
+          await httpClient.request({
+            method: 'OPTIONS',
+            path: '/',
+          }),
+        ).toReplyWith({
+          status: STATUS_CODES.SUCCESS,
+        });
+      });
+
       it('should return SUCCESS if method is POST', async () => {
         sb.post('/');
 
@@ -684,12 +697,10 @@ describe('index', () => {
           const form = new FormData();
           form.append('stream1', Readable.from(Buffer.from('Hello')));
 
-          sb.post('/', { stream1: 'Hello' })
-            .setHeaders({
-              ...form.getHeaders(),
-              'transfer-encoding': 'chunked',
-            })
-            .logDiffOn501();
+          sb.post('/', { stream1: 'Hello' }).setHeaders({
+            ...form.getHeaders(),
+            'transfer-encoding': 'chunked',
+          });
 
           expect(
             await httpClient.request({
@@ -711,12 +722,10 @@ describe('index', () => {
               filename: 'file.txt',
               content: 'Hello',
             },
-          })
-            .setHeaders({
-              ...form.getHeaders(),
-              'transfer-encoding': 'chunked',
-            })
-            .logDiffOn501();
+          }).setHeaders({
+            ...form.getHeaders(),
+            'transfer-encoding': 'chunked',
+          });
 
           expect(
             await httpClient.request({
