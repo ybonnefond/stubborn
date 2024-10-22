@@ -5,7 +5,7 @@ import { Stubborn } from '../../src';
 export interface HttpClientRequest {
   path?: string;
   headers?: Record<string, string>;
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'HEAD';
   responseType?: 'json' | 'text' | 'arraybuffer';
   data?: string | Record<string, unknown> | FormData;
   query?: Record<string, string> | URLSearchParams;

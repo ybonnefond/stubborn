@@ -69,6 +69,19 @@ describe('index', () => {
         });
       });
 
+      it('should return SUCCESS if method is HEAD', async () => {
+        sb.head('/');
+
+        expect(
+          await httpClient.request({
+            method: 'HEAD',
+            path: '/',
+          }),
+        ).toReplyWith({
+          status: STATUS_CODES.SUCCESS,
+        });
+      });
+
       it('should return SUCCESS if method is POST', async () => {
         sb.post('/');
 
