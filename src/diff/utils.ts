@@ -8,44 +8,44 @@ type ObjectOrArray = Record<string | number, any>;
 type ValidateFn = (def: any, value: any, path: string) => DiffError[];
 
 export function findErrors(
-  definitions: any,
-  values: any,
+  definition: any,
+  value: any,
   validate: ValidateFn,
   prefix: string = '',
 ): DiffError[] {
-  if (definitions === WILDCARD) {
+  if (definition === WILDCARD) {
     return [];
   }
 
-  if (typeof definitions === 'object' && definitions !== null) {
-    return findErrorsObject(definitions, values, validate, prefix);
+  if (typeof definition === 'object' && definition !== null) {
+    return findErrorsObject(definition, value, validate, prefix);
   }
 
-  return checkValues(definitions, values, validate, prefix);
+  return checkValues({ definition, value, validate, prefix });
 }
 
 function findErrorsObject(
-  definitions: ObjectOrArray,
-  values: any,
+  definition: ObjectOrArray,
+  value: any,
   validate: ValidateFn,
   prefix: string = '',
 ) {
-  const isValueObject = typeof values === 'object' && values !== null;
+  const isValueObject = typeof value === 'object' && value !== null;
   if (!isValueObject) {
     return [
       formatDiffError({
         type: DIFF_TYPES.INVALID_VALUE_TYPE,
-        definition: definitions,
-        value: values,
+        definition,
+        value,
         path: prefix,
       }),
     ];
   }
 
   return [
-    ...checkMissing(definitions, values, prefix),
-    ...checkExtra(definitions, values, prefix),
-    ...checkValues(definitions, values, validate, prefix),
+    ...checkMissing(definition, value, prefix),
+    ...checkExtra(definition, value, prefix),
+    ...checkValues({ definition, value, validate, prefix }),
   ];
 }
 
@@ -157,20 +157,25 @@ function stringify(val: any): string {
 //   return String(val);
 // }
 
-function checkValues(
-  definitions: ObjectOrArray,
-  values: ObjectOrArray,
-  validate: ValidateFn,
-  prefix: string = '',
-) {
+function checkValues({
+  definition,
+  value,
+  validate,
+  prefix,
+}: {
+  definition: ObjectOrArray;
+  value: ObjectOrArray;
+  validate: ValidateFn;
+  prefix?: string;
+}) {
   let errors: DiffError[] = [];
 
-  const inter = intersectKeys(definitions, values);
+  const inter = intersectKeys(definition, value);
 
   for (const key of inter) {
-    const def = definitions[key];
+    const def = definition[key];
     if (def !== WILDCARD) {
-      const val = values[key];
+      const val = value[key];
 
       errors = [
         ...errors,
