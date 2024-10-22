@@ -5,7 +5,7 @@ import { DIFF_TYPES, WILDCARD } from '../constants';
 import { inspect } from '../inspect';
 
 type ObjectOrArray = Record<string | number, any>;
-type ValidateFn = (def: any, value: any, path: string) => DiffError[];
+type ValidateFn = (definition: any, value: any, path: string) => DiffError[];
 
 export function findErrors(
   definition: any,
@@ -50,16 +50,16 @@ function findErrorsObject(
 }
 
 function checkMissing(
-  definitions: ObjectOrArray,
-  values: ObjectOrArray,
+  definition: ObjectOrArray,
+  value: ObjectOrArray,
   prefix: string = '',
 ) {
   const errors: DiffError[] = [];
-  const missing = differenceKeys(definitions, values);
+  const missing = differenceKeys(definition, value);
 
   if (missing.length > 0) {
     for (const key of missing) {
-      const def = definitions[key];
+      const def = definition[key];
       if (def !== WILDCARD) {
         errors.push({
           type: DIFF_TYPES.MISSING,
@@ -75,16 +75,16 @@ function checkMissing(
 }
 
 function checkExtra(
-  definitions: ObjectOrArray,
-  values: ObjectOrArray,
+  definition: ObjectOrArray,
+  value: ObjectOrArray,
   prefix: string = '',
 ) {
   const errors: DiffError[] = [];
-  const extra = differenceKeys(values, definitions);
+  const extra = differenceKeys(value, definition);
 
   if (extra.length > 0) {
     for (const key of extra) {
-      const val = values[key];
+      const val = value[key];
       errors.push(
         formatDiffError({
           type: DIFF_TYPES.EXTRA,
