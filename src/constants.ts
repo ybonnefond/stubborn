@@ -21,6 +21,7 @@ export enum STATUS_CODES {
 export const EVENTS = {
   NOT_IMPLEMENTED: Symbol.for('NOT_IMPLEMENTED'),
   CLEARED: Symbol.for('CLEARED'),
+  REPLIED: Symbol.for('REPLIED'),
 };
 
 export const WILDCARD = Symbol.for('WILDCARD');

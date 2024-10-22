@@ -698,10 +698,12 @@ describe('index', () => {
               filename: 'file.txt',
               content: 'Hello',
             },
-          }).setHeaders({
-            ...form.getHeaders(),
-            'transfer-encoding': 'chunked',
-          });
+          })
+            .setHeaders({
+              ...form.getHeaders(),
+              'transfer-encoding': 'chunked',
+            })
+            .logDiffOn501();
 
           expect(
             await httpClient.request({
@@ -1110,14 +1112,14 @@ describe('index', () => {
 
   describe('debug', () => {
     async function run(req: any) {
-      const spy = jest.spyOn(global.console, 'log').mockReturnValue();
+      const spy = jest.spyOn(process.stdout, 'write').mockReturnValue(true);
 
       await req;
 
       const [out] = spy.mock.calls[0];
       spy.mockRestore();
 
-      return stripAnsi(out).trim();
+      return stripAnsi(String(out)).trim();
     }
 
     it('should output method diff', async () => {

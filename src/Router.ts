@@ -143,14 +143,21 @@ function buildRequestHandler(router: Router, emitter: EventEmitter) {
     if (null === route) {
       replyNotImplemented(res, req, emitter);
     } else {
-      reply(router, route, res, req);
+      reply(router, route, res, req, emitter);
     }
 
     next();
   };
 }
 
-function reply(router: Router, route: Route, res: Response, req: Request) {
+function reply(
+  router: Router,
+  route: Route,
+  res: Response,
+  req: Request,
+  emitter: EventEmitter,
+) {
+  const dbg = new Debugger(req);
   const stripedReq = stripReq(req);
   route.addCall(stripedReq);
 
@@ -175,6 +182,8 @@ function reply(router: Router, route: Route, res: Response, req: Request) {
   }
 
   res.end();
+
+  setImmediate(() => emitter.emit(EVENTS.REPLIED, dbg));
 }
 
 function registerLogDiff(router: Router, emitter: EventEmitter) {
@@ -223,6 +232,7 @@ function replyNotImplemented(
   res.writeHead(STATUS_CODES.NOT_IMPLEMENTED, {
     'Content-Type': 'application/json',
   });
+
   res.write(
     JSON.stringify(
       {

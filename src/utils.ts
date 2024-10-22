@@ -29,13 +29,23 @@ export function getServerPort(server: Server) {
  * @param route Route
  */
 export function logDiffOn501(emitter: Emitter, route: Route) {
-  const handler = (dbg: Debugger) => {
+  const handlerNotImplemented = (dbg: Debugger) => {
     dbg.logDiff(route);
   };
 
   emitter.setMaxListeners(emitter.getMaxListeners() + 1);
-  emitter.on(EVENTS.NOT_IMPLEMENTED, handler);
+  emitter.on(EVENTS.NOT_IMPLEMENTED, handlerNotImplemented);
   emitter.once(EVENTS.CLEARED, () => {
-    emitter.off(EVENTS.NOT_IMPLEMENTED, handler);
+    emitter.off(EVENTS.NOT_IMPLEMENTED, handlerNotImplemented);
+  });
+
+  const handlerMatched = (dbg: Debugger) => {
+    dbg.warnLogDiffOnMatched();
+  };
+
+  emitter.setMaxListeners(emitter.getMaxListeners() + 1);
+  emitter.on(EVENTS.REPLIED, handlerMatched);
+  emitter.once(EVENTS.CLEARED, () => {
+    emitter.off(EVENTS.REPLIED, handlerMatched);
   });
 }
