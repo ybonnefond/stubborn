@@ -5,6 +5,7 @@ export enum METHODS {
   PUT = 'PUT',
   PATCH = 'PATCH',
   DELETE = 'DELETE',
+  OPTIONS = 'OPTIONS',
 }
 
 export enum STATUS_CODES {
