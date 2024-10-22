@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import { DIFF_TYPES, METHODS, WILDCARD } from '../constants';
+import { DIFF_SUBJECTS, DIFF_TYPES, METHODS, WILDCARD } from '../constants';
 
 export type JsonPrimitive = string | number | boolean | null;
 export type JsonObject = { [member: string]: JsonValue };
@@ -100,6 +100,7 @@ export type ResponseHeaders = {
 export type ResponseBody = JsonValue | Buffer;
 
 export interface DiffError {
+  subject: DIFF_SUBJECTS;
   type: DIFF_TYPES;
   definition: string | null;
   value: JsonValue;

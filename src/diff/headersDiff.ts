@@ -1,5 +1,5 @@
 import { DiffError, HeadersDefinition, RequestHeaders } from '../@types';
-import { WILDCARD } from '../constants';
+import { DIFF_SUBJECTS, WILDCARD } from '../constants';
 import { checkValue, findErrors } from './utils';
 
 export function headersDiff(
@@ -10,7 +10,13 @@ export function headersDiff(
     WILDCARD === _definitions ? WILDCARD : keysToLowerCase(_definitions);
   const value = keysToLowerCase(_values);
 
-  return findErrors({ definition, value, validate: checkValue, prefix: '' });
+  return findErrors({
+    subject: DIFF_SUBJECTS.HEADERS,
+    definition,
+    value,
+    validate: checkValue,
+    prefix: '',
+  });
 }
 
 function keysToLowerCase(o: Record<string, any>): Record<string, any> {

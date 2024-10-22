@@ -1,5 +1,5 @@
 import { JsonValue } from '../@types';
-import { DIFF_TYPES } from '../constants';
+import { DIFF_SUBJECTS, DIFF_TYPES } from '../constants';
 import { pathDiff } from './pathDiff';
 
 describe('pathDiff', () => {
@@ -16,7 +16,13 @@ describe('pathDiff', () => {
     const errors = run(def, value);
 
     expect(errors).toEqual([
-      { type, definition: String(def), value, path: '' },
+      {
+        subject: DIFF_SUBJECTS.PATH,
+        type,
+        definition: String(def),
+        value,
+        path: '',
+      },
     ]);
   }
 
