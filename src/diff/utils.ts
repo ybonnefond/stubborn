@@ -5,11 +5,11 @@ import { DIFF_TYPES, WILDCARD } from '../constants';
 import { inspect } from '../inspect';
 
 type ObjectOrArray = Record<string | number, any>;
-export type ValidateFn = (
-  definition: any,
-  value: any,
-  path: string,
-) => DiffError[];
+export type ValidateFn = (params: {
+  definition: any;
+  value: any;
+  path: string;
+}) => DiffError[];
 
 export function findErrors({
   definition,
@@ -181,7 +181,11 @@ function checkValues({
 
       errors = [
         ...errors,
-        ...validate(def, val, formatPath({ path: key, prefix })),
+        ...validate({
+          definition: def,
+          value: val,
+          path: formatPath({ path: key, prefix }),
+        }),
       ];
     }
   }
@@ -189,11 +193,15 @@ function checkValues({
   return errors;
 }
 
-export function checkValue(
-  definition: any,
-  value: any,
-  path: string,
-): DiffError[] {
+export function checkValue({
+  definition,
+  value,
+  path,
+}: {
+  definition: any;
+  value: any;
+  path: string;
+}): DiffError[] {
   const formatError = (type: DIFF_TYPES) => {
     return [formatDiffError({ type, definition, value, path })];
   };
