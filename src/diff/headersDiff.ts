@@ -6,11 +6,11 @@ export function headersDiff(
   _definitions: HeadersDefinition,
   _values: RequestHeaders,
 ): DiffError[] {
-  const definitions =
+  const definition =
     WILDCARD === _definitions ? WILDCARD : keysToLowerCase(_definitions);
-  const values = keysToLowerCase(_values);
+  const value = keysToLowerCase(_values);
 
-  return findErrors(definitions, values, checkValue);
+  return findErrors({ definition, value, validate: checkValue, prefix: '' });
 }
 
 function keysToLowerCase(o: Record<string, any>): Record<string, any> {

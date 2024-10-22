@@ -5,14 +5,23 @@ import { DIFF_TYPES, WILDCARD } from '../constants';
 import { inspect } from '../inspect';
 
 type ObjectOrArray = Record<string | number, any>;
-type ValidateFn = (definition: any, value: any, path: string) => DiffError[];
-
-export function findErrors(
+export type ValidateFn = (
   definition: any,
   value: any,
-  validate: ValidateFn,
-  prefix: string = '',
-): DiffError[] {
+  path: string,
+) => DiffError[];
+
+export function findErrors({
+  definition,
+  value,
+  validate,
+  prefix,
+}: {
+  definition: any;
+  value: any;
+  validate: ValidateFn;
+  prefix: string;
+}): DiffError[] {
   if (definition === WILDCARD) {
     return [];
   }
