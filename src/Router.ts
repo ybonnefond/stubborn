@@ -143,20 +143,26 @@ function buildRequestHandler(router: Router, emitter: EventEmitter) {
     if (null === route) {
       replyNotImplemented(res, req, emitter);
     } else {
-      reply(router, route, res, req, emitter);
+      reply({ router, route, res, req, emitter });
     }
 
     next();
   };
 }
 
-function reply(
-  router: Router,
-  route: Route,
-  res: Response,
-  req: Request,
-  emitter: EventEmitter,
-) {
+function reply({
+  router,
+  route,
+  res,
+  req,
+  emitter,
+}: {
+  router: Router;
+  route: Route;
+  res: Response;
+  req: Request;
+  emitter: EventEmitter;
+}) {
   const dbg = new Debugger(req);
   const stripedReq = stripReq(req);
   route.addCall(stripedReq);
