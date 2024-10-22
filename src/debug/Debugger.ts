@@ -4,6 +4,7 @@ import { Route } from '../Route';
 import { Output } from './Output';
 import { requestDiff } from '../diff/requestDiff';
 import { DIFF_SUBJECTS } from '../constants';
+import { ErrorRenderer } from './ErrorRenderer';
 
 export class Debugger {
   constructor(private request: Request) {}
@@ -39,6 +40,7 @@ export class Debugger {
 
   public logDiff(route: Route) {
     const out = new Output();
+    const render = new ErrorRenderer(out);
 
     const diff = requestDiff(route, this.request);
 
@@ -54,11 +56,11 @@ export class Debugger {
 
     out.add(`## Request: ${this.request.method} ${this.request.path}`);
 
-    out.renderErrors(DIFF_SUBJECTS.METHOD, errors);
-    out.renderErrors(DIFF_SUBJECTS.PATH, errors);
-    out.renderErrors(DIFF_SUBJECTS.HEADERS, errors);
-    out.renderErrors(DIFF_SUBJECTS.QUERY, errors);
-    out.renderErrors(DIFF_SUBJECTS.BODY, errors);
+    render.renderErrors(DIFF_SUBJECTS.METHOD, errors);
+    render.renderErrors(DIFF_SUBJECTS.PATH, errors);
+    render.renderErrors(DIFF_SUBJECTS.HEADERS, errors);
+    render.renderErrors(DIFF_SUBJECTS.QUERY, errors);
+    render.renderErrors(DIFF_SUBJECTS.BODY, errors);
 
     process.stdout.write(out.render());
   }
