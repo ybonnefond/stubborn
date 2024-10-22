@@ -1,22 +1,25 @@
 import { difference, intersection } from 'lodash';
 
 import { DiffError } from '../@types';
-import { DIFF_TYPES, WILDCARD } from '../constants';
+import { DIFF_SUBJECTS, DIFF_TYPES, WILDCARD } from '../constants';
 import { inspect } from '../inspect';
 
 type ObjectOrArray = Record<string | number, any>;
 export type ValidateFn = (params: {
+  subject: DIFF_SUBJECTS;
   definition: any;
   value: any;
   path: string;
 }) => DiffError[];
 
 export function findErrors({
+  subject,
   definition,
   value,
   validate,
   prefix,
 }: {
+  subject: DIFF_SUBJECTS;
   definition: any;
   value: any;
   validate: ValidateFn;
@@ -27,18 +30,20 @@ export function findErrors({
   }
 
   if (typeof definition === 'object' && definition !== null) {
-    return findErrorsObject({ definition, value, validate, prefix });
+    return findErrorsObject({ subject, definition, value, validate, prefix });
   }
 
-  return checkValues({ definition, value, validate, prefix });
+  return checkValues({ subject, definition, value, validate, prefix });
 }
 
 function findErrorsObject({
+  subject,
   definition,
   value,
   validate,
   prefix,
 }: {
+  subject: DIFF_SUBJECTS;
   definition: ObjectOrArray;
   value: any;
   validate: ValidateFn;
@@ -48,6 +53,7 @@ function findErrorsObject({
   if (!isValueObject) {
     return [
       formatDiffError({
+        subject,
         type: DIFF_TYPES.INVALID_VALUE_TYPE,
         definition,
         value,
@@ -57,17 +63,19 @@ function findErrorsObject({
   }
 
   return [
-    ...checkMissing({ definition, value, prefix }),
-    ...checkExtra({ definition, value, prefix }),
-    ...checkValues({ definition, value, validate, prefix }),
+    ...checkMissing({ subject, definition, value, prefix }),
+    ...checkExtra({ subject, definition, value, prefix }),
+    ...checkValues({ subject, definition, value, validate, prefix }),
   ];
 }
 
 function checkMissing({
+  subject,
   definition,
   value,
   prefix,
 }: {
+  subject: DIFF_SUBJECTS;
   definition: ObjectOrArray;
   value: ObjectOrArray;
   prefix: string;
@@ -80,6 +88,7 @@ function checkMissing({
       const def = definition[key];
       if (def !== WILDCARD) {
         errors.push({
+          subject,
           type: DIFF_TYPES.MISSING,
           definition: String(def),
           value: null,
@@ -93,10 +102,12 @@ function checkMissing({
 }
 
 function checkExtra({
+  subject,
   definition,
   value,
   prefix,
 }: {
+  subject: DIFF_SUBJECTS;
   definition: ObjectOrArray;
   value: ObjectOrArray;
   prefix: string;
@@ -109,6 +120,7 @@ function checkExtra({
       const val = value[key];
       errors.push(
         formatDiffError({
+          subject,
           type: DIFF_TYPES.EXTRA,
           value: val,
           path: formatPath({ path: key, prefix }),
@@ -121,17 +133,20 @@ function checkExtra({
 }
 
 export function formatDiffError({
+  subject,
   type,
   definition,
   value,
   path,
 }: {
+  subject: DIFF_SUBJECTS;
   type: DIFF_TYPES;
   definition?: any;
   value?: any;
   path: string;
-}) {
+}): DiffError {
   return {
+    subject,
     type,
     definition: stringify(definition),
     value: stringify(value),
@@ -160,11 +175,13 @@ function stringify(val: any): string {
 }
 
 function checkValues({
+  subject,
   definition,
   value,
   validate,
   prefix,
 }: {
+  subject: DIFF_SUBJECTS;
   definition: ObjectOrArray;
   value: ObjectOrArray;
   validate: ValidateFn;
@@ -182,6 +199,7 @@ function checkValues({
       errors = [
         ...errors,
         ...validate({
+          subject,
           definition: def,
           value: val,
           path: formatPath({ path: key, prefix }),
@@ -194,16 +212,18 @@ function checkValues({
 }
 
 export function checkValue({
+  subject,
   definition,
   value,
   path,
 }: {
+  subject: DIFF_SUBJECTS;
   definition: any;
   value: any;
   path: string;
 }): DiffError[] {
   const formatError = (type: DIFF_TYPES) => {
-    return [formatDiffError({ type, definition, value, path })];
+    return [formatDiffError({ subject, type, definition, value, path })];
   };
 
   if (definition === WILDCARD) {

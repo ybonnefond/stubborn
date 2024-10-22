@@ -1,4 +1,4 @@
-import { DIFF_TYPES } from '../constants';
+import { DIFF_SUBJECTS, DIFF_TYPES } from '../constants';
 import { methodDiff } from './methodDiff';
 
 describe('methodDiff', () => {
@@ -15,7 +15,13 @@ describe('methodDiff', () => {
     const errors = run(def, value);
 
     expect(errors).toEqual([
-      { type, definition: String(def), value, path: '' },
+      {
+        subject: DIFF_SUBJECTS.METHOD,
+        type,
+        definition: String(def),
+        value,
+        path: '',
+      },
     ]);
   }
 

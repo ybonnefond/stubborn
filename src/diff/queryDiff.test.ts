@@ -1,6 +1,6 @@
-import { stripAnsi } from '../../test/helpers';
+import { makeExpectDiffError, stripAnsi } from '../../test/helpers';
 import { JsonValue } from '../@types';
-import { DIFF_TYPES, WILDCARD } from '../constants';
+import { DIFF_SUBJECTS, DIFF_TYPES, WILDCARD } from '../constants';
 import { queryDiff } from './queryDiff';
 
 describe('queryDiff', () => {
@@ -10,7 +10,7 @@ describe('queryDiff', () => {
   describe('with extra or missing parameter', () => {
     it('should fail if parameter is missing', () => {
       const errors = queryDiff({ limit: POSITIVE_INT_REGEXP }, {});
-      expect(errors).toEqual([
+      expectErrors(errors, [
         {
           definition: POSITIVE_INT_REGEXP_STRING,
           path: 'limit',
@@ -22,7 +22,7 @@ describe('queryDiff', () => {
 
     it('should fail if parameter is extra', () => {
       const errors = queryDiff({}, { page: '12' });
-      expect(errors).toEqual([
+      expectErrors(errors, [
         {
           definition: 'undefined',
           path: 'page',
@@ -34,7 +34,7 @@ describe('queryDiff', () => {
 
     it('should fail with both missing and extra parameters', () => {
       const errors = queryDiff({ page: POSITIVE_INT_REGEXP }, { limit: '12' });
-      expect(errors).toEqual([
+      expectErrors(errors, [
         {
           definition: POSITIVE_INT_REGEXP_STRING,
           path: 'page',
@@ -54,17 +54,17 @@ describe('queryDiff', () => {
   describe('using wildcard', () => {
     it('should pass if query is wildcarded', () => {
       const errors = queryDiff(WILDCARD, { page: '12' });
-      expect(errors).toEqual([]);
+      expectErrors(errors, []);
     });
 
     it('should pass if a parameter is wildcarded', () => {
       const errors = queryDiff({ page: WILDCARD }, { page: '123' });
-      expect(errors).toEqual([]);
+      expectErrors(errors, []);
     });
 
     it('should fail if a parameter is wildcarded and case is different', () => {
       const errors = queryDiff({ page: WILDCARD }, { PAGE: '16' });
-      expect(errors).toEqual([
+      expectErrors(errors, [
         {
           definition: 'undefined',
           path: 'PAGE',
@@ -76,19 +76,19 @@ describe('queryDiff', () => {
 
     it('should pass if a parameter is wildcarded and NOT in request', () => {
       const errors = queryDiff({ page: WILDCARD }, {});
-      expect(errors).toEqual([]);
+      expectErrors(errors, []);
     });
 
     it('should pass if a parameter is wildcarded and param with multiple values', () => {
       const errors = queryDiff({ page: WILDCARD }, { page: ['10', 'abc'] });
-      expect(errors).toEqual([]);
+      expectErrors(errors, []);
     });
   });
 
   describe('with string definition', () => {
     it('should fail if value is not equal to definition', () => {
       const errors = queryDiff({ page: '10' }, { page: '11' });
-      expect(errors).toEqual([
+      expectErrors(errors, [
         {
           definition: '10',
           path: 'page',
@@ -103,7 +103,7 @@ describe('queryDiff', () => {
         { page: '10' },
         { page: ['10', '11', '10', '15'] },
       );
-      expect(errors).toEqual([
+      expectErrors(errors, [
         {
           definition: '10',
           path: 'page.1',
@@ -121,12 +121,12 @@ describe('queryDiff', () => {
 
     it('should pass if value is equal to definition', () => {
       const errors = queryDiff({ page: '10' }, { page: '10' });
-      expect(errors).toEqual([]);
+      expectErrors(errors, []);
     });
 
     it('should pass if all values are equal to definition', () => {
       const errors = queryDiff({ page: '10' }, { page: ['10', '10', '10'] });
-      expect(errors).toEqual([]);
+      expectErrors(errors, []);
     });
 
     it('should pass if all values are equal to all definitions', () => {
@@ -134,7 +134,7 @@ describe('queryDiff', () => {
         { page: ['20', '10', '22'] },
         { page: ['20', '10', '22'] },
       );
-      expect(errors).toEqual([]);
+      expectErrors(errors, []);
     });
 
     it('should fail if definition is an array and value is not', () => {
@@ -143,7 +143,7 @@ describe('queryDiff', () => {
       expect(stripAnsi(errors[0].definition as string)).toBe(
         "[ '20', '10', '22' ]",
       );
-      expect(errors).toEqual([
+      expectErrors(errors, [
         {
           definition: expect.any(String),
           path: 'page',
@@ -155,7 +155,7 @@ describe('queryDiff', () => {
 
     it('should fail if there are less values than definitions', () => {
       const errors = queryDiff({ page: ['20'] }, { page: ['20', '10', '22'] });
-      expect(errors).toEqual([
+      expectErrors(errors, [
         {
           definition: 'undefined',
           path: 'page.1',
@@ -173,7 +173,7 @@ describe('queryDiff', () => {
 
     it('should fail if there are less values than definitions', () => {
       const errors = queryDiff({ page: ['20', '10', '22'] }, { page: ['20'] });
-      expect(errors).toEqual([
+      expectErrors(errors, [
         {
           definition: '10',
           path: 'page.1',
@@ -193,7 +193,7 @@ describe('queryDiff', () => {
   describe('with RexExp definition', () => {
     it('should fail if value does not match definition', () => {
       const errors = queryDiff({ page: POSITIVE_INT_REGEXP }, { page: 'abc' });
-      expect(errors).toEqual([
+      expectErrors(errors, [
         {
           definition: POSITIVE_INT_REGEXP_STRING,
           path: 'page',
@@ -205,7 +205,7 @@ describe('queryDiff', () => {
 
     it('should pass if value matches definition', () => {
       const errors = queryDiff({ page: POSITIVE_INT_REGEXP }, { page: '10' });
-      expect(errors).toEqual([]);
+      expectErrors(errors, []);
     });
   });
 
@@ -215,7 +215,7 @@ describe('queryDiff', () => {
 
     it('should fail if value does not pass function definition', () => {
       const errors = queryDiff({ page: fn }, { page: '5' });
-      expect(errors).toEqual([
+      expectErrors(errors, [
         {
           definition: fnString,
           path: 'page',
@@ -227,7 +227,9 @@ describe('queryDiff', () => {
 
     it('should pass if value passes function definition', () => {
       const errors = queryDiff({ page: fn }, { page: '11' });
-      expect(errors).toEqual([]);
+      expectErrors(errors, []);
     });
   });
+
+  const expectErrors = makeExpectDiffError(DIFF_SUBJECTS.QUERY);
 });

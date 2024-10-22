@@ -25,6 +25,14 @@ export const EVENTS = {
 
 export const WILDCARD = Symbol.for('WILDCARD');
 
+export enum DIFF_SUBJECTS {
+  METHOD = 'METHOD',
+  HEADERS = 'HEADERS',
+  PATH = 'PATH',
+  QUERY = 'QUERY',
+  BODY = 'BODY',
+}
+
 export enum DIFF_TYPES {
   FAIL_EQUALITY = 'FAIL_EQUALITY',
   FAIL_MATCHING = 'FAIL_MATCHING',

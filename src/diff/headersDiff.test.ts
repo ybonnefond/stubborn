@@ -1,12 +1,13 @@
 import { JsonValue } from '../@types';
-import { DIFF_TYPES, WILDCARD } from '../constants';
+import { DIFF_SUBJECTS, DIFF_TYPES, WILDCARD } from '../constants';
 import { headersDiff } from './headersDiff';
+import { makeExpectDiffError } from '../../test';
 
 describe('headersDiff', () => {
   describe('with extra or missing headers', () => {
     it('should fail if header is missing', () => {
       const errors = headersDiff({ authorization: /^Bearer/ }, {});
-      expect(errors).toEqual([
+      expectErrors(errors, [
         {
           definition: '/^Bearer/',
           path: 'authorization',
@@ -18,7 +19,7 @@ describe('headersDiff', () => {
 
     it('should fail if header is extra', () => {
       const errors = headersDiff({}, { authorization: 'Bearer 123' });
-      expect(errors).toEqual([
+      expectErrors(errors, [
         {
           definition: 'undefined',
           path: 'authorization',
@@ -33,7 +34,7 @@ describe('headersDiff', () => {
         { accept: 'application/json' },
         { authorization: 'Bearer 456' },
       );
-      expect(errors).toEqual([
+      expectErrors(errors, [
         {
           definition: 'application/json',
           path: 'accept',
@@ -53,7 +54,7 @@ describe('headersDiff', () => {
   describe('using wildcard', () => {
     it('should pass if headers are wildcarded', () => {
       const errors = headersDiff(WILDCARD, { authorization: 'basic 123' });
-      expect(errors).toEqual([]);
+      expectErrors(errors, []);
     });
 
     it('should pass if a header is wildcarded', () => {
@@ -61,7 +62,7 @@ describe('headersDiff', () => {
         { authorization: WILDCARD },
         { authorization: 'basic 123' },
       );
-      expect(errors).toEqual([]);
+      expectErrors(errors, []);
     });
 
     it('should pass if a header is wildcarded and case is different', () => {
@@ -69,12 +70,12 @@ describe('headersDiff', () => {
         { authorization: WILDCARD },
         { AUTHORIZATION: 'basic 123' },
       );
-      expect(errors).toEqual([]);
+      expectErrors(errors, []);
     });
 
     it('should pass if a header is wildcarded and NOT in request', () => {
       const errors = headersDiff({ authorization: WILDCARD }, {});
-      expect(errors).toEqual([]);
+      expectErrors(errors, []);
     });
   });
 
@@ -84,7 +85,7 @@ describe('headersDiff', () => {
         { accept: 'application/json' },
         { accept: 'application/text' },
       );
-      expect(errors).toEqual([
+      expectErrors(errors, [
         {
           definition: 'application/json',
           path: 'accept',
@@ -99,7 +100,7 @@ describe('headersDiff', () => {
         { accept: 'application/json' },
         { accept: 'application/json' },
       );
-      expect(errors).toEqual([]);
+      expectErrors(errors, []);
     });
 
     it('should pass if value is equal to definition and header case is different', () => {
@@ -107,7 +108,7 @@ describe('headersDiff', () => {
         { accept: 'application/json' },
         { Accept: 'application/json' },
       );
-      expect(errors).toEqual([]);
+      expectErrors(errors, []);
     });
   });
 
@@ -117,7 +118,7 @@ describe('headersDiff', () => {
         { accept: /json/ },
         { accept: 'application/text' },
       );
-      expect(errors).toEqual([
+      expectErrors(errors, [
         {
           definition: '/json/',
           path: 'accept',
@@ -132,7 +133,7 @@ describe('headersDiff', () => {
         { accept: /json/ },
         { accept: 'application/json' },
       );
-      expect(errors).toEqual([]);
+      expectErrors(errors, []);
     });
   });
 
@@ -145,7 +146,7 @@ describe('headersDiff', () => {
         { accept: fn },
         { accept: 'application/text' },
       );
-      expect(errors).toEqual([
+      expectErrors(errors, [
         {
           definition: fnString,
           path: 'accept',
@@ -160,7 +161,9 @@ describe('headersDiff', () => {
         { accept: (val: JsonValue) => (val as string).endsWith('json') },
         { accept: 'application/json' },
       );
-      expect(errors).toEqual([]);
+      expectErrors(errors, []);
     });
   });
+
+  const expectErrors = makeExpectDiffError(DIFF_SUBJECTS.HEADERS);
 });

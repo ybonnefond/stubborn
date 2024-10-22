@@ -1,6 +1,7 @@
 import { BodyDefinition, JsonValue, RequestBody } from '../@types';
-import { DIFF_TYPES, WILDCARD } from '../constants';
+import { DIFF_SUBJECTS, DIFF_TYPES, WILDCARD } from '../constants';
 import { bodyDiff } from './bodyDiff';
+import { makeExpectDiffError } from '../../test';
 
 describe('bodyDiff', () => {
   const LC_STRING = /^[a-z]+$/;
@@ -79,7 +80,7 @@ describe('bodyDiff', () => {
   ])('should pass with def %p and value %p', (...args) => {
     const [def, val] = args;
     const result = bodyDiff(def as BodyDefinition, val);
-    expect(result).toEqual([]);
+    expectErrors(result, []);
   });
 
   describe('missing keys', () => {
@@ -92,7 +93,7 @@ describe('bodyDiff', () => {
         a: 'a',
       };
       const result = bodyDiff(def, val);
-      expect(result).toEqual([
+      expectErrors(result, [
         {
           type: DIFF_TYPES.MISSING,
           path: 'b',
@@ -123,7 +124,7 @@ describe('bodyDiff', () => {
         },
       };
       const result = bodyDiff(def, val);
-      expect(result).toEqual([
+      expectErrors(result, [
         {
           type: DIFF_TYPES.MISSING,
           path: 'a.b.c.d',
@@ -144,7 +145,7 @@ describe('bodyDiff', () => {
         b: 'b',
       };
       const result = bodyDiff(def, val);
-      expect(result).toEqual([
+      expectErrors(result, [
         {
           type: DIFF_TYPES.EXTRA,
           path: 'b',
@@ -175,7 +176,7 @@ describe('bodyDiff', () => {
         },
       };
       const result = bodyDiff(def, val);
-      expect(result).toEqual([
+      expectErrors(result, [
         {
           type: DIFF_TYPES.EXTRA,
           path: 'a.b.c.e',
@@ -243,7 +244,9 @@ describe('bodyDiff', () => {
     )('should fail if def %p not equal val %p', (...args) => {
       const [def, val, error] = args;
       const result = bodyDiff(def as BodyDefinition, val as RequestBody);
-      expect(result).toEqual([error]);
+      expectErrors(result, [error]);
     });
   });
+
+  const expectErrors = makeExpectDiffError(DIFF_SUBJECTS.BODY);
 });

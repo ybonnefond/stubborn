@@ -1,5 +1,8 @@
 import { BodyDefinition, DiffError, RequestBody } from '../@types';
 import { checkValue, findErrors } from './utils';
+import { DIFF_SUBJECTS } from '../constants';
+
+const subject = DIFF_SUBJECTS.BODY;
 
 export function bodyDiff(
   definition: BodyDefinition,
@@ -22,8 +25,14 @@ function rec({
     definition !== null &&
     !(definition instanceof RegExp)
   ) {
-    return findErrors({ definition, value, validate: rec, prefix: path });
+    return findErrors({
+      subject,
+      definition,
+      value,
+      validate: rec,
+      prefix: path,
+    });
   }
 
-  return checkValue({ definition, value, path });
+  return checkValue({ subject, definition, value, path });
 }
