@@ -124,6 +124,17 @@ export class Stubborn implements Emitter {
   public put(path: PathDefinition, body: BodyDefinition = '') {
     return this.router.createRoute(METHODS.PUT, path).setBody(body);
   }
+
+  /**
+   * Create and Register a new HEAD route
+   *
+   * @param path Path matching definition
+   * @param body Request body definition
+   */
+  public head(path: PathDefinition) {
+    return this.router.createRoute(METHODS.HEAD, path);
+  }
+
   /**
    * Register a new route
    *
