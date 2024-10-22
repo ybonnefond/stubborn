@@ -14,6 +14,12 @@ import {
 import { METHODS, STATUS_CODES, WILDCARD } from './constants';
 import { InvalidRemoveAfterMatchingTimesParameterError } from './errors/InvalidRemoveAfterMatchingTimesParameterError';
 
+type LineInfo = {
+  file: string;
+  line: string;
+  column: string;
+};
+
 /**
  * Object holding the route definitions, requests matchers and response templates
  */
@@ -23,7 +29,7 @@ export class Route {
   private query: QueryDefinition = {};
 
   private response: ResponseDefinition;
-  private logDiffOn501Request: boolean = false;
+  private logDiffOn501Request: LineInfo | null = null;
 
   private calls: RequestInfo[] = [];
   private maxCalls: number | null = null;
@@ -392,15 +398,41 @@ export class Route {
    * If this method is called and a request does not match any route, stubborn will output the diff between the current route and the request
    */
   public logDiffOn501() {
-    this.logDiffOn501Request = true;
+    this.logDiffOn501Request = this.getFileLine();
 
     return this;
+  }
+
+  private getFileLine(): LineInfo | null {
+    const stackLines = new Error().stack?.split('\n');
+    if (!stackLines) return null;
+
+    const fileLine = stackLines[3];
+    if (!fileLine) return null;
+
+    // Define regex to capture file path, line number, and column number
+    const stackRegex = /at\s+(?:.*\s\()?(.+?):(\d+):(\d+)\)?$/;
+
+    const match = fileLine.match(stackRegex);
+    if (!match) {
+      return null;
+    }
+    const [, file, line, column] = match;
+    return {
+      file,
+      line,
+      column,
+    };
   }
 
   /**
    * Get weather stubborn should output the diff with the current route if the request does not match any route
    */
   public shouldLogDiffOn501() {
+    return this.logDiffOn501Request;
+  }
+
+  public getLogDiffPosition(): LineInfo | null {
     return this.logDiffOn501Request;
   }
 
