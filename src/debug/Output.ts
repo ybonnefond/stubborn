@@ -1,7 +1,7 @@
 import Color from 'chalk';
 
 import { DiffError } from '../@types';
-import { DIFF_TYPES } from '../constants';
+import { DIFF_SUBJECTS, DIFF_TYPES } from '../constants';
 
 export class Output {
   private currentTab = 0;
@@ -24,8 +24,12 @@ export class Output {
     return this.add(Color.bold.underline(ucCat));
   }
 
-  public newLine() {
-    return this.add('');
+  public newLine(count = 1) {
+    for (let i = 0; i < count; i++) {
+      this.add('');
+    }
+
+    return this;
   }
 
   public errorEq(error: DiffError) {
@@ -77,17 +81,51 @@ export class Output {
     return ' '.repeat(this.currentTab * 2) + text;
   }
 
-  public renderErrors(cat: string, errors: DiffError[]) {
+  public warn(message: string) {
+    return this.add(`[${this.yellow('WARN')}] ${message}`);
+  }
+
+  public yellow(text: string) {
+    return Color.yellow(text);
+  }
+
+  public renderErrors(
+    subject: DIFF_SUBJECTS,
+    errorsBySubjects: Record<DIFF_SUBJECTS, DiffError[]>,
+  ) {
+    const errors = errorsBySubjects[subject] ?? [];
+
     if (errors.length === 0) {
       return;
     }
+
+    const cat = this.getDiffSubjectLabel(subject);
+
+    const catErrors = errors.filter(e => e.subject === subject);
 
     this.newLine();
 
     this.category(cat);
     errors.length === 1
-      ? this.renderOneError(errors)
-      : this.renderMultiplesErrors(errors);
+      ? this.renderOneError(catErrors)
+      : this.renderMultiplesErrors(catErrors);
+  }
+
+  private getDiffSubjectLabel(subject: DIFF_SUBJECTS) {
+    switch (subject) {
+      case DIFF_SUBJECTS.METHOD:
+        return 'Method';
+      case DIFF_SUBJECTS.PATH:
+        return 'Path';
+      case DIFF_SUBJECTS.HEADERS:
+        return 'Headers';
+      case DIFF_SUBJECTS.QUERY:
+        return 'Query';
+      case DIFF_SUBJECTS.BODY:
+        return 'Body';
+      default:
+        throw new Error(`Unknown subject: ${subject}`);
+    }
   }
 
   public renderOneError(errors: DiffError[]) {

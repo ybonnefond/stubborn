@@ -56,8 +56,7 @@ describe('README examples', () => {
       slug: /^[a-z\-]*$/,
     })
       .setQueryParameters({ page: /^\d$/ })
-      .setHeaders(WILDCARD)
-      .logDiffOn501();
+      .setHeaders(WILDCARD);
 
     const res = await request({
       query: { page: '2' },
