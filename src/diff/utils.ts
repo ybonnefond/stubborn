@@ -43,17 +43,21 @@ function findErrorsObject(
   }
 
   return [
-    ...checkMissing(definition, value, prefix),
+    ...checkMissing({ definition, value, prefix }),
     ...checkExtra({ definition, value, prefix }),
     ...checkValues({ definition, value, validate, prefix }),
   ];
 }
 
-function checkMissing(
-  definition: ObjectOrArray,
-  value: ObjectOrArray,
-  prefix: string = '',
-) {
+function checkMissing({
+  definition,
+  value,
+  prefix,
+}: {
+  definition: ObjectOrArray;
+  value: ObjectOrArray;
+  prefix: string;
+}) {
   const errors: DiffError[] = [];
   const missing = differenceKeys(definition, value);
 
