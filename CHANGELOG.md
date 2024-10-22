@@ -1,3 +1,20 @@
+# [7.0.0](https://github.com/ybonnefond/stubborn/compare/v6.2.0...v7.0.0) (2024-10-22)
+
+
+### Features
+
+* add support for HEAD methods ([e8f3e78](https://github.com/ybonnefond/stubborn/commit/e8f3e78303951ac93f80cc54c36e2f14fed370c2))
+* add support for options ([d452bf9](https://github.com/ybonnefond/stubborn/commit/d452bf93589bacc80d0d1633b72cbc3836a4ad3a))
+* move to node 20 ([346ce4c](https://github.com/ybonnefond/stubborn/commit/346ce4c587d8028410700b2317233e81b66efeef))
+* pass subject in DiffError ([2a096e1](https://github.com/ybonnefond/stubborn/commit/2a096e1f9ebf7b24970ccfef9cb4ed183877d24b))
+* show file line when logDiffOn501 called on a mathcing route ([3814881](https://github.com/ybonnefond/stubborn/commit/3814881dd63e8a7c344e9a634d6255d9e5939a56))
+* show warn when log diff called and route matched ([8c9ed84](https://github.com/ybonnefond/stubborn/commit/8c9ed84faba12632f5496574e89f02682928fc5d))
+
+
+### BREAKING CHANGES
+
+* remove support for node 18 & 19
+
 # [6.2.0](https://github.com/ybonnefond/stubborn/compare/v6.1.0...v6.2.0) (2023-03-16)
 
 
