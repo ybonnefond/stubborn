@@ -150,26 +150,6 @@ function stringify(val: any): string {
   return String(val);
 }
 
-// function stringify(val: any) {
-//   if (val instanceof Symbol) {
-//     return val.toString();
-//   }
-//
-//   if (Array.isArray(val)) {
-//     return `[${String(val)}]`;
-//   }
-//
-//   if(typeof val === 'object') {
-//     return val.toSource();
-//     // return JSON.stringify(Object.keys(val).reduce((acc: any, key: any) => {
-//     //   acc[key] = stringify(val[key]);
-//     //   return acc;
-//     // }, {} as any));
-//   }
-//
-//   return String(val);
-// }
-
 function checkValues({
   definition,
   value,
