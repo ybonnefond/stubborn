@@ -18,18 +18,23 @@ export function findErrors(
   }
 
   if (typeof definition === 'object' && definition !== null) {
-    return findErrorsObject(definition, value, validate, prefix);
+    return findErrorsObject({ definition, value, validate, prefix });
   }
 
   return checkValues({ definition, value, validate, prefix });
 }
 
-function findErrorsObject(
-  definition: ObjectOrArray,
-  value: any,
-  validate: ValidateFn,
-  prefix: string = '',
-) {
+function findErrorsObject({
+  definition,
+  value,
+  validate,
+  prefix,
+}: {
+  definition: ObjectOrArray;
+  value: any;
+  validate: ValidateFn;
+  prefix: string;
+}) {
   const isValueObject = typeof value === 'object' && value !== null;
   if (!isValueObject) {
     return [
