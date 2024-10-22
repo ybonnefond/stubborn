@@ -5,13 +5,13 @@ import {
   RequestQuery,
 } from '../@types';
 import { DIFF_TYPES } from '../constants';
-import { checkValue, findErrors, formatDiffError } from './utils';
+import { checkValue, findErrors, formatDiffError, ValidateFn } from './utils';
 
 export function queryDiff(
-  definitions: QueryDefinition,
-  values: RequestQuery,
+  definition: QueryDefinition,
+  value: RequestQuery,
 ): DiffError[] {
-  return findErrors(definitions, values, (def, val, path) => {
+  const validate: ValidateFn = (def: any, val: any, path: string) => {
     if (!Array.isArray(def)) {
       return checkParameters(def, val, path);
     }
@@ -28,8 +28,15 @@ export function queryDiff(
       ];
     }
 
-    return findErrors(def, val, checkParameters, path);
-  });
+    return findErrors({
+      definition: def,
+      value: val,
+      validate: checkParameters,
+      prefix: path,
+    });
+  };
+
+  return findErrors({ definition, value, validate, prefix: '' });
 }
 
 function checkParameters(

@@ -8,14 +8,14 @@ export function bodyDiff(
   return rec(definitions, values);
 }
 
-function rec(definitions: BodyDefinition, values: RequestBody, path = '') {
+function rec(definition: BodyDefinition, value: RequestBody, path = '') {
   if (
-    typeof definitions === 'object' &&
-    definitions !== null &&
-    !(definitions instanceof RegExp)
+    typeof definition === 'object' &&
+    definition !== null &&
+    !(definition instanceof RegExp)
   ) {
-    return findErrors(definitions, values, rec, path);
+    return findErrors({ definition, value, validate: rec, prefix: path });
   }
 
-  return checkValue(definitions, values, path);
+  return checkValue(definition, value, path);
 }
