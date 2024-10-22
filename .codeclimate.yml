@@ -1,0 +1,13 @@
+version: "2"
+
+exclude_patterns:
+  - "node_modules"
+  - "coverage"
+  - "dist"
+  - "docs"
+
+checks:
+  similar-code:
+    enabled: true
+    config:
+      threshold: 50
