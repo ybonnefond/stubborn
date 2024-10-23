@@ -29,11 +29,11 @@ describe('debug', () => {
     const out = await run(req);
 
     expoectOutputToBe(out, [
-      '## Request: POST /',
+      '## Route: POST /',
+      expect.stringMatching(/^\s\sat .+:\d+:\d+/),
       'Method',
       '- Received: post',
       '+ Expected: put',
-      expect.stringMatching(/^Route registered at .+:\d+:\d+/),
     ]);
   });
 
@@ -50,7 +50,8 @@ describe('debug', () => {
 
     const out = await run(req);
     expoectOutputToBe(out, [
-      '## Request: GET /test-stuff',
+      '## Route: GET /test-stuff',
+      expect.stringMatching(/^\s\sat .+:\d+:\d+/),
       'Method',
       '- Received: get',
       '+ Expected: post',
@@ -62,7 +63,6 @@ describe('debug', () => {
       'Body',
       '- Received: undefined',
       "+ Expected: { name: (val) => val === 'tonton' }",
-      expect.stringMatching(/^Route registered at .+:\d+:\d+/),
     ]);
   });
 
@@ -106,7 +106,8 @@ describe('debug', () => {
     const out = await run(req);
 
     expoectOutputToBe(out, [
-      '## Request: POST /test',
+      '## Route: POST /test',
+      expect.stringMatching(/^\s\sat .+:\d+:\d+/),
       'Method',
       '- Received: post',
       '+ Expected: put',
@@ -134,7 +135,6 @@ describe('debug', () => {
       "+   lastname: val => val === 'Doe'",
       '-   roles: writer',
       "+   roles: [ 'writer', 'reviewer' ]",
-      expect.stringMatching(/^Route registered at .+:\d+:\d+/),
     ]);
   });
 
@@ -145,11 +145,11 @@ describe('debug', () => {
     const out = await run(req);
 
     expoectOutputToBe(out, [
-      '## Request: POST /',
+      '## Route: POST /',
+      expect.stringMatching(/^\s\sat .+:\d+:\d+/),
       'Method',
       '- Received: post',
       '+ Expected: put',
-      expect.stringMatching(/^Route registered at .+:\d+:\d+/),
     ]);
   });
 

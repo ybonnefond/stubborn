@@ -62,6 +62,18 @@ export class Output {
     return Color.yellow(text);
   }
 
+  public blue(text: string) {
+    return Color.blue(text);
+  }
+
+  public cyan(text: string) {
+    return Color.cyan(text);
+  }
+
+  public bold(text: string) {
+    return Color.bold(text);
+  }
+
   public formatLineInfo(line: LineInfo | null) {
     if (line === null) {
       return '';
