@@ -3,3 +3,4 @@ export * from './Stubborn';
 export * from './constants';
 export * from './Route';
 export { logDiffOn501 } from './utils';
+export { LineInfo } from './@types';

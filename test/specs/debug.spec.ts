@@ -28,12 +28,13 @@ describe('debug', () => {
 
     const out = await run(req);
 
-    expect(out).toEqual(
-      '## Request: POST /\n\n' +
-        'Method\n' +
-        '- Received: post\n' +
-        '+ Expected: put',
-    );
+    expoectOutputToBe(out, [
+      '## Request: POST /',
+      'Method',
+      '- Received: post',
+      '+ Expected: put',
+      expect.stringMatching(/^Route registered at .+:\d+:\d+/),
+    ]);
   });
 
   it('should output object', async () => {
@@ -99,11 +100,17 @@ describe('debug', () => {
 
     const out = await run(req);
 
-    expect(out).toEqual(
-      '## Request: POST /\n\n' +
-        'Method\n' +
-        '- Received: post\n' +
-        '+ Expected: put',
-    );
+    expoectOutputToBe(out, [
+      '## Request: POST /',
+      'Method',
+      '- Received: post',
+      '+ Expected: put',
+      expect.stringMatching(/^Route registered at .+:\d+:\d+/),
+    ]);
   });
+
+  function expoectOutputToBe(output: string, expected: string[]) {
+    const lines = output.split('\n').filter(line => line !== '');
+    expect(lines).toEqual(expect.arrayContaining(expected));
+  }
 });
