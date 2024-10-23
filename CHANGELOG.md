@@ -1,3 +1,11 @@
+# [7.1.0](https://github.com/ybonnefond/stubborn/compare/v7.0.0...v7.1.0) (2024-10-23)
+
+
+### Features
+
+* output the line of the route on log diff ([7cd4a01](https://github.com/ybonnefond/stubborn/commit/7cd4a016baac16e8c719027a6e051073ef6e5b6b))
+* retrun diffs for matched endpoints routes in 501 response ([79594e9](https://github.com/ybonnefond/stubborn/commit/79594e992629488dd10c8396852e4c954e637348))
+
 # [7.0.0](https://github.com/ybonnefond/stubborn/compare/v6.2.0...v7.0.0) (2024-10-22)
 
 
