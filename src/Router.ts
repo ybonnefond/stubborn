@@ -25,6 +25,8 @@ import { requestDiff } from './diff/requestDiff';
 import { middlewares } from './middlewares';
 import { Route } from './Route';
 import { findCaller, getServerPort, logDiffOn501 } from './utils';
+import { methodDiff } from './diff/methodDiff';
+import { pathDiff } from './diff/pathDiff';
 /**
  * @internal
  */
@@ -142,7 +144,7 @@ function buildRequestHandler(router: Router, emitter: EventEmitter) {
     const route = findRoute(router.getRoutes(), req);
 
     if (null === route) {
-      replyNotImplemented(res, req, emitter);
+      replyNotImplemented(router.getRoutes(), res, req, emitter);
     } else {
       reply({ router, route, res, req, emitter });
     }
@@ -227,10 +229,29 @@ function findRoute(routes: Set<Route>, req: Request) {
   return null;
 }
 
+function findEndpointRouteDiffs(routes: Set<Route>, req: Request) {
+  const diffs = [];
+  for (const [route] of routes.entries()) {
+    const isEndpoint =
+      [...methodDiff(route, req), ...pathDiff(route, req)].length === 0;
+    if (isEndpoint) {
+      diffs.push({
+        route: {
+          path: route.getInitializerPath(),
+        },
+        diffs: requestDiff(route, req),
+      });
+    }
+  }
+
+  return diffs;
+}
+
 /**
  * @internal
  */
 function replyNotImplemented(
+  routes: Set<Route>,
   res: Response,
   req: Request,
   emitter: EventEmitter,
@@ -245,6 +266,7 @@ function replyNotImplemented(
       {
         message: 'No route matched',
         request: dbg.getInfo(),
+        endpointsDiffs: findEndpointRouteDiffs(routes, req),
       },
       null,
       2,

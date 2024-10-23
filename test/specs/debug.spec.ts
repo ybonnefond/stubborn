@@ -49,7 +49,21 @@ describe('debug', () => {
     logDiffOn501(sb, route);
 
     const out = await run(req);
-    expect(out).toMatchSnapshot();
+    expoectOutputToBe(out, [
+      '## Request: GET /test-stuff',
+      'Method',
+      '- Received: get',
+      '+ Expected: post',
+      'Path',
+      '- Received: /test-stuff',
+      '+ Expected: /test$/',
+      'Headers',
+      '+ x-api-key: 123',
+      'Body',
+      '- Received: undefined',
+      "+ Expected: { name: (val) => val === 'tonton' }",
+      expect.stringMatching(/^Route registered at .+:\d+:\d+/),
+    ]);
   });
 
   it('should output various stuff', async () => {
@@ -91,7 +105,37 @@ describe('debug', () => {
 
     const out = await run(req);
 
-    expect(out).toMatchSnapshot();
+    expoectOutputToBe(out, [
+      '## Request: POST /test',
+      'Method',
+      '- Received: post',
+      '+ Expected: put',
+      'Path',
+      '- Received: /test',
+      '+ Expected: /',
+      'Headers',
+      '+   x-header-missing: missing-header-123',
+      '-   x-header-extra: x-extra-header-123',
+      '-   x-header-1: Bearer world',
+      '+   x-header-1: Bearer hello',
+      'Query',
+      '+   missingParam: /^[0-9]+$/',
+      '-   extraParam: 10',
+      '-   param1: ten',
+      '+   param1: /^[0-9]+$/',
+      'Body',
+      '+   missingKey: key missing',
+      '-   extraKey: extra key value',
+      '-   pets.0.type: dog',
+      '+   pets.0.type: cat',
+      '-   firstname: 123',
+      '+   firstname: /^[a-z]+$/',
+      '-   lastname: Donald',
+      "+   lastname: val => val === 'Doe'",
+      '-   roles: writer',
+      "+   roles: [ 'writer', 'reviewer' ]",
+      expect.stringMatching(/^Route registered at .+:\d+:\d+/),
+    ]);
   });
 
   it('should output method diff using logDiff on route', async () => {
