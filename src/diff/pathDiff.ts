@@ -1,15 +1,13 @@
-import { DiffError, PathDefinition } from '../@types';
+import { DiffError, RequestInfo } from '../@types';
 import { checkValue } from './utils';
 import { DIFF_SUBJECTS } from '../constants';
+import { Route } from '../Route';
 
-export function pathDiff(
-  definition: PathDefinition,
-  value: string,
-): DiffError[] {
+export function pathDiff(route: Route, request: RequestInfo): DiffError[] {
   return checkValue({
     subject: DIFF_SUBJECTS.PATH,
-    definition,
-    value,
+    definition: route.getPath(),
+    value: request.path,
     path: '',
   });
 }

@@ -77,10 +77,11 @@ export type RequestInfo = {
   method: RequestMethod;
 };
 
-export type Request = IncomingMessage &
-  RequestInfo & {
-    searchParams?: URLSearchParams;
-  };
+export type RequestInfoWithSearchParam = RequestInfo & {
+  searchParams: URLSearchParams;
+};
+
+export type Request = IncomingMessage & RequestInfoWithSearchParam;
 
 export type Response = ServerResponse;
 export type NextFunction = (err?: any) => void;

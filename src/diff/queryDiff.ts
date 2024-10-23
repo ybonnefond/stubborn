@@ -1,22 +1,15 @@
-import {
-  DiffError,
-  QueryDefinition,
-  QueryParameterDefinition,
-  RequestQuery,
-} from '../@types';
+import { DiffError, QueryParameterDefinition, RequestInfo } from '../@types';
 import { DIFF_SUBJECTS, DIFF_TYPES } from '../constants';
 import { checkValue, findErrors, formatDiffError } from './utils';
+import { Route } from '../Route';
 
 const subject = DIFF_SUBJECTS.QUERY;
 
-export function queryDiff(
-  definition: QueryDefinition,
-  value: RequestQuery,
-): DiffError[] {
+export function queryDiff(route: Route, request: RequestInfo): DiffError[] {
   return findErrors({
     subject,
-    definition,
-    value,
+    definition: route.getQueryParameters(),
+    value: request.query,
     validate: validateQuery,
     prefix: '',
   });

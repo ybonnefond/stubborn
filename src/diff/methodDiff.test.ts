@@ -1,9 +1,13 @@
-import { DIFF_SUBJECTS, DIFF_TYPES } from '../constants';
+import { DIFF_SUBJECTS, DIFF_TYPES, METHODS } from '../constants';
 import { methodDiff } from './methodDiff';
+import { Route } from '../Route';
+import { makeRequestInfo } from '../../test';
 
 describe('methodDiff', () => {
   function run(def: any, value: any) {
-    return methodDiff(def, value);
+    const route = new Route(METHODS.GET, '/').setHeaders(def);
+    const request = makeRequestInfo({ method: value });
+    return methodDiff(route, request);
   }
 
   function expectNoErrors(def: any, value: any) {
