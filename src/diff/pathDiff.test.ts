@@ -1,10 +1,14 @@
 import { JsonValue } from '../@types';
-import { DIFF_SUBJECTS, DIFF_TYPES } from '../constants';
+import { DIFF_SUBJECTS, DIFF_TYPES, METHODS } from '../constants';
 import { pathDiff } from './pathDiff';
+import { Route } from '../Route';
+import { makeRequestInfo } from '../../test';
 
 describe('pathDiff', () => {
   function run(def: any, value: any) {
-    return pathDiff(def, value);
+    const route = new Route(METHODS.GET, def);
+    const request = makeRequestInfo({ path: value });
+    return pathDiff(route, request);
   }
 
   function expectNoErrors(def: any, value: any) {

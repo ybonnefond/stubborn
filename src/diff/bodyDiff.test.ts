@@ -1,7 +1,8 @@
-import { BodyDefinition, JsonValue, RequestBody } from '../@types';
-import { DIFF_SUBJECTS, DIFF_TYPES, WILDCARD } from '../constants';
+import { BodyDefinition, JsonValue } from '../@types';
+import { DIFF_SUBJECTS, DIFF_TYPES, METHODS, WILDCARD } from '../constants';
 import { bodyDiff } from './bodyDiff';
-import { makeExpectDiffError } from '../../test';
+import { makeExpectDiffError, makeRequestInfo } from '../../test';
+import { Route } from '../Route';
 
 describe('bodyDiff', () => {
   const LC_STRING = /^[a-z]+$/;
@@ -79,7 +80,11 @@ describe('bodyDiff', () => {
     [{ a: { b: { c: END_WITH_LO } } }, { a: { b: { c: 'hello' } } }],
   ])('should pass with def %p and value %p', (...args) => {
     const [def, val] = args;
-    const result = bodyDiff(def as BodyDefinition, val);
+
+    const route = new Route(METHODS.GET, '/').setBody(def as BodyDefinition);
+    const request = makeRequestInfo({ body: val });
+    const result = bodyDiff(route, request);
+
     expectErrors(result, []);
   });
 
@@ -92,7 +97,11 @@ describe('bodyDiff', () => {
       const val = {
         a: 'a',
       };
-      const result = bodyDiff(def, val);
+
+      const route = new Route(METHODS.GET, '/').setBody(def);
+      const request = makeRequestInfo({ body: val });
+      const result = bodyDiff(route, request);
+
       expectErrors(result, [
         {
           type: DIFF_TYPES.MISSING,
@@ -123,7 +132,11 @@ describe('bodyDiff', () => {
           },
         },
       };
-      const result = bodyDiff(def, val);
+
+      const route = new Route(METHODS.GET, '/').setBody(def);
+      const request = makeRequestInfo({ body: val });
+      const result = bodyDiff(route, request);
+
       expectErrors(result, [
         {
           type: DIFF_TYPES.MISSING,
@@ -144,7 +157,11 @@ describe('bodyDiff', () => {
         a: 'a',
         b: 'b',
       };
-      const result = bodyDiff(def, val);
+
+      const route = new Route(METHODS.GET, '/').setBody(def);
+      const request = makeRequestInfo({ body: val });
+      const result = bodyDiff(route, request);
+
       expectErrors(result, [
         {
           type: DIFF_TYPES.EXTRA,
@@ -175,7 +192,11 @@ describe('bodyDiff', () => {
           },
         },
       };
-      const result = bodyDiff(def, val);
+
+      const route = new Route(METHODS.GET, '/').setBody(def);
+      const request = makeRequestInfo({ body: val });
+      const result = bodyDiff(route, request);
+
       expectErrors(result, [
         {
           type: DIFF_TYPES.EXTRA,
@@ -243,7 +264,9 @@ describe('bodyDiff', () => {
     ],
     )('should fail if def %p not equal val %p', (...args) => {
       const [def, val, error] = args;
-      const result = bodyDiff(def as BodyDefinition, val as RequestBody);
+      const route = new Route(METHODS.GET, '/').setBody(def);
+      const request = makeRequestInfo({ body: val });
+      const result = bodyDiff(route, request);
       expectErrors(result, [error]);
     });
   });

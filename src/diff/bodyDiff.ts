@@ -1,14 +1,14 @@
-import { BodyDefinition, DiffError, RequestBody } from '../@types';
+import { BodyDefinition, DiffError, RequestInfo, RequestBody } from '../@types';
 import { checkValue, findErrors } from './utils';
 import { DIFF_SUBJECTS } from '../constants';
+import { Route } from '../Route';
 
 const subject = DIFF_SUBJECTS.BODY;
 
-export function bodyDiff(
-  definition: BodyDefinition,
-  value: RequestBody,
-): DiffError[] {
-  return rec({ definition, value, path: '' });
+export function bodyDiff(route: Route, request: RequestInfo): DiffError[] {
+  const value =
+    request.body instanceof Buffer ? String(request.body) : request.body;
+  return rec({ definition: route.getBody(), value, path: '' });
 }
 
 function rec({

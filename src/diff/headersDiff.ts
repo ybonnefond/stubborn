@@ -1,14 +1,17 @@
-import { DiffError, HeadersDefinition, RequestHeaders } from '../@types';
+import { DiffError, RequestInfo } from '../@types';
 import { DIFF_SUBJECTS, WILDCARD } from '../constants';
 import { checkValue, findErrors } from './utils';
+import { Route } from '../Route';
 
-export function headersDiff(
-  _definitions: HeadersDefinition,
-  _values: RequestHeaders,
-): DiffError[] {
+export function headersDiff(route: Route, request: RequestInfo): DiffError[] {
+  const headersDefinitions = route.getHeaders();
+  const headersValues = request.headers;
+
   const definition =
-    WILDCARD === _definitions ? WILDCARD : keysToLowerCase(_definitions);
-  const value = keysToLowerCase(_values);
+    WILDCARD === headersDefinitions
+      ? WILDCARD
+      : keysToLowerCase(headersDefinitions);
+  const value = keysToLowerCase(headersValues);
 
   return findErrors({
     subject: DIFF_SUBJECTS.HEADERS,
