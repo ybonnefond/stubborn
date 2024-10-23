@@ -54,18 +54,20 @@ export class Debugger {
       return acc;
     }, {} as Record<string, DiffError[]>);
 
-    out.add(`## Request: ${this.request.method} ${this.request.path}`);
+    out.add(
+      `## Route: ${out.blue(out.bold(this.request.method))} ${out.cyan(
+        this.request.path,
+      )}`,
+    );
+    out.pushTab();
+    out.add(out.tab(`at ${out.formatLineInfo(route.getInitializerPath())}`));
+    out.pullTab();
 
     render.renderErrors(DIFF_SUBJECTS.METHOD, errors);
     render.renderErrors(DIFF_SUBJECTS.PATH, errors);
     render.renderErrors(DIFF_SUBJECTS.HEADERS, errors);
     render.renderErrors(DIFF_SUBJECTS.QUERY, errors);
     render.renderErrors(DIFF_SUBJECTS.BODY, errors);
-
-    out.newLine();
-    out.add(
-      `Route registered at ${out.formatLineInfo(route.getInitializerPath())}`,
-    );
 
     process.stdout.write(out.render());
   }
