@@ -1,3 +1,10 @@
+## [7.1.1](https://github.com/ybonnefond/stubborn/compare/v7.1.0...v7.1.1) (2024-10-23)
+
+
+### Bug Fixes
+
+* output of log diff show route and path ([1606f9c](https://github.com/ybonnefond/stubborn/commit/1606f9c098621892b70b56e7c9e03ee184f8c8e8))
+
 # [7.1.0](https://github.com/ybonnefond/stubborn/compare/v7.0.0...v7.1.0) (2024-10-23)
 
 
