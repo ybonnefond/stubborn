@@ -106,3 +106,4 @@ export interface DiffError {
   value: JsonValue;
   path: string;
 }
+export { LineInfo } from './LineInfo';

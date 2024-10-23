@@ -16,7 +16,9 @@ Headers
 
 Body
 - Received: undefined
-+ Expected: { name: (val) => val === 'tonton' }"
++ Expected: { name: (val) => val === 'tonton' }
+
+Route registered at /Users/yannickb/workspace-perso/stubborn/test/specs/debug.spec.ts:42:8"
 `;
 
 exports[`debug should output various stuff 1`] = `
@@ -58,5 +60,7 @@ Body
 +   lastname: val => val === 'Doe'
 
 -   roles: writer
-+   roles: [ 'writer', 'reviewer' ]"
++   roles: [ 'writer', 'reviewer' ]
+
+Route registered at /Users/yannickb/workspace-perso/stubborn/test/specs/debug.spec.ts:57:8"
 `;

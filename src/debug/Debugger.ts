@@ -30,7 +30,7 @@ export class Debugger {
     const position = route.getLogDiffPosition();
     if (position !== null) {
       out.pushTab();
-      out.add(out.tab(out.yellow(`at ${Object.values(position).join(':')}`)));
+      out.add(out.tab(out.yellow(`at ${out.formatLineInfo(position)}`)));
       out.pullTab();
     }
     out.newLine(2);
@@ -61,6 +61,11 @@ export class Debugger {
     render.renderErrors(DIFF_SUBJECTS.HEADERS, errors);
     render.renderErrors(DIFF_SUBJECTS.QUERY, errors);
     render.renderErrors(DIFF_SUBJECTS.BODY, errors);
+
+    out.newLine();
+    out.add(
+      `Route registered at ${out.formatLineInfo(route.getInitializerPath())}`,
+    );
 
     process.stdout.write(out.render());
   }

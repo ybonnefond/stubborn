@@ -1,4 +1,5 @@
 import Color from 'chalk';
+import { LineInfo } from '../@types';
 
 export class Output {
   private currentTab = 0;
@@ -59,5 +60,13 @@ export class Output {
 
   public yellow(text: string) {
     return Color.yellow(text);
+  }
+
+  public formatLineInfo(line: LineInfo | null) {
+    if (line === null) {
+      return '';
+    }
+
+    return Object.values(line).join(':');
   }
 }

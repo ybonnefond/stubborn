@@ -24,7 +24,7 @@ import { Debugger } from './debug/Debugger';
 import { requestDiff } from './diff/requestDiff';
 import { middlewares } from './middlewares';
 import { Route } from './Route';
-import { getServerPort, logDiffOn501 } from './utils';
+import { findCaller, getServerPort, logDiffOn501 } from './utils';
 /**
  * @internal
  */
@@ -58,6 +58,7 @@ export class Router {
   }
 
   public addRoute(route: Route) {
+    route.setInitializerPath(findCaller());
     this.routes.add(route);
 
     return route;

@@ -2,6 +2,7 @@ import {
   BodyDefinition,
   HeaderDefinition,
   HeadersDefinition,
+  LineInfo,
   PathDefinition,
   QueryDefinition,
   QueryParameterDefinition,
@@ -13,12 +14,7 @@ import {
 
 import { METHODS, STATUS_CODES, WILDCARD } from './constants';
 import { InvalidRemoveAfterMatchingTimesParameterError } from './errors/InvalidRemoveAfterMatchingTimesParameterError';
-
-type LineInfo = {
-  file: string;
-  line: string;
-  column: string;
-};
+import { findCaller } from './utils';
 
 /**
  * Object holding the route definitions, requests matchers and response templates
@@ -33,6 +29,7 @@ export class Route {
 
   private calls: RequestInfo[] = [];
   private maxCalls: number | null = null;
+  private initializePath: LineInfo | null = null;
 
   constructor(private method: METHODS, private path: PathDefinition) {
     this.setHeaders({
@@ -64,6 +61,14 @@ export class Route {
       query: this.query,
       body: this.body,
     };
+  }
+
+  public setInitializerPath(lineInfo: LineInfo | null) {
+    this.initializePath = lineInfo;
+  }
+
+  public getInitializerPath() {
+    return this.initializePath;
   }
 
   /**
@@ -398,31 +403,9 @@ export class Route {
    * If this method is called and a request does not match any route, stubborn will output the diff between the current route and the request
    */
   public logDiffOn501() {
-    this.logDiffOn501Request = this.getFileLine();
+    this.logDiffOn501Request = findCaller();
 
     return this;
-  }
-
-  private getFileLine(): LineInfo | null {
-    const stackLines = new Error().stack?.split('\n');
-    if (!stackLines) return null;
-
-    const fileLine = stackLines[3];
-    if (!fileLine) return null;
-
-    // Define regex to capture file path, line number, and column number
-    const stackRegex = /at\s+(?:.*\s\()?(.+?):(\d+):(\d+)\)?$/;
-
-    const match = fileLine.match(stackRegex);
-    if (!match) {
-      return null;
-    }
-    const [, file, line, column] = match;
-    return {
-      file,
-      line,
-      column,
-    };
   }
 
   /**
