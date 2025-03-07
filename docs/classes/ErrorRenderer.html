@@ -44,7 +44,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li >Output</li>
+  <li >ErrorRenderer</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -62,7 +62,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/debug/Output.ts</code>
+            <code>src/debug/ErrorRenderer.ts</code>
         </p>
 
 
@@ -74,21 +74,6 @@
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <h6><b>Properties</b></h6>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <ul class="index-list">
-                            <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#currentTab" >currentTab</a>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
 
                 <tr>
                     <td class="col-md-4">
@@ -99,64 +84,44 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#add" >add</a>
+                                    <span class="modifier">Private</span>
+                                <a href="#additionLabel" >additionLabel</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#addition" >addition</a>
+                                <a href="#errorEq" >errorEq</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#blue" >blue</a>
+                                <a href="#errorExt" >errorExt</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#bold" >bold</a>
+                                <a href="#errorMiss" >errorMiss</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#getDiffSubjectLabel" >getDiffSubjectLabel</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#category" >category</a>
+                                <a href="#renderError" >renderError</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#cyan" >cyan</a>
+                                <a href="#renderErrors" >renderErrors</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#formatLineInfo" >formatLineInfo</a>
+                                <a href="#renderMultiplesErrors" >renderMultiplesErrors</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#newLine" >newLine</a>
+                                <a href="#renderOneError" >renderOneError</a>
                             </li>
                             <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#pullTab" >pullTab</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#pushTab" >pushTab</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#render" >render</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#substration" >substration</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#tab" >tab</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#warn" >warn</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#yellow" >yellow</a>
+                                    <span class="modifier">Private</span>
+                                <a href="#substractionLabel" >substractionLabel</a>
                             </li>
                         </ul>
                     </td>
@@ -176,12 +141,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(output: string[])</code>
+<code>constructor(output: <a href="../classes/Output.html" target="_self">Output</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="5" class="link-to-prism">src/debug/Output.ts:5</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="5" class="link-to-prism">src/debug/ErrorRenderer.ts:5</a></div>
                             </td>
                         </tr>
 
@@ -202,7 +167,7 @@
                                                         <td>output</td>
                                                   
                                                         <td>
-                                                                    <code>string[]</code>
+                                                                        <code><a href="../classes/Output.html" target="_self" >Output</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -219,44 +184,6 @@
         </table>
 </section>
 
-            <section>
-    
-    <h3 id="inputs">
-        Properties
-    </h3>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="currentTab"></a>
-                    <span class="name">
-                            <span class="modifier">Private</span>
-                        <span ><b>currentTab</b></span>
-                        <a href="#currentTab"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Default value : </i><code>0</code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="5" class="link-to-prism">src/debug/Output.ts:5</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-</section>
 
             <section>
     
@@ -267,18 +194,444 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="add"></a>
+                    <a name="additionLabel"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
-                        <span ><b>add</b></span>
-                        <a href="#add"><span class="icon ion-ios-link"></span></a>
+                        <span class="modifier">Private</span>
+                        <span ><b>additionLabel</b></span>
+                        <a href="#additionLabel"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>add(lines: string | string[])</code>
+                    <code>additionLabel(error: <a href="../interfaces/DiffError.html" target="_self">DiffError</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="111"
+                            class="link-to-prism">src/debug/ErrorRenderer.ts:111</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>error</td>
+                                    <td>
+                                                <code><a href="../interfaces/DiffError.html" target="_self" >DiffError</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorEq"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>errorEq</b></span>
+                        <a href="#errorEq"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>errorEq(error: <a href="../interfaces/DiffError.html" target="_self">DiffError</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="115"
+                            class="link-to-prism">src/debug/ErrorRenderer.ts:115</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>error</td>
+                                    <td>
+                                                <code><a href="../interfaces/DiffError.html" target="_self" >DiffError</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorExt"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>errorExt</b></span>
+                        <a href="#errorExt"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>errorExt(error: <a href="../interfaces/DiffError.html" target="_self">DiffError</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="133"
+                            class="link-to-prism">src/debug/ErrorRenderer.ts:133</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>error</td>
+                                    <td>
+                                                <code><a href="../interfaces/DiffError.html" target="_self" >DiffError</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorMiss"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>errorMiss</b></span>
+                        <a href="#errorMiss"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>errorMiss(error: <a href="../interfaces/DiffError.html" target="_self">DiffError</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="126"
+                            class="link-to-prism">src/debug/ErrorRenderer.ts:126</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>error</td>
+                                    <td>
+                                                <code><a href="../interfaces/DiffError.html" target="_self" >DiffError</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDiffSubjectLabel"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>getDiffSubjectLabel</b></span>
+                        <a href="#getDiffSubjectLabel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getDiffSubjectLabel(subject: <a href="../undefineds/DIFF_SUBJECTS.html" target="_self">DIFF_SUBJECTS</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="35"
+                            class="link-to-prism">src/debug/ErrorRenderer.ts:35</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>subject</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/enumerations.html#DIFF_SUBJECTS" target="_self" >DIFF_SUBJECTS</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>&quot;Method&quot; | &quot;Path&quot; | &quot;Headers&quot; | &quot;Query&quot; | &quot;Body&quot;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="renderError"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>renderError</b></span>
+                        <a href="#renderError"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>renderError(error: <a href="../interfaces/DiffError.html" target="_self">DiffError</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="84"
+                            class="link-to-prism">src/debug/ErrorRenderer.ts:84</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>error</td>
+                                    <td>
+                                                <code><a href="../interfaces/DiffError.html" target="_self" >DiffError</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="renderErrors"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>renderErrors</b></span>
+                        <a href="#renderErrors"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>renderErrors(subject: <a href="../undefineds/DIFF_SUBJECTS.html" target="_self">DIFF_SUBJECTS</a>, errorsBySubjects: <a href="../interfaces/DiffError.html" target="_self">Record&lt;DIFF_SUBJECTS | DiffError[]&gt;</a>)</code>
                 </td>
             </tr>
 
@@ -286,7 +639,7 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="8"
-                            class="link-to-prism">src/debug/Output.ts:8</a></div>
+                            class="link-to-prism">src/debug/ErrorRenderer.ts:8</a></div>
                 </td>
             </tr>
 
@@ -307,9 +660,21 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>lines</td>
+                                    <td>subject</td>
                                     <td>
-                                            <code>string | string[]</code>
+                                                <code><a href="../miscellaneous/enumerations.html#DIFF_SUBJECTS" target="_self" >DIFF_SUBJECTS</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>errorsBySubjects</td>
+                                    <td>
+                                                <code><a href="../interfaces/DiffError.html" target="_self" >Record&lt;DIFF_SUBJECTS | DiffError[]&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -323,553 +688,13 @@
                     </div>
                     <div>
                     </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>this</code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="addition"></a>
-                    <span class="name">
-                        <span class="modifier">Public</span>
-                        <span ><b>addition</b></span>
-                        <a href="#addition"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>addition(text: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="45"
-                            class="link-to-prism">src/debug/Output.ts:45</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>text</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="blue"></a>
-                    <span class="name">
-                        <span class="modifier">Public</span>
-                        <span ><b>blue</b></span>
-                        <a href="#blue"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>blue(text: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="65"
-                            class="link-to-prism">src/debug/Output.ts:65</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>text</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="bold"></a>
-                    <span class="name">
-                        <span class="modifier">Public</span>
-                        <span ><b>bold</b></span>
-                        <a href="#bold"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>bold(text: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="73"
-                            class="link-to-prism">src/debug/Output.ts:73</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>text</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="category"></a>
-                    <span class="name">
-                        <span class="modifier">Public</span>
-                        <span ><b>category</b></span>
-                        <a href="#category"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>category(cat: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="19"
-                            class="link-to-prism">src/debug/Output.ts:19</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>cat</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>this</code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="cyan"></a>
-                    <span class="name">
-                        <span class="modifier">Public</span>
-                        <span ><b>cyan</b></span>
-                        <a href="#cyan"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>cyan(text: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="69"
-                            class="link-to-prism">src/debug/Output.ts:69</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>text</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="formatLineInfo"></a>
-                    <span class="name">
-                        <span class="modifier">Public</span>
-                        <span ><b>formatLineInfo</b></span>
-                        <a href="#formatLineInfo"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>formatLineInfo(line: <a href="../undefineds/LineInfo.html" target="_self">LineInfo | null</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="77"
-                            class="link-to-prism">src/debug/Output.ts:77</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>line</td>
-                                    <td>
-                                                <code><a href="../miscellaneous/typealiases.html#LineInfo" target="_self" >LineInfo | null</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="newLine"></a>
-                    <span class="name">
-                        <span class="modifier">Public</span>
-                        <span ><b>newLine</b></span>
-                        <a href="#newLine"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>newLine(count: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="25"
-                            class="link-to-prism">src/debug/Output.ts:25</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Default value</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>count</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-                                    <td>
-                                        <code>1</code>
-                                    </td>
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>this</code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="pullTab"></a>
-                    <span class="name">
-                        <span class="modifier">Public</span>
-                        <span ><b>pullTab</b></span>
-                        <a href="#pullTab"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>pullTab()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="41"
-                            class="link-to-prism">src/debug/Output.ts:41</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                     </div>
+                    <div class="io-description">
+                        
+                    </div>
                 </td>
             </tr>
         </tbody>
@@ -878,26 +703,26 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="pushTab"></a>
+                    <a name="renderMultiplesErrors"></a>
                     <span class="name">
                         <span class="modifier">Public</span>
-                        <span ><b>pushTab</b></span>
-                        <a href="#pushTab"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>renderMultiplesErrors</b></span>
+                        <a href="#renderMultiplesErrors"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>pushTab()</code>
+                    <code>renderMultiplesErrors(errors: <a href="../interfaces/DiffError.html" target="_self">DiffError[]</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="37"
-                            class="link-to-prism">src/debug/Output.ts:37</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="52"
+                            class="link-to-prism">src/debug/ErrorRenderer.ts:52</a></div>
                 </td>
             </tr>
 
@@ -905,48 +730,41 @@
             <tr>
                 <td class="col-md-4">
 
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>errors</td>
+                                    <td>
+                                                <code><a href="../interfaces/DiffError.html" target="_self" >DiffError[]</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                     </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="render"></a>
-                    <span class="name">
-                        <span class="modifier">Public</span>
-                        <span ><b>render</b></span>
-                        <a href="#render"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>render()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="33"
-                            class="link-to-prism">src/debug/Output.ts:33</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
+                        
                     </div>
                 </td>
             </tr>
@@ -956,26 +774,26 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="substration"></a>
+                    <a name="renderOneError"></a>
                     <span class="name">
                         <span class="modifier">Public</span>
-                        <span ><b>substration</b></span>
-                        <a href="#substration"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>renderOneError</b></span>
+                        <a href="#renderOneError"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>substration(text: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>renderOneError(errors: <a href="../interfaces/DiffError.html" target="_self">DiffError[]</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="49"
-                            class="link-to-prism">src/debug/Output.ts:49</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="30"
+                            class="link-to-prism">src/debug/ErrorRenderer.ts:30</a></div>
                 </td>
             </tr>
 
@@ -996,9 +814,9 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>text</td>
+                                    <td>errors</td>
                                     <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                <code><a href="../interfaces/DiffError.html" target="_self" >DiffError[]</a></code>
                                     </td>
 
                                     <td>
@@ -1013,7 +831,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                     </div>
                     <div class="io-description">
@@ -1027,26 +845,26 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="tab"></a>
+                    <a name="substractionLabel"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
-                        <span ><b>tab</b></span>
-                        <a href="#tab"><span class="icon ion-ios-link"></span></a>
+                        <span class="modifier">Private</span>
+                        <span ><b>substractionLabel</b></span>
+                        <a href="#substractionLabel"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>tab(text: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>substractionLabel(error: <a href="../interfaces/DiffError.html" target="_self">DiffError</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="53"
-                            class="link-to-prism">src/debug/Output.ts:53</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="107"
+                            class="link-to-prism">src/debug/ErrorRenderer.ts:107</a></div>
                 </td>
             </tr>
 
@@ -1067,151 +885,9 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>text</td>
+                                    <td>error</td>
                                     <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="warn"></a>
-                    <span class="name">
-                        <span class="modifier">Public</span>
-                        <span ><b>warn</b></span>
-                        <a href="#warn"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>warn(message: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="57"
-                            class="link-to-prism">src/debug/Output.ts:57</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>message</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>this</code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="yellow"></a>
-                    <span class="name">
-                        <span class="modifier">Public</span>
-                        <span ><b>yellow</b></span>
-                        <a href="#yellow"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>yellow(text: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="61"
-                            class="link-to-prism">src/debug/Output.ts:61</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>text</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                <code><a href="../interfaces/DiffError.html" target="_self" >DiffError</a></code>
                                     </td>
 
                                     <td>
@@ -1246,88 +922,143 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import Color from &#x27;chalk&#x27;;
-import { LineInfo } from &#x27;../@types&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Output } from &#x27;./Output&#x27;;
+import { DiffError } from &#x27;../@types&#x27;;
+import { DIFF_SUBJECTS, DIFF_TYPES } from &#x27;../constants&#x27;;
 
-export class Output {
-  private currentTab &#x3D; 0;
-  constructor(private output: string[] &#x3D; []) {}
+export class ErrorRenderer {
+  constructor(private output: Output) {}
 
-  public add(lines: string | string[]) {
-    if (Array.isArray(lines)) {
-      lines.forEach(line &#x3D;&gt; this.add(line));
-      return this;
+  public renderErrors(
+    subject: DIFF_SUBJECTS,
+    errorsBySubjects: Record&lt;DIFF_SUBJECTS, DiffError[]&gt;,
+  ) {
+    const errors &#x3D; errorsBySubjects[subject] ?? [];
+
+    if (errors.length &#x3D;&#x3D;&#x3D; 0) {
+      return;
     }
 
-    this.output.push(lines);
+    const cat &#x3D; this.getDiffSubjectLabel(subject);
 
-    return this;
+    const catErrors &#x3D; errors.filter(e &#x3D;&gt; e.subject &#x3D;&#x3D;&#x3D; subject);
+
+    this.output.newLine();
+
+    this.output.category(cat);
+    errors.length &#x3D;&#x3D;&#x3D; 1
+      ? this.renderOneError(catErrors)
+      : this.renderMultiplesErrors(catErrors);
   }
 
-  public category(cat: string) {
-    const ucCat &#x3D; cat[0].toUpperCase() + cat.slice(1);
-
-    return this.add(Color.bold.underline(ucCat));
+  public renderOneError(errors: DiffError[]) {
+    const error &#x3D; errors.pop() as DiffError;
+    this.renderError(error);
   }
 
-  public newLine(count &#x3D; 1) {
-    for (let i &#x3D; 0; i &lt; count; i++) {
-      this.add(&#x27;&#x27;);
+  private getDiffSubjectLabel(subject: DIFF_SUBJECTS) {
+    switch (subject) {
+      case DIFF_SUBJECTS.METHOD:
+        return &#x27;Method&#x27;;
+      case DIFF_SUBJECTS.PATH:
+        return &#x27;Path&#x27;;
+      case DIFF_SUBJECTS.HEADERS:
+        return &#x27;Headers&#x27;;
+      case DIFF_SUBJECTS.QUERY:
+        return &#x27;Query&#x27;;
+      case DIFF_SUBJECTS.BODY:
+        return &#x27;Body&#x27;;
+      default:
+        throw new Error(&#x60;Unknown subject: ${subject}&#x60;);
     }
-
-    return this;
   }
 
-  public render() {
-    return this.output.join(&#x27;\n&#x27;);
+  public renderMultiplesErrors(errors: DiffError[]) {
+    this.output.pushTab();
+
+    errors.sort((a: DiffError, b: DiffError) &#x3D;&gt; {
+      const types &#x3D; [
+        DIFF_TYPES.MISSING,
+        DIFF_TYPES.EXTRA,
+        DIFF_TYPES.FAIL_EQUALITY,
+        DIFF_TYPES.FAIL_MATCHING,
+        DIFF_TYPES.FAIL_FUNCTION,
+        DIFF_TYPES.INVALID_VALUE_TYPE,
+      ];
+      const aWeight &#x3D; types.length - types.indexOf(a.type);
+      const bWeight &#x3D; types.length - types.indexOf(b.type);
+
+      if (aWeight &#x3D;&#x3D;&#x3D; bWeight) {
+        return 0;
+      }
+
+      return aWeight &gt; bWeight ? -1 : 1;
+    });
+
+    errors.forEach((e, i) &#x3D;&gt; {
+      if (i !&#x3D;&#x3D; 0 &amp;&amp; ![DIFF_TYPES.MISSING, DIFF_TYPES.EXTRA].includes(e.type)) {
+        this.output.newLine();
+      }
+
+      this.renderError(e);
+    });
+    this.output.pullTab();
   }
 
-  public pushTab() {
-    this.currentTab++;
-  }
-
-  public pullTab() {
-    this.currentTab--;
-  }
-
-  public addition(text: string) {
-    return Color.green(&#x60;+ ${text}&#x60;);
-  }
-
-  public substration(text: string) {
-    return Color.red(&#x60;- ${text}&#x60;);
-  }
-
-  public tab(text: string) {
-    return &#x27; &#x27;.repeat(this.currentTab * 2) + text;
-  }
-
-  public warn(message: string) {
-    return this.add(&#x60;[${this.yellow(&#x27;WARN&#x27;)}] ${message}&#x60;);
-  }
-
-  public yellow(text: string) {
-    return Color.yellow(text);
-  }
-
-  public blue(text: string) {
-    return Color.blue(text);
-  }
-
-  public cyan(text: string) {
-    return Color.cyan(text);
-  }
-
-  public bold(text: string) {
-    return Color.bold(text);
-  }
-
-  public formatLineInfo(line: LineInfo | null) {
-    if (line &#x3D;&#x3D;&#x3D; null) {
-      return &#x27;&#x27;;
+  public renderError(error: DiffError) {
+    switch (error.type) {
+      case DIFF_TYPES.FAIL_EQUALITY:
+        this.errorEq(error);
+        break;
+      case DIFF_TYPES.FAIL_MATCHING:
+        this.errorEq(error);
+        break;
+      case DIFF_TYPES.FAIL_FUNCTION:
+        this.errorEq(error);
+        break;
+      case DIFF_TYPES.MISSING:
+        this.errorMiss(error);
+        break;
+      case DIFF_TYPES.EXTRA:
+        this.errorExt(error);
+        break;
+      case DIFF_TYPES.INVALID_VALUE_TYPE:
+        this.errorEq(error);
+        break;
     }
+  }
 
-    return Object.values(line).join(&#x27;:&#x27;);
+  private substractionLabel(error: DiffError) {
+    return error.path &#x3D;&#x3D;&#x3D; &#x27;&#x27; ? &#x27;Received&#x27; : error.path;
+  }
+
+  private additionLabel(error: DiffError) {
+    return error.path &#x3D;&#x3D;&#x3D; &#x27;&#x27; ? &#x27;Expected&#x27; : error.path;
+  }
+
+  public errorEq(error: DiffError) {
+    const substration &#x3D; &#x60;${this.substractionLabel(error)}: ${String(
+      error.value,
+    )}&#x60;;
+    const addition &#x3D; &#x60;${this.additionLabel(error)}: ${String(
+      error.definition,
+    )}&#x60;;
+    this.output.add(this.output.substration(this.output.tab(substration)));
+    this.output.add(this.output.addition(this.output.tab(addition)));
+  }
+
+  public errorMiss(error: DiffError) {
+    const addition &#x3D; &#x60;${this.additionLabel(error)}: ${String(
+      error.definition,
+    )}&#x60;;
+    this.output.add(this.output.addition(this.output.tab(addition)));
+  }
+
+  public errorExt(error: DiffError) {
+    const subtraction &#x3D; &#x60;${this.substractionLabel(error)}: ${String(
+      error.value,
+    )}&#x60;;
+    this.output.add(this.output.substration(this.output.tab(subtraction)));
   }
 }
 </code></pre>
@@ -1368,7 +1099,7 @@ export class Output {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
-            var COMPODOC_CURRENT_PAGE_URL = 'Output.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'ErrorRenderer.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

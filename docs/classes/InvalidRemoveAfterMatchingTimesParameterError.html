@@ -28,7 +28,7 @@
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
-               <div class="content interface">
+               <div class="content class">
                    <div class="content-data">
 
 
@@ -42,12 +42,9 @@
 
 
 
-
 <ol class="breadcrumb">
-  <li>Interfaces</li>
-  <li
-  >
-  JsonArray</li>
+  <li>Classes</li>
+  <li >InvalidRemoveAfterMatchingTimesParameterError</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -65,7 +62,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/@types/index.ts</code>
+            <code>src/errors/InvalidRemoveAfterMatchingTimesParameterError.ts</code>
         </p>
 
 
@@ -74,8 +71,34 @@
                 <h3>Extends</h3>
             </p>
             <p class="comment">
-                    <code>Array</code>
+                    <code>Error</code>
             </p>
+
+
+
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor()</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="1" class="link-to-prism">src/errors/InvalidRemoveAfterMatchingTimesParameterError.ts:1</a></div>
+                            </td>
+                        </tr>
+
+            </tbody>
+        </table>
+</section>
+
+
+
+
 
 
 
@@ -84,119 +107,15 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { IncomingMessage, ServerResponse } from &#x27;http&#x27;;
-import { DIFF_SUBJECTS, DIFF_TYPES, METHODS, WILDCARD } from &#x27;../constants&#x27;;
-
-export type JsonPrimitive &#x3D; string | number | boolean | null;
-export type JsonObject &#x3D; { [member: string]: JsonValue };
-export interface JsonArray extends Array&lt;JsonValue&gt; {}
-export type JsonValue &#x3D; JsonPrimitive | JsonObject | JsonArray;
-
-// TODO use generic type in match function so each element (header, body, query, etc...) can specify the type of the value
-export type MatchFunction &#x3D; (value: JsonValue) &#x3D;&gt; boolean;
-export type DefinitionMatcher &#x3D; RegExp | MatchFunction | typeof WILDCARD;
-export type DefinitionValue &#x3D;
-  | DefinitionMatcher
-  | JsonValue
-  | undefined
-  | METHODS; // Any possible values for definition
-
-// Request part definitions types
-export type MethodDefinition &#x3D; METHODS;
-export type PathDefinition &#x3D; DefinitionMatcher | string;
-export type HeaderDefinition &#x3D; DefinitionMatcher | string | number;
-export type HeadersDefinition &#x3D;
-  | Record&lt;string, HeaderDefinition&gt;
-  | typeof WILDCARD;
-
-export type BodyDefinitionPrimitive &#x3D; DefinitionMatcher | JsonValue;
-export type BodyDefinitionObject &#x3D; {
-  [member: string]: BodyDefinitionValue;
-};
-export interface BodyDefinitionArray extends Array&lt;BodyDefinitionValue&gt; {}
-export type BodyDefinitionValue &#x3D;
-  | BodyDefinitionPrimitive
-  | BodyDefinitionObject
-  | BodyDefinitionArray;
-export type BodyDefinition &#x3D; undefined | BodyDefinitionValue;
-
-export type QueryParameterDefinitionPrimitives &#x3D;
-  | DefinitionMatcher
-  | string
-  | number;
-export type QueryParameterDefinition &#x3D;
-  | QueryParameterDefinitionPrimitives
-  | QueryParameterDefinitionPrimitives[];
-export type QueryDefinition &#x3D;
-  | Record&lt;string, QueryParameterDefinition&gt;
-  | typeof WILDCARD;
-
-export type TemplateFunction &#x3D; (request: Request, scope: any) &#x3D;&gt; JsonValue;
-export type TemplateObject &#x3D; { [key: string]: Template };
-export type TemplateArray &#x3D; { [index: number]: Template };
-
-export type Template &#x3D;
-  | JsonValue
-  | TemplateFunction
-  | TemplateObject
-  | TemplateArray;
-
-export type ResponseDefinition &#x3D; {
-  statusCode: number;
-  headers: Record&lt;string, string | TemplateFunction&gt;;
-  body: Template | Buffer;
-};
-
-export type RequestHeaders &#x3D; Record&lt;string, string&gt;;
-export type RequestQuery &#x3D; Record&lt;string, string | string[]&gt;;
-export type RequestBody &#x3D; JsonValue | undefined;
-export type RequestPath &#x3D; string;
-export type RequestHash &#x3D; string;
-export type RequestMethod &#x3D; string;
-
-export type RequestInfo &#x3D; {
-  headers: RequestHeaders;
-  body: RequestBody;
-  path: RequestPath;
-  query: RequestQuery;
-  hash: RequestHash;
-  method: RequestMethod;
-};
-
-export type RequestInfoWithSearchParam &#x3D; RequestInfo &amp; {
-  searchParams: URLSearchParams;
-};
-
-export type Request &#x3D; IncomingMessage &amp; RequestInfoWithSearchParam;
-
-export type Response &#x3D; ServerResponse;
-export type NextFunction &#x3D; (err?: any) &#x3D;&gt; void;
-
-export type Middleware &#x3D; (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) &#x3D;&gt; any;
-
-export type RequestMatcher &#x3D; (req: Request) &#x3D;&gt; boolean;
-
-export type ResponseHeaders &#x3D; {
-  [key: string]: string;
-};
-
-export type ResponseBody &#x3D; JsonValue | Buffer;
-
-export interface DiffError {
-  subject: DIFF_SUBJECTS;
-  type: DIFF_TYPES;
-  definition: string | null;
-  value: JsonValue;
-  path: string;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export class InvalidRemoveAfterMatchingTimesParameterError extends Error {
+  constructor() {
+    super(&#x27;&quot;times&quot; parameter must be a positive integer greater that 0&#x27;);
+  }
 }
-export { LineInfo } from &#x27;./LineInfo&#x27;;
 </code></pre>
     </div>
 </div>
+
 
 
 
@@ -230,8 +149,8 @@ export { LineInfo } from &#x27;./LineInfo&#x27;;
 
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
-            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
-            var COMPODOC_CURRENT_PAGE_URL = 'JsonArray.html';
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'InvalidRemoveAfterMatchingTimesParameterError.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
