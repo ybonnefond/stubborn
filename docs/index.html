@@ -8,7 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
-	      <link rel="stylesheet" href="./styles/style.css">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
     </head>
     <body>
 
@@ -49,8 +50,24 @@
 </ul>
 <hr />
 
+<h2 id="node-support-policy">Node Support Policy</h2>
+<p>We will always support at least the latest Long-Term Support version of Node, but provide no promise of support for older versions. 
+The supported range will always be defined in the engines.node property of the package.json of our packages.</p>
+<p>We specifically limit our support to LTS versions of Node, not because this package won&#39;t work on other versions, but because we have a limited amount of time, 
+and supporting LTS offers the greatest return on that investment.</p>
+<p>It&#39;s possible this package will work correctly on newer versions of Node. It may even be possible to use this package on older versions of Node, 
+though that&#39;s more unlikely as we&#39;ll make every effort to take advantage of features available in the oldest LTS version we support.</p>
+<p>As new Node LTS versions become available we may remove previous versions from the engines.node property of our package&#39;s package.json file. 
+Removing a Node version is considered a breaking change and will entail the publishing of a new major version of this package.
+We will not accept any requests to support an end-of-life version of Node. Any merge requests or issues supporting an end-of-life version of Node will be closed.</p>
+<p>We will accept code that allows this package to run on newer, non-LTS, versions of Node. Furthermore, we will attempt to ensure our own changes work on the latest version of Node. 
+To help in that commitment, our continuous integration setup runs against all LTS versions of Node in addition the most recent Node release; called current.</p>
+<p>JavaScript package managers should allow you to install this package with any version of Node, with, at most, 
+a warning if your version of Node does not fall within the range specified by our node engines property. 
+If you encounter issues installing this package, please report the issue to your package manager.</p>
 <h2 id="installation">Installation</h2>
-<div><pre class="line-numbers"><code class="language-none">npm install --save-dev stubborn-ws</code></pre></div><div><pre class="line-numbers"><code class="language-none">yarn add -D stubborn-ws</code></pre></div><h2 id="usage">Usage</h2>
+<div><pre class="line-numbers"><code class="language-none">npm install --save-dev stubborn-ws</code></pre></div><p>or</p>
+<div><pre class="line-numbers"><code class="language-none">yarn add -D stubborn-ws</code></pre></div><h2 id="usage">Usage</h2>
 <p>Stubborn is a testing tool that let you <strong>hot</strong> load and unload routes into a webserver.
 Requests are <strong>strictly</strong> matched against routes definitions based on Method, Path, Query parameters, Headers and Body.
 If the request does not exactly match one route definition (ex: extra parameter, missing parameter, value does not match, etc), Stubborn will respond with a 501.</p>
@@ -109,15 +126,6 @@ describe(&#39;Test&#39;, () =&gt; {
   const res = await request(`/?page=2`);
 
   expect(res.statusCode).toEqual(STATUS_CODES.NOT_IMPLEMENTED);
-});</code></pre></div><p>You can use <code>null</code> as wildcard</p>
-<div><pre class="line-numbers"><code class="language-typescript">it(&#39;should match using wildcard&#39;, async () =&gt; {
-  sb.get(&#39;/&#39;).setQueryParameters({ page: WILDCARD }).setHeaders(WILDCARD);
-
-  const res = await request(`/?page=2`, {
-    headers: { &#39;x-api-key&#39;: &#39;api key&#39;, &#39;any-other-header&#39;: &#39;stuff&#39; },
-  });
-
-  expect(res.statusCode).toEqual(STATUS_CODES.SUCCESS);
 });</code></pre></div><p>You can use regex to match a parameter, header or body</p>
 <div><pre class="line-numbers"><code class="language-typescript">it(&#39;should match using a regexp&#39;, async () =&gt; {
   sb.post(&#39;/&#39;, {
@@ -140,6 +148,16 @@ it(&#39;should match using a function&#39;, async () =&gt; {
   const res = await request(`/?page=2`);
 
   expect(res.statusCode).toBe(STATUS_CODES.SUCCESS);
+});</code></pre></div><p>Although this is not advised, you can use the <code>WILDCARD</code> constant to match any values:</p>
+<div><pre class="line-numbers"><code class="language-typescript">import { WILDCARD } from &#39;stubborn-ws&#39;;
+it(&#39;should match using wildcard&#39;, async () =&gt; {
+  sb.get(&#39;/&#39;).setQueryParameters({ page: WILDCARD }).setHeaders(WILDCARD);
+
+  const res = await request(`/?page=2`, {
+    headers: { &#39;x-api-key&#39;: &#39;api key&#39;, &#39;any-other-header&#39;: &#39;stuff&#39; },
+  });
+
+  expect(res.statusCode).toEqual(STATUS_CODES.SUCCESS);
 });</code></pre></div><h2 id="public-api">Public API</h2>
 <p>See the <a href="https://ybonnefond.github.io/stubborn/">API documentation</a></p>
 <h2 id="faq">FAQ</h2>
@@ -192,7 +210,46 @@ If the request matches the route it will respond according to the route response
       // ...
     }
       // ...
-    });</code></pre></div>
+    });</code></pre></div><h4 id="q-can-i-send-the-same-request-multiple-times-and-have-different-response">Q: Can I send the same request multiple times and have different response?</h4>
+<p>Stubborn returns the first route that match a request even if multiple routes could match that request.
+Using <code>Route.removeRouteAfterMatching</code> you can tell stubborn to remove a route from the router, and if another route matching then it will be used.</p>
+<div><pre class="line-numbers"><code class="language-typescript">// First return a 400
+sb.addRoute(
+  new Route(METHODS.GET, &#39;/&#39;)
+    .setResponseStatusCode(400)
+    .removeRouteAfterMatching({ times: 1 }), // Match one time then remove
+);
+
+// Then return a 500
+sb.addRoute(
+  new Route(METHODS.GET, &#39;/&#39;)
+    .setResponseStatusCode(500)
+    .removeRouteAfterMatching({ times: 1 }), // Match one time then remove
+);
+
+// Finally always return 200
+sb.addRoute(
+  new Route(METHODS.GET, &#39;/&#39;).setResponseStatusCode(200),
+);
+
+// First call match the first route, then the route is removed
+expect(await httpClient.request({ path: &#39;/&#39; })).toReplyWith({
+  status: 400,
+});
+
+// Second call match the second route, then the route is removed
+expect(await httpClient.request({ path: &#39;/&#39; })).toReplyWith({
+  status: 500,
+});
+
+// Any subsequent calls match the last route which is never removed
+expect(await httpClient.request({ path: &#39;/&#39; })).toReplyWith({
+  status: 200,
+});
+
+expect(await httpClient.request({ path: &#39;/&#39; })).toReplyWith({
+  status: 200,
+});</code></pre></div>
 
 
 
@@ -206,14 +263,16 @@ If the request matches the route it will respond according to the route response
 
 
 
-                   
+
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -225,6 +284,15 @@ If the request matches the route it will respond according to the route response
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 0;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
@@ -234,9 +302,9 @@ If the request matches the route it will respond according to the route response
 
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="./js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+
        <script src="./js/menu-wc.js" defer></script>
+       <script nomodule src="./js/menu-wc_es5.js" defer></script>
 
        <script src="./js/libs/bootstrap-native.js"></script>
 

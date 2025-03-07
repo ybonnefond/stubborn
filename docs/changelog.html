@@ -8,7 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
-	      <link rel="stylesheet" href="./styles/style.css">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
     </head>
     <body>
 
@@ -30,48 +31,206 @@
                <div class="content getting-started">
                    <div class="content-data">
 
-<h2 id="514-2020-08-15"><a href="https://github.com/ybonnefond/stubborn/compare/v5.1.3...v5.1.4">5.1.4</a> (2020-08-15)</h2>
+<h2 id="711-2024-10-23"><a href="https://github.com/ybonnefond/stubborn/compare/v7.1.0...v7.1.1">7.1.1</a> (2024-10-23)</h2>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li>output of log diff show route and path (<a href="https://github.com/ybonnefond/stubborn/commit/1606f9c098621892b70b56e7c9e03ee184f8c8e8">1606f9c</a>)</li>
+</ul>
+<h1 id="710-2024-10-23"><a href="https://github.com/ybonnefond/stubborn/compare/v7.0.0...v7.1.0">7.1.0</a> (2024-10-23)</h1>
+<h3 id="features">Features</h3>
+<ul>
+<li>output the line of the route on log diff (<a href="https://github.com/ybonnefond/stubborn/commit/7cd4a016baac16e8c719027a6e051073ef6e5b6b">7cd4a01</a>)</li>
+<li>retrun diffs for matched endpoints routes in 501 response (<a href="https://github.com/ybonnefond/stubborn/commit/79594e992629488dd10c8396852e4c954e637348">79594e9</a>)</li>
+</ul>
+<h1 id="700-2024-10-22"><a href="https://github.com/ybonnefond/stubborn/compare/v6.2.0...v7.0.0">7.0.0</a> (2024-10-22)</h1>
+<h3 id="features-1">Features</h3>
+<ul>
+<li>add support for HEAD methods (<a href="https://github.com/ybonnefond/stubborn/commit/e8f3e78303951ac93f80cc54c36e2f14fed370c2">e8f3e78</a>)</li>
+<li>add support for options (<a href="https://github.com/ybonnefond/stubborn/commit/d452bf93589bacc80d0d1633b72cbc3836a4ad3a">d452bf9</a>)</li>
+<li>move to node 20 (<a href="https://github.com/ybonnefond/stubborn/commit/346ce4c587d8028410700b2317233e81b66efeef">346ce4c</a>)</li>
+<li>pass subject in DiffError (<a href="https://github.com/ybonnefond/stubborn/commit/2a096e1f9ebf7b24970ccfef9cb4ed183877d24b">2a096e1</a>)</li>
+<li>show file line when logDiffOn501 called on a mathcing route (<a href="https://github.com/ybonnefond/stubborn/commit/3814881dd63e8a7c344e9a634d6255d9e5939a56">3814881</a>)</li>
+<li>show warn when log diff called and route matched (<a href="https://github.com/ybonnefond/stubborn/commit/8c9ed84faba12632f5496574e89f02682928fc5d">8c9ed84</a>)</li>
+</ul>
+<h3 id="breaking-changes">BREAKING CHANGES</h3>
+<ul>
+<li>remove support for node 18 &amp; 19</li>
+</ul>
+<h1 id="620-2023-03-16"><a href="https://github.com/ybonnefond/stubborn/compare/v6.1.0...v6.2.0">6.2.0</a> (2023-03-16)</h1>
+<h3 id="features-2">Features</h3>
+<ul>
+<li>automatic remove route after matching X times (<a href="https://github.com/ybonnefond/stubborn/commit/60b6b399f87558f0932bb047e94a1b19e70fe722">60b6b39</a>)</li>
+</ul>
+<h1 id="610-2023-03-08"><a href="https://github.com/ybonnefond/stubborn/compare/v6.0.0...v6.1.0">6.1.0</a> (2023-03-08)</h1>
+<h3 id="features-3">Features</h3>
+<ul>
+<li>support multipart/form-data content type (<a href="https://github.com/ybonnefond/stubborn/commit/cea879317860d90da37f977cf912c5de62e9970b">cea8793</a>)</li>
+</ul>
+<h1 id="600-2023-03-06"><a href="https://github.com/ybonnefond/stubborn/compare/v5.5.0...v6.0.0">6.0.0</a> (2023-03-06)</h1>
+<h3 id="bug-fixes-1">Bug Fixes</h3>
+<ul>
+<li>remove max event listener warning (<a href="https://github.com/ybonnefond/stubborn/commit/faa6a7ed9dc45b87d4aed888e24c78fa62828fae">faa6a7e</a>)</li>
+</ul>
+<h3 id="chore">chore</h3>
+<ul>
+<li>update dependencies (<a href="https://github.com/ybonnefond/stubborn/commit/0f8ad66f03991a96415fcbb100f4a3cca5263112">0f8ad66</a>)</li>
+</ul>
+<h3 id="features-4">Features</h3>
+<ul>
+<li>drop support for node &lt; LTS (<a href="https://github.com/ybonnefond/stubborn/commit/3903fb066aa73a22684a5c12fa93a00fb496166f">3903fb0</a>)</li>
+</ul>
+<h3 id="breaking-changes-1">BREAKING CHANGES</h3>
+<ul>
+<li>CHANGE
+node 12.x, 13.x, 14.x, 15.x are no longer supported
+Only version &gt;= to latest LTS are now supported</li>
+<li>CHANGE
+Drop support for node 10.x and 11.x</li>
+</ul>
+<p>If you are not using node 10 or 11 you can upgrade
+from 5.x to 6.x eyes closed 😘</p>
+<h1 id="550-2021-10-06"><a href="https://github.com/ybonnefond/stubborn/compare/v5.4.0...v5.5.0">5.5.0</a> (2021-10-06)</h1>
+<h3 id="features-5">Features</h3>
+<ul>
+<li>support AWS JSON 1.0 and 1.1 content-types (<a href="https://github.com/ybonnefond/stubborn/commit/18114532d53ad4203f58435739311211600b7fda">1811453</a>)</li>
+</ul>
+<h1 id="540-2021-09-21"><a href="https://github.com/ybonnefond/stubborn/compare/v5.3.14...v5.4.0">5.4.0</a> (2021-09-21)</h1>
+<h3 id="features-6">Features</h3>
+<ul>
+<li>support buffer as response body (<a href="https://github.com/ybonnefond/stubborn/commit/17368e65d36a5dd29dca43280e1488cf023f8d4e">17368e6</a>)</li>
+</ul>
+<h2 id="5314-2021-08-03"><a href="https://github.com/ybonnefond/stubborn/compare/v5.3.13...v5.3.14">5.3.14</a> (2021-08-03)</h2>
 <h3 id="automatic-dependencies-upgrade">Automatic Dependencies Upgrade</h3>
+<ul>
+<li>[security] bump tar from 4.4.13 to 4.4.15 (<a href="https://github.com/ybonnefond/stubborn/commit/75225543096a9fcdc348e3c39fcf6c4e490ffc65">7522554</a>)</li>
+</ul>
+<h2 id="5313-2021-07-30"><a href="https://github.com/ybonnefond/stubborn/compare/v5.3.12...v5.3.13">5.3.13</a> (2021-07-30)</h2>
+<h3 id="automatic-dependencies-upgrade-1">Automatic Dependencies Upgrade</h3>
+<ul>
+<li>bump chalk from 4.1.1 to 4.1.2 (<a href="https://github.com/ybonnefond/stubborn/commit/1dfd2d607271ab232612bebea6aa42cc678c231f">1dfd2d6</a>)</li>
+</ul>
+<h2 id="5312-2021-06-14"><a href="https://github.com/ybonnefond/stubborn/compare/v5.3.11...v5.3.12">5.3.12</a> (2021-06-14)</h2>
+<h3 id="automatic-dependencies-upgrade-2">Automatic Dependencies Upgrade</h3>
+<ul>
+<li>[security] bump normalize-url from 4.5.0 to 4.5.1 (<a href="https://github.com/ybonnefond/stubborn/commit/341bc30267f84cf29f00971e041b145f2665a4e2">341bc30</a>)</li>
+</ul>
+<h2 id="5311-2021-06-14"><a href="https://github.com/ybonnefond/stubborn/compare/v5.3.10...v5.3.11">5.3.11</a> (2021-06-14)</h2>
+<h3 id="automatic-dependencies-upgrade-3">Automatic Dependencies Upgrade</h3>
+<ul>
+<li>bump chalk from 4.1.0 to 4.1.1 (<a href="https://github.com/ybonnefond/stubborn/commit/b8103b17bb00efb3a014b2ccc941f27e72c9f4f5">b8103b1</a>)</li>
+</ul>
+<h2 id="5310-2021-06-12"><a href="https://github.com/ybonnefond/stubborn/compare/v5.3.9...v5.3.10">5.3.10</a> (2021-06-12)</h2>
+<h3 id="automatic-dependencies-upgrade-4">Automatic Dependencies Upgrade</h3>
+<ul>
+<li>[security] bump handlebars from 4.7.6 to 4.7.7 (<a href="https://github.com/ybonnefond/stubborn/commit/ff51a8fc31927d66c656fe5e6674ee9531ab0f4d">ff51a8f</a>)</li>
+</ul>
+<h2 id="539-2021-06-12"><a href="https://github.com/ybonnefond/stubborn/compare/v5.3.8...v5.3.9">5.3.9</a> (2021-06-12)</h2>
+<h3 id="automatic-dependencies-upgrade-5">Automatic Dependencies Upgrade</h3>
+<ul>
+<li>[security] bump trim-newlines from 3.0.0 to 3.0.1 (<a href="https://github.com/ybonnefond/stubborn/commit/8824574e26070f24ae15ed79067fb9fc79cf87bf">8824574</a>)</li>
+</ul>
+<h2 id="538-2021-06-11"><a href="https://github.com/ybonnefond/stubborn/compare/v5.3.7...v5.3.8">5.3.8</a> (2021-06-11)</h2>
+<h3 id="automatic-dependencies-upgrade-6">Automatic Dependencies Upgrade</h3>
+<ul>
+<li>[security] bump y18n from 3.2.1 to 3.2.2 (<a href="https://github.com/ybonnefond/stubborn/commit/b92e57651c8aa2f537b1d59b25578c9a8578e806">b92e576</a>)</li>
+</ul>
+<h2 id="537-2021-06-11"><a href="https://github.com/ybonnefond/stubborn/compare/v5.3.6...v5.3.7">5.3.7</a> (2021-06-11)</h2>
+<h3 id="automatic-dependencies-upgrade-7">Automatic Dependencies Upgrade</h3>
+<ul>
+<li>[security] bump hosted-git-info from 2.8.8 to 2.8.9 (<a href="https://github.com/ybonnefond/stubborn/commit/828e4f8c58a72e72b078aec5ccad8cc12857c57b">828e4f8</a>)</li>
+</ul>
+<h2 id="536-2021-06-11"><a href="https://github.com/ybonnefond/stubborn/compare/v5.3.5...v5.3.6">5.3.6</a> (2021-06-11)</h2>
+<h3 id="automatic-dependencies-upgrade-8">Automatic Dependencies Upgrade</h3>
+<ul>
+<li>[security] bump ssri from 6.0.1 to 6.0.2 (<a href="https://github.com/ybonnefond/stubborn/commit/474d3b37a3545e8783895a6652c1b49aac5bcbd9">474d3b3</a>)</li>
+</ul>
+<h2 id="535-2021-06-11"><a href="https://github.com/ybonnefond/stubborn/compare/v5.3.4...v5.3.5">5.3.5</a> (2021-06-11)</h2>
+<h3 id="bug-fixes-2">Bug Fixes</h3>
+<ul>
+<li>res.write throwing error if body is null (<a href="https://github.com/ybonnefond/stubborn/commit/d22119e4f263ba2f611cc93dc053bf33622264f3">d22119e</a>)</li>
+</ul>
+<h2 id="534-2021-02-20"><a href="https://github.com/ybonnefond/stubborn/compare/v5.3.3...v5.3.4">5.3.4</a> (2021-02-20)</h2>
+<h3 id="automatic-dependencies-upgrade-9">Automatic Dependencies Upgrade</h3>
+<ul>
+<li>bump lodash from 4.17.20 to 4.17.21 (<a href="https://github.com/ybonnefond/stubborn/commit/fac4187aa1187886b09663e731c9a776f893e29f">fac4187</a>)</li>
+</ul>
+<h2 id="533-2021-02-05"><a href="https://github.com/ybonnefond/stubborn/compare/v5.3.2...v5.3.3">5.3.3</a> (2021-02-05)</h2>
+<h3 id="automatic-dependencies-upgrade-10">Automatic Dependencies Upgrade</h3>
+<ul>
+<li>bump @hapi/accept from 5.0.1 to 5.0.2 (<a href="https://github.com/ybonnefond/stubborn/commit/5be48f045a1dec14e60fc64b1f58ff4bf9e0ebaa">5be48f0</a>)</li>
+</ul>
+<h2 id="532-2020-12-21"><a href="https://github.com/ybonnefond/stubborn/compare/v5.3.1...v5.3.2">5.3.2</a> (2020-12-21)</h2>
+<h3 id="automatic-dependencies-upgrade-11">Automatic Dependencies Upgrade</h3>
+<ul>
+<li>[security] bump node-notifier from 8.0.0 to 8.0.1 (<a href="https://github.com/ybonnefond/stubborn/commit/5ea3da57318c1fbd90b99ef8bf412c056a1387a2">5ea3da5</a>)</li>
+</ul>
+<h2 id="531-2020-12-10"><a href="https://github.com/ybonnefond/stubborn/compare/v5.3.0...v5.3.1">5.3.1</a> (2020-12-10)</h2>
+<h3 id="automatic-dependencies-upgrade-12">Automatic Dependencies Upgrade</h3>
+<ul>
+<li>[security] bump ini from 1.3.5 to 1.3.7 (<a href="https://github.com/ybonnefond/stubborn/commit/1d45f926ccedd09bc7ff658b011b6409e8cab7a3">1d45f92</a>)</li>
+</ul>
+<h1 id="530-2020-11-18"><a href="https://github.com/ybonnefond/stubborn/compare/v5.2.2...v5.3.0">5.3.0</a> (2020-11-18)</h1>
+<h3 id="features-7">Features</h3>
+<ul>
+<li>add title with request&#39;s method and path on logDiffOn501 (<a href="https://github.com/ybonnefond/stubborn/commit/eba1ebe8cf7945967137f3c91f20e26058cd31f1">eba1ebe</a>)</li>
+</ul>
+<h2 id="522-2020-10-17"><a href="https://github.com/ybonnefond/stubborn/compare/v5.2.1...v5.2.2">5.2.2</a> (2020-10-17)</h2>
+<h3 id="automatic-dependencies-upgrade-13">Automatic Dependencies Upgrade</h3>
+<ul>
+<li>[security] bump npm-user-validate from 1.0.0 to 1.0.1 (<a href="https://github.com/ybonnefond/stubborn/commit/4f53c32afee19186e22ee8a2a4566b9b7ae06856">4f53c32</a>)</li>
+</ul>
+<h2 id="521-2020-09-11"><a href="https://github.com/ybonnefond/stubborn/compare/v5.2.0...v5.2.1">5.2.1</a> (2020-09-11)</h2>
+<h3 id="automatic-dependencies-upgrade-14">Automatic Dependencies Upgrade</h3>
+<ul>
+<li>[security] bump node-fetch from 2.6.0 to 2.6.1 (<a href="https://github.com/ybonnefond/stubborn/commit/e065d1a9ca2b0025c7212fa03187a8e784ecb0e4">e065d1a</a>)</li>
+</ul>
+<h1 id="520-2020-08-27"><a href="https://github.com/ybonnefond/stubborn/compare/v5.1.4...v5.2.0">5.2.0</a> (2020-08-27)</h1>
+<h3 id="features-8">Features</h3>
+<ul>
+<li>allow to remove a route (<a href="https://github.com/ybonnefond/stubborn/commit/97876270b12222179f8387bbc9fa564288badcb1">9787627</a>)</li>
+</ul>
+<h2 id="514-2020-08-15"><a href="https://github.com/ybonnefond/stubborn/compare/v5.1.3...v5.1.4">5.1.4</a> (2020-08-15)</h2>
+<h3 id="automatic-dependencies-upgrade-15">Automatic Dependencies Upgrade</h3>
 <ul>
 <li>bump lodash from 4.17.19 to 4.17.20 (<a href="https://github.com/ybonnefond/stubborn/commit/43acdba7c1f0b8854a87f960aff5afc36900f327">43acdba</a>)</li>
 </ul>
 <h2 id="513-2020-07-08"><a href="https://github.com/ybonnefond/stubborn/compare/v5.1.2...v5.1.3">5.1.3</a> (2020-07-08)</h2>
-<h3 id="automatic-dependencies-upgrade-1">Automatic Dependencies Upgrade</h3>
+<h3 id="automatic-dependencies-upgrade-16">Automatic Dependencies Upgrade</h3>
 <ul>
 <li>bump lodash from 4.17.18 to 4.17.19 (<a href="https://github.com/ybonnefond/stubborn/commit/463449caedbfcbaf8649129cfc273a7d36ee3d0a">463449c</a>)</li>
 </ul>
 <h2 id="512-2020-07-08"><a href="https://github.com/ybonnefond/stubborn/compare/v5.1.1...v5.1.2">5.1.2</a> (2020-07-08)</h2>
-<h3 id="automatic-dependencies-upgrade-2">Automatic Dependencies Upgrade</h3>
+<h3 id="automatic-dependencies-upgrade-17">Automatic Dependencies Upgrade</h3>
 <ul>
 <li>bump lodash from 4.17.15 to 4.17.18 (<a href="https://github.com/ybonnefond/stubborn/commit/0b3c5777986b95bf2d4843ecbe2445747e33e292">0b3c577</a>)</li>
 </ul>
 <h2 id="511-2020-07-07"><a href="https://github.com/ybonnefond/stubborn/compare/v5.1.0...v5.1.1">5.1.1</a> (2020-07-07)</h2>
-<h3 id="automatic-dependencies-upgrade-3">Automatic Dependencies Upgrade</h3>
+<h3 id="automatic-dependencies-upgrade-18">Automatic Dependencies Upgrade</h3>
 <ul>
 <li>[security] bump npm from 6.14.5 to 6.14.6 (<a href="https://github.com/ybonnefond/stubborn/commit/7df3365c15f8ec4bcefd6369ea5527f36eadd7f7">7df3365</a>)</li>
 </ul>
 <h1 id="510-2020-06-26"><a href="https://github.com/ybonnefond/stubborn/compare/v5.0.4...v5.1.0">5.1.0</a> (2020-06-26)</h1>
-<h3 id="features">Features</h3>
+<h3 id="features-9">Features</h3>
 <ul>
 <li>add logDiffon501 method to route (<a href="https://github.com/ybonnefond/stubborn/commit/003d4efc3ca08d15d29c2b9559bb1ec2be720c47">003d4ef</a>)</li>
 </ul>
 <h2 id="504-2020-06-23"><a href="https://github.com/ybonnefond/stubborn/compare/v5.0.3...v5.0.4">5.0.4</a> (2020-06-23)</h2>
-<h3 id="bug-fixes">Bug Fixes</h3>
+<h3 id="bug-fixes-3">Bug Fixes</h3>
 <ul>
 <li>fix packaged files (<a href="https://github.com/ybonnefond/stubborn/commit/56c446c35066cb4b38cbb08d4822cbcbb82c627e">56c446c</a>)</li>
 </ul>
 <h2 id="503-2020-06-23"><a href="https://github.com/ybonnefond/stubborn/compare/v5.0.2...v5.0.3">5.0.3</a> (2020-06-23)</h2>
-<h3 id="automatic-dependencies-upgrade-4">Automatic Dependencies Upgrade</h3>
+<h3 id="automatic-dependencies-upgrade-19">Automatic Dependencies Upgrade</h3>
 <ul>
 <li>bump dependencies (<a href="https://github.com/ybonnefond/stubborn/commit/0de24fa95e067337a8bdde932e682849c8b26e73">0de24fa</a>)</li>
 </ul>
 <h2 id="502-2020-06-23"><a href="https://github.com/ybonnefond/stubborn/compare/v5.0.1...v5.0.2">5.0.2</a> (2020-06-23)</h2>
-<h3 id="automatic-dependencies-upgrade-5">Automatic Dependencies Upgrade</h3>
+<h3 id="automatic-dependencies-upgrade-20">Automatic Dependencies Upgrade</h3>
 <ul>
 <li>bump chalk from 3.0.0 to 4.1.0 (<a href="https://github.com/ybonnefond/stubborn/commit/c40f8a5cdfb3011a13df997a0f7f5d54be4a12a5">c40f8a5</a>)</li>
 </ul>
 <h2 id="501-2020-06-23"><a href="https://github.com/ybonnefond/stubborn/compare/v5.0.0...v5.0.1">5.0.1</a> (2020-06-23)</h2>
-<h3 id="automatic-dependencies-upgrade-6">Automatic Dependencies Upgrade</h3>
+<h3 id="automatic-dependencies-upgrade-21">Automatic Dependencies Upgrade</h3>
 <ul>
 <li>[security] bump acorn from 5.7.3 to 5.7.4 (<a href="https://github.com/ybonnefond/stubborn/commit/248fdf18ac7352661a139b0e74515f8d4ff91535">248fdf1</a>)</li>
 </ul>
@@ -89,14 +248,16 @@
 
 
 
-                   
+
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -108,6 +269,15 @@
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 0;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
@@ -117,9 +287,9 @@
 
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="./js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+
        <script src="./js/menu-wc.js" defer></script>
+       <script nomodule src="./js/menu-wc_es5.js" defer></script>
 
        <script src="./js/libs/bootstrap-native.js"></script>
 

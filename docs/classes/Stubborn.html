@@ -8,7 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
-	      <link rel="stylesheet" href="../styles/style.css">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
 
@@ -40,9 +41,10 @@
 
 
 
+
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li>Stubborn</li>
+  <li >Stubborn</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -64,6 +66,18 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <div><pre class="line-numbers"><code class="language-html">```typescript
+import { Stubborn } from &#39;stubborn-ws&#39;;
+const sb = new Stubborn();</code></pre></div><p>sb.get(&#39;/&#39;).setResponseBody({ some: &#39;body&#39; });</p>
+<p>const res = await got(<code>${sb.getOrigin()}</code>, { json: true });</p>
+<p>expect(res.body).toEqual({ some: &#39;body&#39; });</p>
+<div><pre class="line-numbers"><code class="language-none"></code></pre></div>
+            </p>
+
 
             <p class="comment">
                 <h3>Implements</h3>
@@ -72,23 +86,6 @@
                             <code><a href="../interfaces/Emitter.html" target="_self" >Emitter</a></code>
             </p>
 
-            <p class="comment">
-                <h3>Example</h3>
-            </p>
-            <div class="io-description">
-                        <div>
-                            <pre class="line-numbers"><code class="language-html">```typescript
- * import { Stubborn } from 'stubborn-ws';
- * const sb = new Stubborn();
- *
- * sb.get('/').setResponseBody({ some: 'body' });
- *
- * const res = await got(`${sb.getOrigin()}`, { json: true });
- *
- * expect(res.body).toEqual({ some: 'body' });
- * ```</code></pre>
-                        </div>
-            </div>
 
             <section>
     <h3 id="index">Index</h3>
@@ -104,23 +101,23 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Private</span>
-                                <a href="#emitter">emitter</a>
+                                <a href="#emitter" >emitter</a>
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
-                                <a href="#options">options</a>
+                                <a href="#port" >port</a>
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
-                                <a href="#port">port</a>
+                                <a href="#router" >router</a>
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
-                                <a href="#router">router</a>
+                                <a href="#server" >server</a>
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
-                                <a href="#server">server</a>
+                                <a href="#stubbornOptions" >stubbornOptions</a>
                             </li>
                         </ul>
                     </td>
@@ -136,63 +133,79 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#addRoute">addRoute</a>
+                                <a href="#addRoute" >addRoute</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#clear">clear</a>
+                                <a href="#clear" >clear</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#delete">delete</a>
+                                <a href="#delete" >delete</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#get">get</a>
+                                <a href="#get" >get</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#getOrigin">getOrigin</a>
+                                <a href="#getMaxListeners" >getMaxListeners</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#getPort">getPort</a>
+                                <a href="#getOrigin" >getOrigin</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#off">off</a>
+                                <a href="#getPort" >getPort</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#on">on</a>
+                                <a href="#head" >head</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#once">once</a>
+                                <a href="#off" >off</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#patch">patch</a>
+                                <a href="#on" >on</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#post">post</a>
+                                <a href="#once" >once</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#put">put</a>
+                                <a href="#options" >options</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#removeRoute">removeRoute</a>
+                                <a href="#patch" >patch</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#start">start</a>
+                                <a href="#post" >post</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#stop">stop</a>
+                                <a href="#put" >put</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#removeRoute" >removeRoute</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#setMaxListeners" >setMaxListeners</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#start" >start</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#stop" >stop</a>
                             </li>
                         </ul>
                     </td>
@@ -212,7 +225,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(options: <a href="../classes/Stubborn.html">StubbornOptions</a>)</code>
+<code>constructor(options: <a href="../classes/Stubborn.html" target="_self">StubbornOptions</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -257,154 +270,149 @@
 
             <section>
     
-        <h3 id="inputs">
-            Properties
-        </h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="emitter"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>emitter</b></span>
+                        <a href="#emitter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <a name="emitter"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
-                            emitter</b>
-                            <a href="#emitter"><span class="icon ion-ios-link"></span></a>
-                        </span>
+                        <i>Type : </i>        <code><a href="../interfaces/Emitter.html" target="_self" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new EventEmitter()</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="../interfaces/Emitter.html" target="_self" >EventEmitter</a></code>
-
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/Stubborn.ts:34</a></div>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Default value : </i><code>new EventEmitter()</code>
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/Stubborn.ts:34</a></div>
-                            </td>
-                        </tr>
 
 
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="port"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>port</b></span>
+                        <a href="#port"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <a name="options"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
-                            options</b>
-                            <a href="#options"><span class="icon ion-ios-link"></span></a>
-                        </span>
+                        <i>Type : </i>    <code>number | null</code>
+
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="../classes/Stubborn.html" target="_self" >StubbornOptions</a></code>
-
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/Stubborn.ts:31</a></div>
                         </td>
                     </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/Stubborn.ts:33</a></div>
-                            </td>
-                        </tr>
 
 
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="router"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>router</b></span>
+                        <a href="#router"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <a name="port"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
-                            port</b>
-                            <a href="#port"><span class="icon ion-ios-link"></span></a>
-                        </span>
+                        <i>Type : </i>        <code><a href="../classes/Route.html" target="_self" >Router</a></code>
+
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>    <code>number | null</code>
-
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/Stubborn.ts:32</a></div>
                         </td>
                     </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/Stubborn.ts:31</a></div>
-                            </td>
-                        </tr>
 
 
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="server"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>server</b></span>
+                        <a href="#server"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <a name="router"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
-                            router</b>
-                            <a href="#router"><span class="icon ion-ios-link"></span></a>
-                        </span>
+                        <i>Type : </i>    <code>Server</code>
+
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="../classes/Route.html" target="_self" >Router</a></code>
-
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/Stubborn.ts:30</a></div>
                         </td>
                     </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/Stubborn.ts:32</a></div>
-                            </td>
-                        </tr>
 
 
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="stubbornOptions"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>stubbornOptions</b></span>
+                        <a href="#stubbornOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <a name="server"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
-                            server</b>
-                            <a href="#server"><span class="icon ion-ios-link"></span></a>
-                        </span>
+                        <i>Type : </i>        <code><a href="../classes/Stubborn.html" target="_self" >StubbornOptions</a></code>
+
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>    <code>Server</code>
-
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/Stubborn.ts:33</a></div>
                         </td>
                     </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/Stubborn.ts:30</a></div>
-                            </td>
-                        </tr>
 
 
-            </tbody>
-        </table>
+        </tbody>
+    </table>
 </section>
 
             <section>
@@ -418,10 +426,8 @@
                 <td class="col-md-4">
                     <a name="addRoute"></a>
                     <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            addRoute
-                        </b>
+                        <span class="modifier">Public</span>
+                        <span ><b>addRoute</b></span>
                         <a href="#addRoute"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -429,15 +435,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>addRoute(route: <a href="../classes/Route.html">Route</a>)</code>
+                    <code>addRoute(route: <a href="../classes/Route.html" target="_self">Route</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="132"
-                            class="link-to-prism">src/Stubborn.ts:132</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="153"
+                            class="link-to-prism">src/Stubborn.ts:153</a></div>
                 </td>
             </tr>
 
@@ -449,6 +455,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
@@ -497,10 +504,8 @@
                 <td class="col-md-4">
                     <a name="clear"></a>
                     <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            clear
-                        </b>
+                        <span class="modifier">Public</span>
+                        <span ><b>clear</b></span>
                         <a href="#clear"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -540,10 +545,8 @@
                 <td class="col-md-4">
                     <a name="delete"></a>
                     <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            delete
-                        </b>
+                        <span class="modifier">Public</span>
+                        <span ><b>delete</b></span>
                         <a href="#delete"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -551,7 +554,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>delete(path: <a href="../undefineds/PathDefinition.html">PathDefinition</a>)</code>
+                    <code>delete(path: <a href="../undefineds/PathDefinition.html" target="_self">PathDefinition</a>)</code>
                 </td>
             </tr>
 
@@ -571,6 +574,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
@@ -619,10 +623,8 @@
                 <td class="col-md-4">
                     <a name="get"></a>
                     <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            get
-                        </b>
+                        <span class="modifier">Public</span>
+                        <span ><b>get</b></span>
                         <a href="#get"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -630,7 +632,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>get(path: <a href="../undefineds/PathDefinition.html">PathDefinition</a>)</code>
+                    <code>get(path: <a href="../undefineds/PathDefinition.html" target="_self">PathDefinition</a>)</code>
                 </td>
             </tr>
 
@@ -650,6 +652,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
@@ -696,12 +699,49 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="getMaxListeners"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getMaxListeners</b></span>
+                        <a href="#getMaxListeners"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getMaxListeners()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="212"
+                            class="link-to-prism">src/Stubborn.ts:212</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="getOrigin"></a>
                     <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            getOrigin
-                        </b>
+                        <span class="modifier">Public</span>
+                        <span ><b>getOrigin</b></span>
                         <a href="#getOrigin"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -747,10 +787,8 @@
                 <td class="col-md-4">
                     <a name="getPort"></a>
                     <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            getPort
-                        </b>
+                        <span class="modifier">Public</span>
+                        <span ><b>getPort</b></span>
                         <a href="#getPort"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -796,12 +834,88 @@ will return the randomly affected port only after the server is started</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="head"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>head</b></span>
+                        <a href="#head"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>head(path: <a href="../undefineds/PathDefinition.html" target="_self">PathDefinition</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="134"
+                            class="link-to-prism">src/Stubborn.ts:134</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Create and Register a new HEAD route</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>path</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#PathDefinition" target="_self" >PathDefinition</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>Path matching definition</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="off"></a>
                     <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            off
-                        </b>
+                        <span class="modifier">Public</span>
+                        <span ><b>off</b></span>
                         <a href="#off"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -816,8 +930,8 @@ will return the randomly affected port only after the server is started</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="180"
-                            class="link-to-prism">src/Stubborn.ts:180</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="201"
+                            class="link-to-prism">src/Stubborn.ts:201</a></div>
                 </td>
             </tr>
 
@@ -827,6 +941,7 @@ will return the randomly affected port only after the server is started</p>
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
@@ -875,10 +990,8 @@ will return the randomly affected port only after the server is started</p>
                 <td class="col-md-4">
                     <a name="on"></a>
                     <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            on
-                        </b>
+                        <span class="modifier">Public</span>
+                        <span ><b>on</b></span>
                         <a href="#on"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -893,8 +1006,8 @@ will return the randomly affected port only after the server is started</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="170"
-                            class="link-to-prism">src/Stubborn.ts:170</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="191"
+                            class="link-to-prism">src/Stubborn.ts:191</a></div>
                 </td>
             </tr>
 
@@ -904,6 +1017,7 @@ will return the randomly affected port only after the server is started</p>
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
@@ -952,10 +1066,8 @@ will return the randomly affected port only after the server is started</p>
                 <td class="col-md-4">
                     <a name="once"></a>
                     <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            once
-                        </b>
+                        <span class="modifier">Public</span>
+                        <span ><b>once</b></span>
                         <a href="#once"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -970,8 +1082,8 @@ will return the randomly affected port only after the server is started</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="175"
-                            class="link-to-prism">src/Stubborn.ts:175</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="196"
+                            class="link-to-prism">src/Stubborn.ts:196</a></div>
                 </td>
             </tr>
 
@@ -981,6 +1093,7 @@ will return the randomly affected port only after the server is started</p>
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
@@ -1027,12 +1140,88 @@ will return the randomly affected port only after the server is started</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="options"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>options</b></span>
+                        <a href="#options"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>options(path: <a href="../undefineds/PathDefinition.html" target="_self">PathDefinition</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="144"
+                            class="link-to-prism">src/Stubborn.ts:144</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Create and Register a new HEAD route</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>path</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#PathDefinition" target="_self" >PathDefinition</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>Path matching definition</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="patch"></a>
                     <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            patch
-                        </b>
+                        <span class="modifier">Public</span>
+                        <span ><b>patch</b></span>
                         <a href="#patch"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -1040,7 +1229,7 @@ will return the randomly affected port only after the server is started</p>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>patch(path: <a href="../undefineds/PathDefinition.html">PathDefinition</a>, body: <a href="../undefineds/BodyDefinition.html">BodyDefinition</a>)</code>
+                    <code>patch(path: <a href="../undefineds/PathDefinition.html" target="_self">PathDefinition</a>, body: <a href="../undefineds/BodyDefinition.html" target="_self">BodyDefinition</a>)</code>
                 </td>
             </tr>
 
@@ -1060,6 +1249,7 @@ will return the randomly affected port only after the server is started</p>
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
@@ -1130,10 +1320,8 @@ will return the randomly affected port only after the server is started</p>
                 <td class="col-md-4">
                     <a name="post"></a>
                     <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            post
-                        </b>
+                        <span class="modifier">Public</span>
+                        <span ><b>post</b></span>
                         <a href="#post"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -1141,7 +1329,7 @@ will return the randomly affected port only after the server is started</p>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>post(path: <a href="../undefineds/PathDefinition.html">PathDefinition</a>, body: <a href="../undefineds/BodyDefinition.html">BodyDefinition</a>)</code>
+                    <code>post(path: <a href="../undefineds/PathDefinition.html" target="_self">PathDefinition</a>, body: <a href="../undefineds/BodyDefinition.html" target="_self">BodyDefinition</a>)</code>
                 </td>
             </tr>
 
@@ -1161,6 +1349,7 @@ will return the randomly affected port only after the server is started</p>
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
@@ -1231,10 +1420,8 @@ will return the randomly affected port only after the server is started</p>
                 <td class="col-md-4">
                     <a name="put"></a>
                     <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            put
-                        </b>
+                        <span class="modifier">Public</span>
+                        <span ><b>put</b></span>
                         <a href="#put"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -1242,7 +1429,7 @@ will return the randomly affected port only after the server is started</p>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>put(path: <a href="../undefineds/PathDefinition.html">PathDefinition</a>, body: <a href="../undefineds/BodyDefinition.html">BodyDefinition</a>)</code>
+                    <code>put(path: <a href="../undefineds/PathDefinition.html" target="_self">PathDefinition</a>, body: <a href="../undefineds/BodyDefinition.html" target="_self">BodyDefinition</a>)</code>
                 </td>
             </tr>
 
@@ -1262,6 +1449,7 @@ will return the randomly affected port only after the server is started</p>
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
@@ -1332,10 +1520,8 @@ will return the randomly affected port only after the server is started</p>
                 <td class="col-md-4">
                     <a name="removeRoute"></a>
                     <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            removeRoute
-                        </b>
+                        <span class="modifier">Public</span>
+                        <span ><b>removeRoute</b></span>
                         <a href="#removeRoute"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -1343,15 +1529,15 @@ will return the randomly affected port only after the server is started</p>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>removeRoute(route: <a href="../classes/Route.html">Route</a>)</code>
+                    <code>removeRoute(route: <a href="../classes/Route.html" target="_self">Route</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="141"
-                            class="link-to-prism">src/Stubborn.ts:141</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="162"
+                            class="link-to-prism">src/Stubborn.ts:162</a></div>
                 </td>
             </tr>
 
@@ -1363,6 +1549,7 @@ will return the randomly affected port only after the server is started</p>
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
@@ -1409,12 +1596,74 @@ will return the randomly affected port only after the server is started</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="setMaxListeners"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>setMaxListeners</b></span>
+                        <a href="#setMaxListeners"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>setMaxListeners(nb: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="206"
+                            class="link-to-prism">src/Stubborn.ts:206</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>nb</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="start"></a>
                     <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            start
-                        </b>
+                        <span class="modifier">Public</span>
+                        <span ><b>start</b></span>
                         <a href="#start"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -1429,8 +1678,8 @@ will return the randomly affected port only after the server is started</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="149"
-                            class="link-to-prism">src/Stubborn.ts:149</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="170"
+                            class="link-to-prism">src/Stubborn.ts:170</a></div>
                 </td>
             </tr>
 
@@ -1442,6 +1691,7 @@ will return the randomly affected port only after the server is started</p>
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
@@ -1490,10 +1740,8 @@ will return the randomly affected port only after the server is started</p>
                 <td class="col-md-4">
                     <a name="stop"></a>
                     <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            stop
-                        </b>
+                        <span class="modifier">Public</span>
+                        <span ><b>stop</b></span>
                         <a href="#stop"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -1508,8 +1756,8 @@ will return the randomly affected port only after the server is started</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="164"
-                            class="link-to-prism">src/Stubborn.ts:164</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="185"
+                            class="link-to-prism">src/Stubborn.ts:185</a></div>
                 </td>
             </tr>
 
@@ -1575,11 +1823,11 @@ export class Stubborn implements Emitter {
   private server: Server;
   private port: number | null;
   private router: Router;
-  private options: StubbornOptions;
+  private stubbornOptions: StubbornOptions;
   private emitter: EventEmitter &#x3D; new EventEmitter();
 
   constructor(options: StubbornOptions &#x3D; {}) {
-    this.options &#x3D; Object.assign(
+    this.stubbornOptions &#x3D; Object.assign(
       {
         host: &#x27;localhost&#x27;,
         defaultHeaders: {},
@@ -1589,7 +1837,7 @@ export class Stubborn implements Emitter {
 
     this.port &#x3D; null;
     this.server &#x3D; createServer();
-    this.router &#x3D; new Router({ host: this.options.host }, this.emitter);
+    this.router &#x3D; new Router({ host: this.stubbornOptions.host }, this.emitter);
   }
 
   /**
@@ -1608,7 +1856,7 @@ export class Stubborn implements Emitter {
    * @returns the server origin
    */
   public getOrigin(): string {
-    return &#x60;http://${this.options.host}:${this.getPort()}&#x60;;
+    return &#x60;http://${this.stubbornOptions.host}:${this.getPort()}&#x60;;
   }
 
   /**
@@ -1669,6 +1917,27 @@ export class Stubborn implements Emitter {
   public put(path: PathDefinition, body: BodyDefinition &#x3D; &#x27;&#x27;) {
     return this.router.createRoute(METHODS.PUT, path).setBody(body);
   }
+
+  /**
+   * Create and Register a new HEAD route
+   *
+   * @param path Path matching definition
+   * @param body Request body definition
+   */
+  public head(path: PathDefinition) {
+    return this.router.createRoute(METHODS.HEAD, path);
+  }
+
+  /**
+   * Create and Register a new HEAD route
+   *
+   * @param path Path matching definition
+   * @param body Request body definition
+   */
+  public options(path: PathDefinition) {
+    return this.router.createRoute(METHODS.OPTIONS, path);
+  }
+
   /**
    * Register a new route
    *
@@ -1697,7 +1966,7 @@ export class Stubborn implements Emitter {
     return new Promise(resolve &#x3D;&gt; {
       this.server.listen(this.port);
       this.router.handle(this.server);
-      resolve();
+      resolve(null);
     });
   }
 
@@ -1708,7 +1977,7 @@ export class Stubborn implements Emitter {
    */
   public stop() {
     return new Promise(resolve &#x3D;&gt; {
-      this.server.close(() &#x3D;&gt; resolve());
+      this.server.close(() &#x3D;&gt; resolve(null));
     });
   }
 
@@ -1726,6 +1995,16 @@ export class Stubborn implements Emitter {
     this.emitter.off(event, listener);
     return this;
   }
+
+  public setMaxListeners(nb: number): this {
+    this.emitter.setMaxListeners(nb);
+
+    return this;
+  }
+
+  public getMaxListeners(): number {
+    return this.emitter.getMaxListeners();
+  }
 }
 </code></pre>
     </div>
@@ -1733,14 +2012,15 @@ export class Stubborn implements Emitter {
 
 
 
-                   
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -1752,6 +2032,15 @@ export class Stubborn implements Emitter {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
@@ -1761,9 +2050,9 @@ export class Stubborn implements Emitter {
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+
        <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 
