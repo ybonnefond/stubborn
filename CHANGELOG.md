@@ -1,3 +1,10 @@
+## [7.1.2](https://github.com/ybonnefond/stubborn/compare/v7.1.1...v7.1.2) (2026-01-07)
+
+
+### Bug Fixes
+
+* prevent sending header if already sent ([f70ae69](https://github.com/ybonnefond/stubborn/commit/f70ae69cbf3a947c6804b1a0ec57ae05214572f8))
+
 ## [7.1.1](https://github.com/ybonnefond/stubborn/compare/v7.1.0...v7.1.1) (2024-10-23)
 
 
