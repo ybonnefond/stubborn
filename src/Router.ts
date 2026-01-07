@@ -183,7 +183,10 @@ function reply({
   const body =
     rawBody instanceof Buffer ? rawBody : applyTemplate(rawBody, req);
 
-  res.writeHead(route.getResponseStatusCode(), headers);
+  if (!res.headersSent) {
+    res.writeHead(route.getResponseStatusCode(), headers);
+  }
+
   const data = encodeBody(req, headers, body);
 
   if (data !== null) {
@@ -257,9 +260,11 @@ function replyNotImplemented(
   emitter: EventEmitter,
 ) {
   const dbg = new Debugger(req);
-  res.writeHead(STATUS_CODES.NOT_IMPLEMENTED, {
-    'Content-Type': 'application/json',
-  });
+  if (!res.headersSent) {
+    res.writeHead(STATUS_CODES.NOT_IMPLEMENTED, {
+      'Content-Type': 'application/json',
+    });
+  }
 
   res.write(
     JSON.stringify(
