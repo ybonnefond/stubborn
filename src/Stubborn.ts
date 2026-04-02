@@ -184,6 +184,7 @@ export class Stubborn implements Emitter {
    */
   public stop() {
     return new Promise(resolve => {
+      this.server.closeAllConnections();
       this.server.close(() => resolve(null));
     });
   }
