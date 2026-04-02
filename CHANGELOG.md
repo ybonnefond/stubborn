@@ -1,3 +1,10 @@
+## [7.1.3](https://github.com/ybonnefond/stubborn/compare/v7.1.2...v7.1.3) (2026-04-02)
+
+
+### Bug Fixes
+
+* close all connections ([0880cdb](https://github.com/ybonnefond/stubborn/commit/0880cdb08a5be072b540598dcd757b0f30124223))
+
 ## [7.1.2](https://github.com/ybonnefond/stubborn/compare/v7.1.1...v7.1.2) (2026-01-07)
 
 
