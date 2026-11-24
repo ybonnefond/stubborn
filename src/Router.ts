@@ -32,6 +32,7 @@ import { pathDiff } from './diff/pathDiff';
  */
 export type RouterOptions = {
   host?: string;
+  bodyLimit?: number | string;
 };
 
 /**
@@ -85,7 +86,14 @@ export class Router {
     const mws = buildMiddlewares(this);
     mws.push(buildRequestHandler(this, this.emitter));
     server.on('request', (req: Request, res: Response) => {
-      return runMiddlewares(mws.slice(0), req, res);
+      return runMiddlewares(mws.slice(0), req, res).catch(
+        (err: Error & { status?: number }) => {
+          if (!res.headersSent) {
+            res.statusCode = err.status || 500;
+            res.end(err.message);
+          }
+        },
+      );
     });
   }
 
@@ -99,6 +107,10 @@ export class Router {
 
   public getPort() {
     return this.port;
+  }
+
+  public getBodyLimit() {
+    return this.options.bodyLimit;
   }
 }
 /**
@@ -212,10 +224,10 @@ function registerLogDiff(router: Router, emitter: EventEmitter) {
 function buildMiddlewares(router: Router) {
   return [
     middlewares.urlParser({ host: router.getHost(), port: router.getPort() }),
-    middlewares.bodyJson(),
-    middlewares.bodyUrlEncoded(),
+    middlewares.bodyJson(router.getBodyLimit()),
+    middlewares.bodyUrlEncoded(router.getBodyLimit()),
     middlewares.bodyMultipartFormData(),
-    middlewares.bodyRaw(),
+    middlewares.bodyRaw(router.getBodyLimit()),
     middlewares.bodyEmpty(),
   ];
 }

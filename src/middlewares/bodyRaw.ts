@@ -2,6 +2,6 @@ import { raw } from 'body-parser';
 /**
  * @internal
  */
-export function bodyRaw() {
-  return raw({ type: () => true });
+export function bodyRaw(limit?: number | string) {
+  return raw({ type: () => true, limit });
 }
