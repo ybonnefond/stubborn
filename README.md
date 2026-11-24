@@ -186,6 +186,8 @@ it('should match using wildcard', async () => {
 
 See the [API documentation](https://ybonnefond.github.io/stubborn/)
 
+Request bodies are limited to 100kb by default (larger ones get a `413`); raise it with `new Stubborn({ bodyLimit: '64mb' })` (bytes or a [bytes](https://www.npmjs.com/package/bytes) string).
+
 ## FAQ
 
 #### Q: Stubborn is not matching my route definition and always return a 501

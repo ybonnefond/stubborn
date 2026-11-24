@@ -11,6 +11,11 @@ import { getServerPort } from './utils';
 export type StubbornOptions = {
   host?: string;
   defaultHeaders?: HeadersDefinition;
+  /**
+   * Maximum request body size, passed to body-parser's `limit`
+   * (bytes as a number, or a string like "64mb"). Defaults to body-parser's 100kb.
+   */
+  bodyLimit?: number | string;
 };
 
 /**
@@ -44,7 +49,13 @@ export class Stubborn implements Emitter {
 
     this.port = null;
     this.server = createServer();
-    this.router = new Router({ host: this.stubbornOptions.host }, this.emitter);
+    this.router = new Router(
+      {
+        host: this.stubbornOptions.host,
+        bodyLimit: this.stubbornOptions.bodyLimit,
+      },
+      this.emitter,
+    );
   }
 
   /**

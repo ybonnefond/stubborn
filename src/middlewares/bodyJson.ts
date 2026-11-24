@@ -2,8 +2,9 @@ import { json } from 'body-parser';
 /**
  * @internal
  */
-export function bodyJson() {
+export function bodyJson(limit?: number | string) {
   return json({
+    limit,
     type: [
       'json',
       'application/json',

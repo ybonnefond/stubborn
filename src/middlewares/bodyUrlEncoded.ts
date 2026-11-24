@@ -2,6 +2,6 @@ import { urlencoded } from 'body-parser';
 /**
  * @internal
  */
-export function bodyUrlEncoded() {
-  return urlencoded({ extended: true });
+export function bodyUrlEncoded(limit?: number | string) {
+  return urlencoded({ extended: true, limit });
 }
