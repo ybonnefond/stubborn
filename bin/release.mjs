@@ -57,7 +57,7 @@ ${nextRelease.notes}
 
     if (isPR) {
       const { default: GH_EVENT } = await import(process.env.GITHUB_EVENT_PATH, {
-        assert: {
+        with: {
           type: "json",
         },
       });
