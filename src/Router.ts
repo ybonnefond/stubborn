@@ -224,10 +224,10 @@ function registerLogDiff(router: Router, emitter: EventEmitter) {
 function buildMiddlewares(router: Router) {
   return [
     middlewares.urlParser({ host: router.getHost(), port: router.getPort() }),
-    middlewares.bodyJson(router.getBodyLimit()),
-    middlewares.bodyUrlEncoded(router.getBodyLimit()),
+    middlewares.bodyJson({ limit: router.getBodyLimit() }),
+    middlewares.bodyUrlEncoded({ limit: router.getBodyLimit() }),
     middlewares.bodyMultipartFormData(),
-    middlewares.bodyRaw(router.getBodyLimit()),
+    middlewares.bodyRaw({ limit: router.getBodyLimit() }),
     middlewares.bodyEmpty(),
   ];
 }
