@@ -1,3 +1,15 @@
+# [7.2.0](https://github.com/ybonnefond/stubborn/compare/v7.1.3...v7.2.0) (2026-11-25)
+
+
+### Bug Fixes
+
+* use import attributes in release script for Node 24 ([589963f](https://github.com/ybonnefond/stubborn/commit/589963f43d55b9d7c655047034e56e847120e46b))
+
+
+### Features
+
+* add bodyLimit option to configure request body size limit ([645ce0d](https://github.com/ybonnefond/stubborn/commit/645ce0dae5ff172e4699328ee1657dd20d4db099))
+
 ## [7.1.3](https://github.com/ybonnefond/stubborn/compare/v7.1.2...v7.1.3) (2026-04-02)
 
 
