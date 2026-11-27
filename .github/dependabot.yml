@@ -1,0 +1,17 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: "@commitlint/config-conventional"
+    versions:
+    - 12.1.0
+  - dependency-name: "@commitlint/cli"
+    versions:
+    - 12.1.0
+  - dependency-name: jsdoc-to-markdown
+    versions:
+    - 7.0.0
